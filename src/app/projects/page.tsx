@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { areaOrder, areas, models, projects } from "@/data/projects";
+import { categories, projects } from "@/data/projects";
 import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "LLM agents, retrieval systems, full-stack apps and machine learning models by Anubrata De.",
+  description: "LLM agents, full-stack apps, machine learning models and analysis by Anubrata De.",
 };
+
+const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 export default function WorkPage() {
   return (
@@ -17,51 +19,34 @@ export default function WorkPage() {
         <Episode n={3} {...episodes.work} />
         <h1 className="page__title">Everything I&apos;ve built</h1>
         <p className="page__lead">
-          {projects.length} projects with public code, from agents that do the analysis themselves to apps with logins, roles and
-          background jobs.
+          {projects.length} projects, each with its code on GitHub. This list updates itself from my repositories every day.
         </p>
       </header>
 
-      {areaOrder
-        .filter((a) => projects.some((p) => p.area === a))
-        .map((area) => (
-          <section key={area} className="work-group" aria-labelledby={`area-${area}`}>
-            <h2 id={`area-${area}`} className="work-group__title">
-              {areas[area].label}
+      {categories
+        .filter((c) => projects.some((p) => p.category === c))
+        .map((category) => (
+          <section key={category} className="work-group" aria-labelledby={`cat-${kebab(category)}`}>
+            <h2 id={`cat-${kebab(category)}`} className="work-group__title">
+              {category}
             </h2>
             <ul className="cards">
               {projects
-                .filter((p) => p.area === area)
+                .filter((p) => p.category === category)
                 .map((p) => (
                   <li key={p.slug}>
                     <Link href={`/projects/${p.slug}`} className="card">
-                      <ScreenSketch slug={p.slug} label={p.name} className="card__shot" />
-                      <span className="card__name">{p.name}</span>
+                      <ScreenSketch slug={p.slug} category={p.category} label={p.title} className="card__shot" />
+                      <span className="card__name">{p.title}</span>
+                      {p.tagline && <span className="card__tagline">{p.tagline}</span>}
                       <span className="card__summary">{p.summary}</span>
-                      <span className="card__stack">{p.stack.slice(0, 4).join(", ")}</span>
+                      {p.tags.length > 0 && <span className="card__stack">{p.tags.join(", ")}</span>}
                     </Link>
                   </li>
                 ))}
             </ul>
           </section>
         ))}
-
-      <section id="models" className="work-group" aria-labelledby="models-title">
-        <h2 id="models-title" className="work-group__title">
-          Side quests
-        </h2>
-        <ul className="quests__list">
-          {models.map((m) => (
-            <li key={m.name}>
-              <strong>{m.name}</strong>
-              <span>
-                {m.taskLabel}. {m.question}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
     </div>
   );
 }

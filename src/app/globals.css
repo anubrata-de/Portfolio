@@ -1133,6 +1133,13 @@ textarea {
   letter-spacing: -0.02em;
 }
 
+.card__tagline {
+  margin-top: -6px;
+  color: var(--shu-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
 .card__summary {
   color: var(--ink-2);
 }
@@ -1172,6 +1179,18 @@ textarea {
 .project__crumbs a {
   text-decoration-color: var(--shu);
   text-underline-offset: 3px;
+}
+
+.project__tagline {
+  margin-top: 12px;
+  color: var(--shu-text);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.project__more {
+  max-width: 52ch;
+  color: var(--ink-2);
 }
 
 .project__context {

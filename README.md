@@ -1,3 +1,7 @@
+<!-- portfolio
+hide: yes
+-->
+
 # anubrata.de
 
 Portfolio for Anubrata De: BS in Data Science and Applications at IIT Madras (2023–2027), former Secretary of Nilgiri House, building LLM agents, retrieval apps and full-stack Flask and Vue systems.
@@ -20,26 +24,57 @@ Requires Node 20.9 or later.
 | --- | --- |
 | Konnichiwa | Name (with the katakana version running down the side), a line that cycles through words ("Data should feel useful, obvious, honest, sugoi"), the local time, and a drawing of a late-night desk under a twilight sky, with a manga sound effect. |
 | Shinnen | Three rules on taped sticky notes. |
-| Sakuhin | Every project as a sketch of its main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Smaller "side quests" are listed on the Work page. |
+| Sakuhin | Featured projects as sketches of their main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Every project is on the Work page. |
 | Yasumi | A slow strip of small facts with doodles. Pauses on hover. |
 | Jikai | What I'm looking for, as a checklist. Ticking each box draws more of the scene next to it. |
 | End card | Sunset over rooftops and power lines, a fansub-style subtitle, a signature and a red name seal. |
 
 Motion is kept small: the cycling word, notes settling in once, and the checklist drawing. With *reduce motion* turned on, all of it is still and the strip becomes a static row.
 
+## Projects update themselves from GitHub
+
+The project list on the site, and on the GitHub profile README, is built from the public repos on this account:
+
+1. `scripts/sync-projects.mjs` reads every public repo (forks, archived repos and this one are skipped) and writes `src/data/github-projects.json`.
+2. `.github/workflows/sync-projects.yml` runs it every morning, and on demand from the **Actions** tab. When something changed it commits the file, and Vercel redeploys.
+3. The profile repo (`anubrata-de/anubrata-de`) rebuilds its README from the same file half an hour later.
+
+So a new public repo appears on its own. To control how a repo is shown, put this anywhere in its README; GitHub doesn't display it:
+
+```
+<!-- portfolio
+title: Data Analyst Agent
+tagline: Automated Data Analysis & Visualization API
+category: LLM agents and apps
+summary: One or two sentences about what it does.
+tags: Python, FastAPI, pandas
+featured: yes
+-->
+```
+
+- **category** is one of: LLM agents and apps, Full-stack apps, Machine learning, Business and data analysis, Other projects.
+- **featured: yes** pins the project on the home page.
+- **hide: yes** leaves a repo out.
+- **slug** (optional) fixes the page address, e.g. `slug: data-analyst-agent` → `/projects/data-analyst-agent`.
+
+Without the block, the title comes from the README's first heading, the summary from the repo's About text, and the tags from its topics or main language.
+
+Extra write-up for a project page (steps, highlights) lives in `src/data/projects.ts`, keyed by slug. It's optional.
+
 ## Editing content
 
-All content lives in `src/data/`:
+Everything else lives in `src/data/`:
 
 | File | Holds |
 | --- | --- |
 | `site.ts` | Name, email, location, social links |
 | `home.ts` | Section labels, hero line, beliefs, facts strip, checklist, end card |
 | `journey.ts` | Roles and milestones (the About page's story arcs) and languages |
-| `projects.ts` | Projects (summary, steps or parts, highlights, stack, links) and smaller side quests |
+| `projects.ts` | Optional extra detail for project pages (steps, highlights), keyed by slug |
+| `github-projects.json` | Generated from GitHub. Don't edit by hand |
 | `skills.ts` | Toolkit |
 
-Each project's screen sketch is in `src/components/projects/ScreenSketch.tsx`, keyed by the project's `slug`. A new project without a sketch still shows its window frame.
+Each project's screen sketch is in `src/components/projects/ScreenSketch.tsx`, keyed by the project's `slug`. A project without its own sketch gets a generic one for its category.
 
 ## Environment variables
 

@@ -3,7 +3,7 @@ import { site } from "@/data/site";
 const items = [
   {
     q: "Which project should I look at first?",
-    a: "The Data Analyst Agent for agents and data handling, the TDS Virtual TA for retrieval, and the Placement Portal for a full-stack app with roles and background jobs.",
+    a: "The Data Analyst Agent for agents and data handling, the Virtual Teaching Assistant for retrieval, the Placement Portal Application for a full-stack app with roles and background jobs, and the Portcast take-home for analysis.",
   },
   {
     q: "Do you actually speak Japanese?",

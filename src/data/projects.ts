@@ -1,50 +1,30 @@
-import { github } from "./site";
+import data from "./github-projects.json";
 
 /**
- * Project write-ups are drawn from each repository's README and source.
- * If a detail changes in a repo, change it here too.
+ * The project list comes from GitHub: scripts/sync-projects.mjs reads every public repo
+ * and writes github-projects.json (title, summary, category, tags and links), daily.
+ *
+ * Below is optional extra detail for a project page, keyed by slug. A project without
+ * an entry here still gets a page built from its GitHub information.
  */
-
-export type AreaKey = "agents" | "llm" | "web" | "analysis";
-
-export const areas: Record<AreaKey, { label: string }> = {
-  agents: { label: "Agents" },
-  llm: { label: "LLM apps" },
-  web: { label: "Full-stack apps" },
-  analysis: { label: "Analysis" },
-};
-
-/** Order of the groups on the Work page. */
-export const areaOrder: AreaKey[] = ["agents", "llm", "web", "analysis"];
 
 type Step = { title: string; detail: string };
 
-export type Project = {
-  slug: string;
-  name: string;
-  area: AreaKey;
-  /** One sentence, what it does for the person using it. */
-  summary: string;
+export type Detail = {
   /** Where it came from, if it was built for a course. */
   context?: string;
   /** Ordered pipeline for systems that process a request in stages. */
   steps?: Step[];
   /** Unordered building blocks for apps that are not a pipeline. */
   parts?: Step[];
-  highlights: string[];
-  stack: string[];
-  code: string;
+  highlights?: string[];
+  stack?: string[];
   live?: { href: string; label: string };
 };
 
-export const projects: Project[] = [
-  {
-    slug: "data-analyst-agent",
-    name: "Data Analyst Agent",
-    area: "agents",
+const details: Record<string, Detail> = {
+  "data-analyst-agent": {
     context: "Built for Tools in Data Science at IIT Madras",
-    summary:
-      "An API that takes a question in plain English plus whatever data comes with it, finds and scrapes the sources it needs, works out the analysis and returns the answers as JSON.",
     steps: [
       {
         title: "Read the request",
@@ -78,15 +58,9 @@ export const projects: Project[] = [
       "Configured for deployment on Railway",
     ],
     stack: ["Python", "FastAPI", "pandas", "DuckDB", "BeautifulSoup", "httpx", "pdfplumber", "matplotlib", "Gemini, Claude and GPT APIs"],
-    code: github("tds_p2"),
   },
-  {
-    slug: "tds-virtual-ta",
-    name: "TDS Virtual TA",
-    area: "llm",
+  "tds-virtual-ta": {
     context: "Built for Tools in Data Science at IIT Madras",
-    summary:
-      "Answers student questions for the Tools in Data Science course using the course notes and the discussion forum, and links the posts it drew on.",
     steps: [
       {
         title: "Take the question",
@@ -116,15 +90,9 @@ export const projects: Project[] = [
       "Falls back to the top retrieved URLs when the model does not cite its sources",
     ],
     stack: ["Python", "FastAPI", "SQLite", "OpenAI embeddings", "gpt-4o-mini", "AI Pipe"],
-    code: github("TDS-VIRTUAL-TA"),
     live: { href: "https://tds-virtual-ta-steel.vercel.app", label: "Deployed API" },
   },
-  {
-    slug: "prompt2ppt",
-    name: "Prompt2PPT",
-    area: "llm",
-    summary:
-      "Turns long text or Markdown into a PowerPoint deck that keeps the fonts, colours and layouts of a template you upload.",
+  "prompt2ppt": {
     steps: [
       {
         title: "Bring the content",
@@ -152,14 +120,8 @@ export const projects: Project[] = [
       "Runs anywhere a Procfile or Docker image runs",
     ],
     stack: ["Python", "FastAPI", "python-pptx", "OpenAI, Anthropic and Gemini APIs", "HTML, CSS, JavaScript"],
-    code: github("Promt2PPT"),
   },
-  {
-    slug: "browser-llm-agent",
-    name: "Browser LLM Agent",
-    area: "agents",
-    summary:
-      "A chat agent that runs entirely in the browser and can search the web, consult a second model and execute JavaScript on its way to an answer.",
+  "browser-llm-agent": {
     steps: [
       {
         title: "Pick a model",
@@ -185,14 +147,8 @@ export const projects: Project[] = [
       "Exports the whole conversation as JSON",
     ],
     stack: ["JavaScript", "Web Workers", "Bootstrap 5", "OpenAI, Anthropic and Gemini APIs", "Vercel"],
-    code: github("LLM_Agent"),
   },
-  {
-    slug: "parkease",
-    name: "ParkEase",
-    area: "web",
-    summary:
-      "A vehicle parking app where drivers book spots, slots are allocated automatically and a scheduled job emails a daily summary.",
+  "parkease": {
     parts: [
       { title: "Flask API", detail: "Booking and slot allocation, with JWT authentication." },
       { title: "Vue.js front end", detail: "Booking and availability screens that talk to the Flask API." },
@@ -202,14 +158,8 @@ export const projects: Project[] = [
     ],
     highlights: ["Background jobs run outside the request cycle, so booking stays fast"],
     stack: ["Python", "Flask", "Vue.js", "SQLite", "Redis", "Celery", "JWT", "pytest"],
-    code: github("ParkEase"),
   },
-  {
-    slug: "placement-portal",
-    name: "Placement Portal",
-    area: "web",
-    summary:
-      "Runs campus placements for three roles: admins approve companies and drives, companies shortlist and schedule interviews, and students apply to drives they are eligible for.",
+  "placement-portal": {
     parts: [
       {
         title: "Admins",
@@ -230,14 +180,8 @@ export const projects: Project[] = [
     ],
     highlights: ["Redis caching in front of SQLAlchemy models", "Flask-Migrate for schema changes"],
     stack: ["Python", "Flask", "SQLAlchemy", "Vue 3", "Bootstrap 5", "Celery", "Redis", "SQLite"],
-    code: github("placement_portal"),
   },
-  {
-    slug: "quiz-master-v1",
-    name: "Quiz Master V1",
-    area: "web",
-    summary:
-      "Exam practice across several courses: an admin builds subjects, chapters and timed quizzes, and students take them against a live countdown and review their scores.",
+  "quiz-master-v1": {
     parts: [
       { title: "Admin dashboard", detail: "Create subjects, chapters and multiple-choice quizzes, manage users and see attempt statistics." },
       { title: "Student dashboard", detail: "Filter quizzes by subject and chapter, take them timed, and review results and history." },
@@ -246,15 +190,9 @@ export const projects: Project[] = [
     ],
     highlights: ["Hashed passwords, role-based access and server-side input validation"],
     stack: ["Python", "Flask", "Jinja2", "SQLite", "Bootstrap"],
-    code: github("Quiz-Master-V1"),
   },
-  {
-    slug: "portcast-take-home",
-    name: "Portcast take-home",
-    area: "analysis",
+  "portcast-take-home": {
     context: "Take-home for Portcast's Data Analyst Intern role",
-    summary:
-      "A three-part analysis: why a container reached Rotterdam a week late, what inaccurate ETAs cost a manufacturer each year, and what's wrong with an AI-written plan to integrate 50+ tracking feeds.",
     parts: [
       {
         title: "Root cause",
@@ -279,55 +217,18 @@ export const projects: Project[] = [
       "Said exactly where AI review changed the answer, part by part",
     ],
     stack: ["SQL", "Python", "Root-cause analysis", "Estimation", "Data quality"],
-    code: `${github}/portcast-data-analyst-take-home`,
     live: {
-      href: `${github}/portcast-data-analyst-take-home/blob/main/solution/Anubrata_De_Portcast_Take_Home_Solution.pdf`,
+      href: "https://github.com/anubrata-de/portcast-data-analyst-take-home/blob/main/solution/Anubrata_De_Portcast_Take_Home_Solution.pdf",
       label: "Read the write-up",
     },
   },
-];
-
-type Model = {
-  name: string;
-  /** What kind of problem it is, in a few words. */
-  taskLabel: string;
-  /** The question it answers. */
-  question: string;
 };
 
-/** Smaller course projects: machine learning, deep learning and a business case. */
-export const models: Model[] = [
-  {
-    name: "Cinema audience forecasting",
-    taskLabel: "Time-series forecasting",
-    question: "How many people will come to each theatre on a given day?",
-  },
-  {
-    name: "Messy Mashup (DLGenAI)",
-    taskLabel: "Deep learning, audio",
-    question: "Which genre is this noisy mashup of mixed instrument stems?",
-  },
-  {
-    name: "Hotel booking cancellation",
-    taskLabel: "Binary classification",
-    question: "Will this booking be cancelled?",
-  },
-  {
-    name: "House price prediction",
-    taskLabel: "Regression",
-    question: "What will this house sell for?",
-  },
-  {
-    name: "Movie review sentiment",
-    taskLabel: "Multiclass classification",
-    question: "Is this review negative, neutral or positive?",
-  },
-  {
-    name: "Clothing shop strategy (BDM capstone)",
-    taskLabel: "Business analysis",
-    question: "How can a readymade garments shop fix its working capital and grow?",
-  },
-];
+export type Project = (typeof data.projects)[number] & { detail?: Detail };
+
+export const categories: string[] = data.categories;
+export const projects: Project[] = data.projects.map((p) => ({ ...p, detail: details[p.slug] }));
+export const featured = projects.filter((p) => p.featured);
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
@@ -335,8 +236,6 @@ export function getProject(slug: string) {
 
 export function neighbours(slug: string) {
   const i = projects.findIndex((p) => p.slug === slug);
-  return {
-    previous: projects[(i - 1 + projects.length) % projects.length],
-    next: projects[(i + 1) % projects.length],
-  };
+  const n = projects.length;
+  return { previous: projects[(i - 1 + n) % n], next: projects[(i + 1) % n] };
 }

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { site } from "@/data/site";
-import { areas, models, projects } from "@/data/projects";
+import { featured, projects } from "@/data/projects";
 import { episodes, hero, lookingFor, tiles } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { CyclingWord } from "@/components/home/CyclingWord";
@@ -67,13 +67,13 @@ export default function Home() {
             Things I&apos;ve built, pinned where I can see them
           </h2>
           <ul className="board">
-            {projects.map((p, i) => (
+            {featured.map((p, i) => (
               <li key={p.slug} className="pin" style={{ "--tilt": `${tilts[i % tilts.length]}deg` } as CSSProperties}>
                 <Link href={`/projects/${p.slug}`} className="pin__link">
                   <span className="tape" aria-hidden="true" />
-                  <ScreenSketch slug={p.slug} label={p.name} className="pin__shot" />
-                  <span className="pin__name">{p.name}</span>
-                  <span className="pin__area">{areas[p.area].label}</span>
+                  <ScreenSketch slug={p.slug} category={p.category} label={p.title} className="pin__shot" />
+                  <span className="pin__name">{p.title}</span>
+                  <span className="pin__area">{p.category}</span>
                 </Link>
               </li>
             ))}
@@ -87,11 +87,13 @@ export default function Home() {
           </ul>
           <p className="section__more">
             <Link href="/projects" className="button button--ghost">
-              See every project in detail
+              See all {projects.length} projects
             </Link>
-            <Link href="/projects#models" className="section__aside">
-              plus {models.length} side quests in ML, deep learning and business
-            </Link>
+            {projects.length > featured.length && (
+              <Link href="/projects" className="section__aside">
+                plus {projects.length - featured.length} more in machine learning and analysis
+              </Link>
+            )}
           </p>
         </div>
       </section>

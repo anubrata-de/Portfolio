@@ -159,7 +159,72 @@ const screens: Record<string, ReactNode> = {
   ),
 };
 
-export function ScreenSketch({ slug, label, className }: { slug: string; label: string; className?: string }) {
+/** Used for any project without its own sketch, so new repos still get a picture. */
+const byCategory: Record<string, ReactNode> = {
+  "Machine learning": (
+    <>
+      <text x="20" y="52" fontFamily="ui-monospace, monospace" fontSize="10" fill={INK}>model.ipynb</text>
+      <path d="M22 176 H170 M22 176 V64" {...s} strokeWidth={1.4} />
+      <path d="M28 160 L 52 142 L 76 150 L 100 118 L 124 124 L 148 92 L 166 84" fill="none" stroke="#e2442f" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+      {[
+        [34, 166], [50, 150], [64, 158], [88, 128], [110, 132], [130, 112], [152, 98], [162, 80],
+      ].map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="3" fill="#d6e6ff" stroke={INK} strokeWidth={1.2} />
+      ))}
+      {Array.from({ length: 9 }, (_, i) => {
+        const r = Math.floor(i / 3);
+        const c = i % 3;
+        return <rect key={i} x={196 + c * 34} y={68 + r * 34} width="30" height="30" rx="3" fill={r === c ? "#cfe6b4" : "#ffffff"} stroke={INK} strokeWidth={1.2} />;
+      })}
+      <text x="247" y="190" textAnchor="middle" fontSize="9.5" fill={INK}>predictions</text>
+    </>
+  ),
+  "Business and data analysis": (
+    <>
+      <text x="20" y="54" fontSize="12" fontWeight="700" fill={INK}>Findings</text>
+      {[66, 78, 90, 102].map((y, i) => (
+        <g key={y}>{bar(20, y, [140, 120, 132, 96][i])}</g>
+      ))}
+      {[
+        [26, 26], [56, 46], [86, 34], [116, 58],
+      ].map(([x, h]) => (
+        <rect key={x} x={x} y={182 - h} width="22" height={h} rx="2" fill="#ffe27a" stroke={INK} strokeWidth={1.3} />
+      ))}
+      <circle cx="244" cy="118" r="44" fill="#d6e6ff" stroke={INK} strokeWidth={1.4} />
+      <path d="M244 118 V74 A44 44 0 0 1 286 132 Z" fill="#ffc5d5" stroke={INK} strokeWidth={1.3} />
+      <path d="M244 118 L 286 132 A44 44 0 0 1 230 160 Z" fill="#cfe6b4" stroke={INK} strokeWidth={1.3} />
+    </>
+  ),
+  "LLM agents and apps": (
+    <>
+      <rect x="120" y="42" width="182" height="30" rx="12" fill="#d6e6ff" stroke={INK} strokeWidth={1.4} />
+      {bar(134, 54, 130, "#9aa7c4")}
+      <rect x="18" y="84" width="220" height="56" rx="12" fill="#ffffff" stroke={INK} strokeWidth={1.4} />
+      {bar(32, 96, 180)}
+      {bar(32, 108, 160)}
+      {bar(32, 120, 110)}
+      <rect x="18" y="160" width="286" height="28" rx="14" fill="#ffffff" stroke={INK} strokeWidth={1.4} />
+      {bar(34, 171, 120)}
+    </>
+  ),
+  "Full-stack apps": (
+    <>
+      <rect x="1" y="29" width="70" height="176" fill="#f4f2f7" />
+      {[48, 66, 84, 102].map((y) => (
+        <g key={y}>{bar(14, y, 44, y === 48 ? "#e2442f" : MUTED)}</g>
+      ))}
+      {[0, 1, 2].map((i) => (
+        <rect key={i} x={84 + i * 76} y="44" width="66" height="44" rx="6" fill={["#d6e6ff", "#cfe6b4", "#ffe27a"][i]} stroke={INK} strokeWidth={1.3} />
+      ))}
+      <rect x="84" y="102" width="218" height="88" rx="6" fill="#ffffff" stroke={INK} strokeWidth={1.3} />
+      {[116, 132, 148, 164].map((y) => (
+        <g key={y}>{bar(96, y, 190)}</g>
+      ))}
+    </>
+  ),
+};
+
+export function ScreenSketch({ slug, category, label, className }: { slug: string; category?: string; label: string; className?: string }) {
   return (
     <svg viewBox="0 0 320 206" className={className} role="img" aria-label={`Sketch of ${label}`}>
       <rect x="1" y="1" width="318" height="204" rx="10" fill="#ffffff" stroke={INK} strokeWidth={2} />
@@ -168,7 +233,7 @@ export function ScreenSketch({ slug, label, className }: { slug: string; label: 
       <circle cx="30" cy="15" r="4" fill="#ffe27a" stroke={INK} strokeWidth={1} />
       <circle cx="44" cy="15" r="4" fill="#cfe6b4" stroke={INK} strokeWidth={1} />
       <rect x="96" y="8" width="128" height="14" rx="7" fill="#f4f2f7" />
-      {screens[slug]}
+      {screens[slug] ?? (category && byCategory[category]) ?? byCategory["LLM agents and apps"]}
     </svg>
   );
 }

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const facts = [
   {
     title: "Studying",
-    body: "BS in Data Science and Applications at IIT Madras, Sep 2023 to Aug 2027. The Data Analyst Agent and the TDS Virtual TA both started as course work there.",
+    body: "BS in Data Science and Applications at IIT Madras, Sep 2023 to Aug 2027. The Data Analyst Agent and the Virtual Teaching Assistant both started as course work there.",
   },
   {
     title: "Languages",
@@ -29,17 +29,17 @@ const facts = [
 const habits = [
   {
     title: "Plan for the model failing",
-    body: "Providers time out and rate-limit. The Data Analyst Agent falls back across Claude, GPT and Gemini; the TDS Virtual TA backs off on HTTP 429 and reports its own health.",
+    body: "Providers time out and rate-limit. The Data Analyst Agent falls back across Claude, GPT and Gemini; the Virtual Teaching Assistant backs off on HTTP 429 and reports its own health.",
     href: "/projects/data-analyst-agent",
   },
   {
     title: "Make answers checkable",
-    body: "The Virtual TA returns the forum posts and notes it drew on, and falls back to the top matches when the model forgets to cite.",
+    body: "The Virtual Teaching Assistant returns the forum posts and notes it drew on, and falls back to the top matches when the model forgets to cite.",
     href: "/projects/tds-virtual-ta",
   },
   {
     title: "Keep other people's keys out of storage",
-    body: "Prompt2PPT uses a visitor's own API key in memory for one request and never writes it anywhere.",
+    body: "Your Text, Your Style (Prompt2PPT) uses a visitor's own API key in memory for one request and never writes it anywhere.",
     href: "/projects/prompt2ppt",
   },
   {
