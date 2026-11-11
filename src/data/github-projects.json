@@ -23,9 +23,28 @@
       ],
       "featured": true,
       "url": "https://github.com/anubrata-de/Promt2PPT",
-      "homepage": "",
+      "homepage": "https://promt2-ppt.vercel.app",
       "language": "Python",
-      "updated": "2025-08-29T18:39:17Z"
+      "updated": "2026-11-11T08:47:53Z"
+    },
+    {
+      "repo": "TDS-VIRTUAL-TA",
+      "slug": "tds-virtual-ta",
+      "title": "Virtual Teaching Assistant",
+      "tagline": "Tools in Data Science (TDS), IIT Madras",
+      "summary": "Answers student questions for the TDS course from scraped course content and Discourse forum posts, returning context-aware answers with references as JSON in under 30 seconds.",
+      "category": "LLM agents and apps",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Embeddings",
+        "Web scraping"
+      ],
+      "featured": true,
+      "url": "https://github.com/anubrata-de/TDS-VIRTUAL-TA",
+      "homepage": "https://tds-virtual-ta-steel.vercel.app",
+      "language": "Python",
+      "updated": "2026-11-11T08:47:50Z"
     },
     {
       "repo": "LLM_Agent",
@@ -42,9 +61,9 @@
       ],
       "featured": true,
       "url": "https://github.com/anubrata-de/LLM_Agent",
-      "homepage": "",
+      "homepage": "https://llm-agent-teal.vercel.app",
       "language": "JavaScript",
-      "updated": "2025-08-29T17:50:30Z"
+      "updated": "2026-11-11T08:47:48Z"
     },
     {
       "repo": "tds_p2",
@@ -64,26 +83,26 @@
       "url": "https://github.com/anubrata-de/tds_p2",
       "homepage": "",
       "language": "Python",
-      "updated": "2025-08-16T17:51:27Z"
+      "updated": "2026-11-11T08:47:46Z"
     },
     {
-      "repo": "TDS-VIRTUAL-TA",
-      "slug": "tds-virtual-ta",
-      "title": "Virtual Teaching Assistant",
-      "tagline": "Tools in Data Science (TDS), IIT Madras",
-      "summary": "Answers student questions for the TDS course from scraped course content and Discourse forum posts, returning context-aware answers with references as JSON in under 30 seconds.",
-      "category": "LLM agents and apps",
+      "repo": "Quiz-Master-V1",
+      "slug": "quiz-master-v1",
+      "title": "Quiz Master V1",
+      "tagline": "Multi-User Exam Preparation Platform",
+      "summary": "Admins manage subjects, chapters and quizzes; students take timed quizzes with a live countdown and auto-submit, then track their results.",
+      "category": "Full-stack apps",
       "tags": [
-        "Python",
-        "FastAPI",
-        "Embeddings",
-        "Web scraping"
+        "Flask",
+        "Jinja2",
+        "SQLite",
+        "Bootstrap"
       ],
       "featured": true,
-      "url": "https://github.com/anubrata-de/TDS-VIRTUAL-TA",
-      "homepage": "",
+      "url": "https://github.com/anubrata-de/Quiz-Master-V1",
+      "homepage": "https://quiz-master-v1-liart.vercel.app",
       "language": "Python",
-      "updated": "2025-06-18T04:34:01Z"
+      "updated": "2026-11-11T08:47:59Z"
     },
     {
       "repo": "placement_portal",
@@ -102,8 +121,8 @@
       "featured": true,
       "url": "https://github.com/anubrata-de/placement_portal",
       "homepage": "",
-      "language": "Python",
-      "updated": "2026-03-06T09:58:52Z"
+      "language": "JavaScript",
+      "updated": "2026-11-11T08:47:57Z"
     },
     {
       "repo": "ParkEase",
@@ -122,99 +141,105 @@
       "featured": true,
       "url": "https://github.com/anubrata-de/ParkEase",
       "homepage": "",
-      "language": "Python",
-      "updated": "2025-12-01T08:37:27Z"
+      "language": "JavaScript",
+      "updated": "2026-11-11T08:47:55Z"
     },
     {
-      "repo": "Quiz-Master-V1",
-      "slug": "quiz-master-v1",
-      "title": "Quiz Master V1",
-      "tagline": "Multi-User Exam Preparation Platform",
-      "summary": "Admins manage subjects, chapters and quizzes; students take timed quizzes with a live countdown and auto-submit, then track their results.",
-      "category": "Full-stack apps",
+      "repo": "chest-xray-disease-classification",
+      "slug": "chest-xray-classification",
+      "title": "Chest X-Ray Disease Classification",
+      "tagline": "DLGenAI NPPE 1 (Kaggle)",
+      "summary": "Classifies chest X-rays by finding despite heavy class imbalance, comparing DenseNet-121, EfficientNet-V2-S and ViT-B/16 backbones with a class-balanced sampler and focal loss.",
+      "category": "Machine learning",
       "tags": [
-        "Flask",
-        "Jinja2",
-        "SQLite",
-        "Bootstrap"
+        "Python",
+        "PyTorch",
+        "Computer vision",
+        "DenseNet"
       ],
-      "featured": true,
-      "url": "https://github.com/anubrata-de/Quiz-Master-V1",
+      "featured": false,
+      "url": "https://github.com/anubrata-de/chest-xray-disease-classification",
       "homepage": "",
-      "language": "HTML",
-      "updated": "2025-03-30T15:11:27Z"
+      "language": "Jupyter Notebook",
+      "updated": "2026-11-11T09:04:31Z"
     },
     {
       "repo": "cinema-audience-forecasting",
       "slug": "cinema-audience-forecasting",
       "title": "Cinema Audience Forecasting Challenge",
       "tagline": "Time Series Prediction",
-      "summary": "Forecasts daily audience counts across theatres from online and point-of-sale booking data, theatre metadata and calendar effects such as weekends and holidays.",
+      "summary": "Forecasts daily audience counts across theatres from booking, theatre and calendar data. Random Forest scored best (validation R² 0.51) and anchors a three-model ensemble.",
       "category": "Machine learning",
       "tags": [
         "Python",
-        "Time series",
-        "Forecasting"
+        "scikit-learn",
+        "XGBoost",
+        "Time series"
       ],
       "featured": false,
       "url": "https://github.com/anubrata-de/cinema-audience-forecasting",
       "homepage": "",
-      "language": "Python",
-      "updated": "2026-11-11T09:00:00Z"
-    },
-    {
-      "repo": "hotel-booking-cancellation",
-      "slug": "hotel-booking-cancellation",
-      "title": "Hotel Booking Cancellation Prediction",
-      "tagline": "Binary classification",
-      "summary": "Predicts whether a hotel booking will be cancelled from customer, booking and stay features such as lead time, room type and booking history.",
-      "category": "Machine learning",
-      "tags": [
-        "Python",
-        "Machine learning",
-        "Classification"
-      ],
-      "featured": false,
-      "url": "https://github.com/anubrata-de/hotel-booking-cancellation",
-      "homepage": "",
-      "language": "Python",
-      "updated": "2026-11-11T09:00:00Z"
-    },
-    {
-      "repo": "house-price-prediction",
-      "slug": "house-price-prediction",
-      "title": "House Price Prediction",
-      "tagline": "Regression",
-      "summary": "Predicts house prices from mixed categorical and numerical data for a Kaggle competition, scored on R².",
-      "category": "Machine learning",
-      "tags": [
-        "Python",
-        "Machine learning",
-        "Regression"
-      ],
-      "featured": false,
-      "url": "https://github.com/anubrata-de/house-price-prediction",
-      "homepage": "",
-      "language": "Python",
-      "updated": "2026-11-11T09:00:00Z"
+      "language": "Jupyter Notebook",
+      "updated": "2026-11-11T09:04:27Z"
     },
     {
       "repo": "movie-review-sentiment",
       "slug": "movie-review-sentiment",
       "title": "Movie Review Sentiment Prediction",
       "tagline": "Multiclass classification (NLP)",
-      "summary": "Classifies movie reviews as negative, neutral or positive from review phrases combined with structured features.",
+      "summary": "Classifies movie reviews as negative, neutral or positive with TF-IDF features and linear models, reaching 65% validation accuracy across the three classes.",
       "category": "Machine learning",
       "tags": [
         "Python",
+        "scikit-learn",
         "NLP",
-        "Classification"
+        "TF-IDF"
       ],
       "featured": false,
       "url": "https://github.com/anubrata-de/movie-review-sentiment",
       "homepage": "",
-      "language": "Python",
-      "updated": "2026-11-11T09:00:00Z"
+      "language": "Jupyter Notebook",
+      "updated": "2026-11-11T09:04:24Z"
+    },
+    {
+      "repo": "house-price-prediction",
+      "slug": "house-price-prediction",
+      "title": "House Price Prediction",
+      "tagline": "Regression",
+      "summary": "Predicts house prices from mixed categorical and numerical data for a Kaggle competition, comparing linear, tree and boosted models on R².",
+      "category": "Machine learning",
+      "tags": [
+        "Python",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "Regression"
+      ],
+      "featured": false,
+      "url": "https://github.com/anubrata-de/house-price-prediction",
+      "homepage": "",
+      "language": "Jupyter Notebook",
+      "updated": "2026-11-11T09:04:21Z"
+    },
+    {
+      "repo": "hotel-booking-cancellation",
+      "slug": "hotel-booking-cancellation",
+      "title": "Hotel Booking Cancellation Prediction",
+      "tagline": "Binary classification",
+      "summary": "Predicts whether a hotel booking will be cancelled from customer, booking and stay features. Compared ten models; XGBoost reached 0.94 ROC-AUC on validation.",
+      "category": "Machine learning",
+      "tags": [
+        "Python",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "Classification"
+      ],
+      "featured": false,
+      "url": "https://github.com/anubrata-de/hotel-booking-cancellation",
+      "homepage": "",
+      "language": "Jupyter Notebook",
+      "updated": "2026-11-11T09:04:18Z"
     },
     {
       "repo": "DL-23f3001069-t12026",
@@ -225,15 +250,15 @@
       "category": "Machine learning",
       "tags": [
         "Python",
-        "Deep learning",
-        "Audio",
-        "CNN"
+        "PyTorch",
+        "librosa",
+        "Audio"
       ],
       "featured": false,
       "url": "https://github.com/anubrata-de/DL-23f3001069-t12026",
       "homepage": "",
-      "language": "Jupyter Notebook",
-      "updated": "2026-04-05T04:10:09Z"
+      "language": "Python",
+      "updated": "2026-11-11T08:52:55Z"
     },
     {
       "repo": "portcast-data-analyst-take-home",
@@ -252,7 +277,7 @@
       "url": "https://github.com/anubrata-de/portcast-data-analyst-take-home",
       "homepage": "",
       "language": "Python",
-      "updated": "2026-11-11T08:02:58Z"
+      "updated": "2026-11-11T08:48:04Z"
     },
     {
       "repo": "bdm-capstone-clothing-business",
@@ -269,8 +294,8 @@
       "featured": false,
       "url": "https://github.com/anubrata-de/bdm-capstone-clothing-business",
       "homepage": "",
-      "language": "Python",
-      "updated": "2026-11-11T09:00:00Z"
+      "language": "",
+      "updated": "2026-11-11T09:04:34Z"
     }
   ]
 }
