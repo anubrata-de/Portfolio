@@ -135,6 +135,28 @@ const screens: Record<string, ReactNode> = {
       <text x="268" y="115" textAnchor="middle" fontSize="13" fontWeight="700" fill={INK}>0:42</text>
     </>
   ),
+  "portcast-take-home": (
+    <>
+      <text x="20" y="52" fontSize="11" fontWeight="700" fill={INK}>Booked vs actual</text>
+      <text x="20" y="81" fontSize="9.5" fill={INK}>Booked</text>
+      <rect x="70" y="71" width="40" height="14" rx="3" fill="#d6e6ff" stroke={INK} strokeWidth={1.2} />
+      <rect x="114" y="71" width="150" height="14" rx="3" fill="#d6e6ff" stroke={INK} strokeWidth={1.2} />
+      <text x="20" y="108" fontSize="9.5" fill={INK}>Actual</text>
+      <rect x="70" y="98" width="44" height="14" rx="3" fill="#cfe6b4" stroke={INK} strokeWidth={1.2} />
+      <rect x="114" y="96" width="36" height="18" rx="3" fill="#ffc5d5" stroke="#e2442f" strokeWidth={1.6} strokeDasharray="3 2" />
+      <rect x="150" y="98" width="150" height="14" rx="3" fill="#cfe6b4" stroke={INK} strokeWidth={1.2} />
+      <path d="M264 64 V120 M300 64 V120" stroke="#e2442f" strokeWidth={1.2} strokeDasharray="3 3" />
+      <text x="282" y="62" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#e2442f">+7d</text>
+      <path d="M18 132 H302" {...s} strokeWidth={1} strokeDasharray="4 4" />
+      <text x="20" y="152" fontSize="9.5" fill={INK}>Stock</text>
+      <text x="20" y="168" fontSize="9.5" fill={INK}>Expedite</text>
+      <text x="20" y="184" fontSize="9.5" fill={INK}>D&amp;D</text>
+      <rect x="70" y="144" width="53" height="10" rx="2" fill="#d6e6ff" stroke={INK} strokeWidth={1.1} />
+      <rect x="70" y="160" width="120" height="10" rx="2" fill="#e2442f" stroke={INK} strokeWidth={1.1} />
+      <rect x="70" y="176" width="58" height="10" rx="2" fill="#ffe27a" stroke={INK} strokeWidth={1.1} />
+      <text x="300" y="172" textAnchor="end" fontSize="14" fontWeight="700" fill={INK}>≈ $2.3M/yr</text>
+    </>
+  ),
 };
 
 export function ScreenSketch({ slug, label, className }: { slug: string; label: string; className?: string }) {

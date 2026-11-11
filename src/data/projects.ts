@@ -5,16 +5,17 @@ import { github } from "./site";
  * If a detail changes in a repo, change it here too.
  */
 
-export type AreaKey = "agents" | "llm" | "web";
+export type AreaKey = "agents" | "llm" | "web" | "analysis";
 
 export const areas: Record<AreaKey, { label: string }> = {
   agents: { label: "Agents" },
   llm: { label: "LLM apps" },
   web: { label: "Full-stack apps" },
+  analysis: { label: "Analysis" },
 };
 
 /** Order of the groups on the Work page. */
-export const areaOrder: AreaKey[] = ["agents", "llm", "web"];
+export const areaOrder: AreaKey[] = ["agents", "llm", "web", "analysis"];
 
 type Step = { title: string; detail: string };
 
@@ -246,6 +247,43 @@ export const projects: Project[] = [
     highlights: ["Hashed passwords, role-based access and server-side input validation"],
     stack: ["Python", "Flask", "Jinja2", "SQLite", "Bootstrap"],
     code: github("Quiz-Master-V1"),
+  },
+  {
+    slug: "portcast-take-home",
+    name: "Portcast take-home",
+    area: "analysis",
+    context: "Take-home for Portcast's Data Analyst Intern role",
+    summary:
+      "A three-part analysis: why a container reached Rotterdam a week late, what inaccurate ETAs cost a manufacturer each year, and what's wrong with an AI-written plan to integrate 50+ tracking feeds.",
+    parts: [
+      {
+        title: "Root cause",
+        detail:
+          "Compared the booked routing with actual tracking events. The ocean leg took the planned 35 days; the week was lost at Singapore, where the container missed its booked vessel and left on a later one.",
+      },
+      {
+        title: "Guesstimate",
+        detail:
+          "Split the cost of ETA error into safety stock, expedited freight and detention or demurrage, with stated assumptions and low, base and high cases.",
+      },
+      {
+        title: "AI sanity check",
+        detail:
+          "Found six claims to push back on in an AI-drafted integration plan and rewrote it around source adapters, a data-quality layer and a phased rollout.",
+      },
+    ],
+    highlights: [
+      "Traced the 7-day delay to a missed connection at Singapore, not slower ocean transit",
+      "Wrote an SQL early-warning rule that would have flagged it about five weeks before the promised ETA",
+      "Estimated about $2.3M a year (range $0.7M to $5.8M), with expedited freight as the biggest lever",
+      "Said exactly where AI review changed the answer, part by part",
+    ],
+    stack: ["SQL", "Python", "Root-cause analysis", "Estimation", "Data quality"],
+    code: `${github}/portcast-data-analyst-take-home`,
+    live: {
+      href: `${github}/portcast-data-analyst-take-home/blob/main/solution/Anubrata_De_Portcast_Take_Home_Solution.pdf`,
+      label: "Read the write-up",
+    },
   },
 ];
 
