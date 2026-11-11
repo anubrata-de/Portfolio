@@ -362,7 +362,24 @@ textarea {
 }
 
 .section__more {
-  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+  margin-top: 72px;
+}
+
+.section__aside {
+  color: var(--shu);
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  text-decoration: none;
+  transform: rotate(-2deg);
+}
+
+.section__aside:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* ---------- hero ---------- */
@@ -659,23 +676,9 @@ textarea {
   font-size: 0.9375rem;
 }
 
-.quests {
-  margin-top: 88px;
-}
-
-.quests__title {
-  margin-bottom: 20px;
-  font-size: 1.375rem;
-}
-
-.quests__title .hand {
-  color: var(--shu);
-  font-size: 1.4rem;
-}
-
 .quests__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 14px;
   margin: 0;
   padding: 0;
@@ -1140,10 +1143,6 @@ textarea {
   border-top: 1px dashed var(--grid-strong);
   color: var(--ink-2);
   font-size: 0.9375rem;
-}
-
-.quests__list--wide {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
 }
 
 .toolkit > div {
@@ -1683,6 +1682,14 @@ textarea {
   margin-top: 6px;
   color: var(--shu-text);
   font-size: 0.9375rem;
+}
+
+.form__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .form__submit {

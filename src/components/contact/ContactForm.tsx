@@ -21,9 +21,12 @@ const topics = ["an internship or role", "a project to build together", "a quest
 function validate(data: FormData): Errors {
   const errors: Errors = {};
   if (!data.get("topic")) errors.topic = "Pick what you're reaching out about.";
-  if (!String(data.get("name") ?? "").trim()) errors.name = "Add your name so I know who's writing.";
+  const name = String(data.get("name") ?? "").trim();
+  if (!name) errors.name = "Add your name so I know who's writing.";
+  else if (name.length > LIMITS.name) errors.name = `Keep your name under ${LIMITS.name} characters.`;
   const email = String(data.get("email") ?? "").trim();
   if (!email) errors.email = "Add an email address so I can reply.";
+  else if (email.length > LIMITS.email) errors.email = "This email address is too long.";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "This email address looks incomplete.";
   const message = String(data.get("message") ?? "").trim();
   if (message.length < 10) errors.message = "Write at least a sentence about it.";
@@ -50,6 +53,12 @@ export function ContactForm() {
     const name = String(data.get("name")).trim();
     const email = String(data.get("email")).trim();
     const message = String(data.get("message")).trim();
+    // Bots fill every field, people never see this one. Pretend it worked and drop it.
+    if (String(data.get("_gotcha") ?? "")) {
+      form.reset();
+      setStatus({ kind: "sent", text: "Message sent. I'll reply to the address you gave." });
+      return;
+    }
 
     if (!FORMSPREE_ID) {
       const subject = encodeURIComponent(`About ${topic}, from ${name}`);
@@ -137,6 +146,11 @@ export function ContactForm() {
           />
           {err("message")}
         </div>
+      </div>
+
+      <div className="form__trap" aria-hidden="true">
+        <label htmlFor="_gotcha">Leave this empty</label>
+        <input id="_gotcha" name="_gotcha" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="form__submit">

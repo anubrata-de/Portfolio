@@ -5,19 +5,18 @@ import { github } from "./site";
  * If a detail changes in a repo, change it here too.
  */
 
-export type AreaKey = "agents" | "llm" | "web" | "ml";
+export type AreaKey = "agents" | "llm" | "web";
 
 export const areas: Record<AreaKey, { label: string }> = {
   agents: { label: "Agents" },
   llm: { label: "LLM apps" },
   web: { label: "Full-stack apps" },
-  ml: { label: "ML models" },
 };
 
-/** Fixed order for filters and legends. Colours follow the area, never the position. */
-export const areaOrder: AreaKey[] = ["agents", "llm", "web", "ml"];
+/** Order of the groups on the Work page. */
+export const areaOrder: AreaKey[] = ["agents", "llm", "web"];
 
-export type Step = { title: string; detail: string };
+type Step = { title: string; detail: string };
 
 export type Project = {
   slug: string;
@@ -250,7 +249,7 @@ export const projects: Project[] = [
   },
 ];
 
-export type Model = {
+type Model = {
   name: string;
   /** What kind of problem it is, in a few words. */
   taskLabel: string;

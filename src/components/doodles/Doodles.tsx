@@ -34,14 +34,6 @@ export function Arrow(props: P) {
   );
 }
 
-export function Star(props: P) {
-  return (
-    <svg viewBox="0 0 40 40" aria-hidden="true" {...props}>
-      <path d="M20 4 L 23 16 L 36 20 L 23 24 L 20 36 L 17 24 L 4 20 L 17 16 Z" {...ink} strokeWidth={2} />
-    </svg>
-  );
-}
-
 export function Petal(props: P) {
   return (
     <svg viewBox="0 0 30 30" aria-hidden="true" {...props}>
@@ -123,7 +115,7 @@ const tileDoodles = {
   ),
 } as const;
 
-export type TileDoodleName = keyof typeof tileDoodles;
+type TileDoodleName = keyof typeof tileDoodles;
 
 export function TileDoodle({ name, ...props }: P & { name: TileDoodleName }) {
   return (

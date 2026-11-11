@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { areaOrder, areas, models, projects } from "@/data/projects";
-import { toolkit } from "@/data/skills";
 import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
@@ -51,7 +50,7 @@ export default function WorkPage() {
         <h2 id="models-title" className="work-group__title">
           Side quests
         </h2>
-        <ul className="quests__list quests__list--wide">
+        <ul className="quests__list">
           {models.map((m) => (
             <li key={m.name}>
               <strong>{m.name}</strong>
@@ -63,19 +62,6 @@ export default function WorkPage() {
         </ul>
       </section>
 
-      <section className="work-group" aria-labelledby="toolkit-title">
-        <h2 id="toolkit-title" className="work-group__title">
-          Toolkit
-        </h2>
-        <dl className="toolkit">
-          {toolkit.map((g) => (
-            <div key={g.group}>
-              <dt>{g.group}</dt>
-              <dd>{g.items.join(", ")}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
     </div>
   );
 }

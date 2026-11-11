@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="page wrap contact">
+    <div className="page wrap">
       <header className="page__head">
         <Episode n={5} {...episodes.contact} />
         <h1 className="page__title">Let&apos;s talk</h1>
@@ -21,7 +21,7 @@ export default function ContactPage() {
         <p className="hand page__note">yoroshiku onegaishimasu!</p>
       </header>
       <div className="contact__grid">
-        <aside className="contact__direct">
+        <aside>
           <h2 className="project__h2">Write to me directly</h2>
           <CopyEmail />
           <ul className="contact__social">
@@ -35,7 +35,7 @@ export default function ContactPage() {
             ))}
           </ul>
         </aside>
-        <div className="contact__form">
+        <div>
           <h2 className="project__h2">Or leave a note</h2>
           <ContactForm />
         </div>

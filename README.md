@@ -20,7 +20,7 @@ Requires Node 20.9 or later.
 | --- | --- |
 | Konnichiwa | Name (with the katakana version running down the side), a line that cycles through words ("Data should feel useful, obvious, honest, sugoi"), the local time, and a drawing of a late-night desk under a twilight sky, with a manga sound effect. |
 | Shinnen | Three rules on taped sticky notes. |
-| Sakuhin | Every project as a sketch of its main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Below them are the machine learning "side quests". |
+| Sakuhin | Every project as a sketch of its main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Smaller "side quests" are listed on the Work page. |
 | Yasumi | A slow strip of small facts with doodles. Pauses on hover. |
 | Jikai | What I'm looking for, as a checklist. Ticking each box draws more of the scene next to it. |
 | End card | Sunset over rooftops and power lines, a fansub-style subtitle, a signature and a red name seal. |

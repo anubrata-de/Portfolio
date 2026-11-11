@@ -6,8 +6,8 @@ import { ScreenSketch } from "@/components/projects/ScreenSketch";
 export function ProjectFile({ project: p }: { project: Project }) {
   const { previous, next } = neighbours(p.slug);
   return (
-    <article className="page wrap project">
-      <header className="project__head">
+    <article className="page wrap">
+      <header className="page__head">
         <p className="project__crumbs">
           <Link href="/projects">Work</Link> / {areas[p.area].label}
         </p>

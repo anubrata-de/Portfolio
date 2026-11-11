@@ -2,12 +2,12 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { areas, models, projects } from "@/data/projects";
-import { beliefs, episodes, hero, lookingFor, tiles } from "@/data/home";
+import { episodes, hero, lookingFor, tiles } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
-import { InView } from "@/components/ui/InView";
 import { CyclingWord } from "@/components/home/CyclingWord";
 import { LocalTime } from "@/components/home/LocalTime";
 import { Checklist } from "@/components/home/Checklist";
+import { Notes } from "@/components/home/Notes";
 import { HeroScene } from "@/components/doodles/HeroScene";
 import { Arrow, Petal, TileDoodle } from "@/components/doodles/Doodles";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
@@ -57,15 +57,7 @@ export default function Home() {
         <h2 id="beliefs-title" className="section__title">
           Three rules I build by
         </h2>
-        <InView as="ul" className="notes">
-          {beliefs.map((b, i) => (
-            <li key={b.title} className={`note note--${b.colour}`} style={{ "--i": i } as CSSProperties}>
-              <span className="tape" aria-hidden="true" />
-              <h3 className="note__title">{b.title}</h3>
-              <p className="note__body">{b.body}</p>
-            </li>
-          ))}
-        </InView>
+        <Notes />
       </section>
 
       <section className="section ruled" aria-labelledby="work-title">
@@ -93,22 +85,12 @@ export default function Home() {
               </a>
             </li>
           </ul>
-          <div className="quests">
-            <h3 className="quests__title">
-              Side quests <span className="hand">(ML, deep learning and a business case)</span>
-            </h3>
-            <ul className="quests__list">
-              {models.map((m) => (
-                <li key={m.name}>
-                  <strong>{m.name}</strong>
-                  <span>{m.question}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
           <p className="section__more">
             <Link href="/projects" className="button button--ghost">
               See every project in detail
+            </Link>
+            <Link href="/projects#models" className="section__aside">
+              plus {models.length} side quests in ML, deep learning and business
             </Link>
           </p>
         </div>
