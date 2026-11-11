@@ -1,25 +1,20 @@
 import Link from "next/link";
-import { Label, RevealLines } from "@/components/ui/RevealLines";
-import { Icon } from "@/components/ui/Icon";
+import { Episode } from "@/components/ui/Episode";
 
 export default function NotFound() {
   return (
-    <div className="page wrap not-found" data-scene="tree" data-scene-side="right">
-      <div data-reveal>
-        <Label>404</Label>
-      </div>
-      <RevealLines as="h1" className="page-title" lines={["Lost in", <em key="b">the woods</em>]} />
-      <p className="page-lede" data-reveal>
-        This page isn&apos;t here. The link may be old, or the project may have a new address.
-      </p>
-      <div className="case__actions" data-reveal>
-        <Link href="/projects" className="pill pill--solid" data-magnetic>
-          Browse my work <Icon name="return" />
+    <div className="page wrap not-found">
+      <Episode n={4}>Missing episode</Episode>
+      <h1 className="page__title">This episode doesn&apos;t exist</h1>
+      <p className="page__lead">The link may be old, or the project may have a new address.</p>
+      <p className="about__end">
+        <Link href="/projects" className="button">
+          Browse my work
         </Link>
-        <Link href="/" className="pill">
+        <Link href="/" className="button button--ghost">
           Go home
         </Link>
-      </div>
+      </p>
     </div>
   );
 }

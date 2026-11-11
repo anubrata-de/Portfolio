@@ -1,8 +1,3 @@
-"use client";
-
-import { useId, useState } from "react";
-import { audio } from "@/lib/audio";
-import { cn } from "@/lib/cn";
 import { site } from "@/data/site";
 
 const items = [
@@ -28,38 +23,16 @@ const items = [
   },
 ];
 
+/** Native disclosure widgets: keyboard and screen-reader friendly with no script. */
 export function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
-  const base = useId();
   return (
-    <ul className="faq">
-      {items.map((item, i) => {
-        const isOpen = open === i;
-        const panel = `${base}-${i}`;
-        return (
-          <li key={item.q} className={cn("faq__item glass", isOpen && "is-open")} data-reveal>
-            <button
-              type="button"
-              className="faq__q"
-              aria-expanded={isOpen}
-              aria-controls={panel}
-              onClick={() => {
-                setOpen(isOpen ? null : i);
-                audio.click();
-              }}
-            >
-              <span className="faq__num">{String(i + 1).padStart(2, "0")}</span>
-              <span>{item.q}</span>
-              <span className="faq__icon" aria-hidden="true">
-                {isOpen ? "−" : "+"}
-              </span>
-            </button>
-            <div id={panel} className="faq__a" hidden={!isOpen}>
-              <p>{item.a}</p>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="faq">
+      {items.map((item, i) => (
+        <details key={item.q} className="faq__item" open={i === 0}>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
   );
 }

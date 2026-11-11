@@ -2,14 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { toolkit } from "@/data/skills";
+import { Episode } from "@/components/ui/Episode";
 import { FAQ } from "@/components/about/FAQ";
-import { Curl, Label, RevealLines, delay } from "@/components/ui/RevealLines";
+import { Ring } from "@/components/doodles/Doodles";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Anubrata De is a BS Data Science and Applications student at IIT Madras, Secretary of Nilgiri House, and builds LLM agents and full-stack apps.",
 };
+
+const facts = [
+  {
+    title: "Studying",
+    body: "BS in Data Science and Applications at IIT Madras. The Data Analyst Agent and the TDS Virtual TA both started as work for the Tools in Data Science course.",
+  },
+  { title: "Serving", body: "Secretary of Nilgiri House, one of the student houses of the IIT Madras BS programme, for 2025–26." },
+  { title: "Looking for", body: "Internships in data science, machine learning or backend engineering." },
+];
 
 const habits = [
   {
@@ -36,53 +46,40 @@ const habits = [
 
 export default function AboutPage() {
   return (
-    <div className="page about">
-      <section className="about-hero wrap" data-scene="globe" data-scene-side="right">
-        <div data-reveal>
-          <Label>
-            Hi, I&apos;m {site.name}, and I care about
-            <br />
-            one thing more than most
-          </Label>
-        </div>
-        <RevealLines
-          as="h1"
-          className="page-title about-hero__title"
-          lines={[
-            "Models don't matter",
-            <>
-              <Curl /> in a notebook.
-            </>,
-            "They matter when",
-            <>
-              <em>someone</em> uses them
-            </>,
-          ]}
-        />
-      </section>
+    <div className="page wrap about">
+      <header className="page__head">
+        <Episode n={1}>About</Episode>
+        <h1 className="page__title">
+          Hi, I&apos;m{" "}
+          <span className="ringed">
+            Anubrata
+            <Ring className="ringed__ring" />
+          </span>
+          .
+        </h1>
+        <p className="page__lead">
+          I like the part where a model leaves the notebook and someone actually uses it. So I build the whole path: the data
+          cleaning, the model or LLM, the API around it and the screen on top.
+        </p>
+      </header>
 
-      <section className="wrap about-facts" data-scene="globe" data-scene-side="left" aria-label="Background">
-        {[
-          {
-            title: "Studying",
-            body: `BS in Data Science and Applications at IIT Madras. The Data Analyst Agent and the TDS Virtual TA both started as work for the Tools in Data Science course.`,
-          },
-          { title: "Serving", body: "Secretary of Nilgiri House, one of the student houses of the IIT Madras BS programme, for 2025–26." },
-          { title: "Looking for", body: "Internships in data science, machine learning or backend engineering." },
-        ].map((f, i) => (
-          <div key={f.title} className="about-fact glass" data-reveal style={delay(0.08 * i)}>
-            <p className="label">{f.title}</p>
+      <ul className="index-cards">
+        {facts.map((f) => (
+          <li key={f.title} className="index-card">
+            <h2 className="index-card__title">{f.title}</h2>
             <p>{f.body}</p>
-          </div>
+          </li>
         ))}
-      </section>
+      </ul>
 
-      <section className="wrap habits" data-scene="knot" data-scene-side="right" aria-labelledby="habits-title">
-        <RevealLines id="habits-title" lines={["How I like", <em key="b">to build</em>]} />
-        <ul className="habits__list">
-          {habits.map((h, i) => (
-            <li key={h.title} className="habit glass" data-reveal style={delay(0.06 * i)}>
-              <h3 className="habit__title">{h.title}</h3>
+      <section className="project__section" aria-labelledby="habits-title">
+        <h2 id="habits-title" className="project__h2">
+          How I like to build
+        </h2>
+        <ul className="parts">
+          {habits.map((h) => (
+            <li key={h.title}>
+              <h3>{h.title}</h3>
               <p>{h.body}</p>
               <Link href={h.href} className="text-link">
                 See the project
@@ -92,22 +89,35 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="wrap toolkit" id="toolkit" data-scene="wave" data-scene-side="left" aria-labelledby="toolkit-title">
-        <RevealLines id="toolkit-title" lines={["Toolkit"]} />
-        <dl className="toolkit__list glass" data-reveal>
-          {toolkit.map((row) => (
-            <div key={row.group} className="toolkit__row">
-              <dt>{row.group}</dt>
-              <dd>{row.items.join(", ")}</dd>
+      <section className="project__section" aria-labelledby="toolkit-title">
+        <h2 id="toolkit-title" className="project__h2">
+          Toolkit
+        </h2>
+        <dl className="toolkit">
+          {toolkit.map((g) => (
+            <div key={g.group}>
+              <dt>{g.group}</dt>
+              <dd>{g.items.join(", ")}</dd>
             </div>
           ))}
         </dl>
       </section>
 
-      <section className="wrap about-faq" data-scene="clusters" data-scene-side="right" aria-labelledby="faq-title">
-        <RevealLines id="faq-title" lines={["FAQ"]} />
+      <section className="project__section" aria-labelledby="faq-title">
+        <h2 id="faq-title" className="project__h2">
+          Questions people ask
+        </h2>
         <FAQ />
       </section>
+
+      <p className="about__end">
+        <Link href="/contact" className="button">
+          Get in touch
+        </Link>
+        <a href={site.social[0].href} className="button button--ghost" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </p>
     </div>
   );
 }

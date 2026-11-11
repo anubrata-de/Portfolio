@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/data/projects";
-import { CaseStudy } from "@/components/projects/CaseStudy";
+import { ProjectFile } from "@/components/projects/ProjectFile";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,5 +20,5 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
-  return <CaseStudy project={project} />;
+  return <ProjectFile project={project} />;
 }

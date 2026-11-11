@@ -35,7 +35,6 @@ export type Project = {
   stack: string[];
   code: string;
   live?: { href: string; label: string };
-  featured?: boolean;
 };
 
 export const projects: Project[] = [
@@ -43,7 +42,6 @@ export const projects: Project[] = [
     slug: "data-analyst-agent",
     name: "Data Analyst Agent",
     area: "agents",
-    featured: true,
     context: "Built for Tools in Data Science at IIT Madras",
     summary:
       "An API that takes a question in plain English plus whatever data comes with it, finds and scrapes the sources it needs, works out the analysis and returns the answers as JSON.",
@@ -86,7 +84,6 @@ export const projects: Project[] = [
     slug: "tds-virtual-ta",
     name: "TDS Virtual TA",
     area: "llm",
-    featured: true,
     context: "Built for Tools in Data Science at IIT Madras",
     summary:
       "Answers student questions for the Tools in Data Science course using the course notes and the discussion forum, and links the posts it drew on.",
@@ -126,7 +123,6 @@ export const projects: Project[] = [
     slug: "prompt2ppt",
     name: "Prompt2PPT",
     area: "llm",
-    featured: true,
     summary:
       "Turns long text or Markdown into a PowerPoint deck that keeps the fonts, colours and layouts of a template you upload.",
     steps: [
@@ -288,8 +284,6 @@ export const models: Model[] = [
     question: "How many people will come to the cinema?",
   },
 ];
-
-export const featuredProjects = projects.filter((p) => p.featured);
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);

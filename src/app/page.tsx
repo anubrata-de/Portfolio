@@ -1,19 +1,144 @@
-import { Hero } from "@/components/home/Hero";
-import { Story } from "@/components/home/Story";
-import { SelectedProjects } from "@/components/home/SelectedProjects";
-import { Capabilities } from "@/components/home/Capabilities";
-import { Milestones } from "@/components/home/Milestones";
-import { ContactCTA } from "@/components/home/ContactCTA";
+import type { CSSProperties } from "react";
+import Link from "next/link";
+import { site } from "@/data/site";
+import { areas, models, projects } from "@/data/projects";
+import { beliefs, hero, lookingFor, tiles } from "@/data/home";
+import { Episode } from "@/components/ui/Episode";
+import { InView } from "@/components/ui/InView";
+import { CyclingWord } from "@/components/home/CyclingWord";
+import { LocalTime } from "@/components/home/LocalTime";
+import { Checklist } from "@/components/home/Checklist";
+import { HeroScene } from "@/components/doodles/HeroScene";
+import { Arrow, Petal, TileDoodle } from "@/components/doodles/Doodles";
+import { ScreenSketch } from "@/components/projects/ScreenSketch";
 
-export default function HomePage() {
+/** Fixed tilts for the pinboard so it looks hand-placed but never shifts between renders. */
+const tilts = [-3, 2.5, -1.5, 3, -2.5, 1.5, -2];
+
+export default function Home() {
   return (
     <>
-      <Hero />
-      <Story />
-      <SelectedProjects />
-      <Capabilities />
-      <Milestones />
-      <ContactCTA />
+      <section className="hero wrap" aria-labelledby="hero-title">
+        <div className="hero__text">
+          <Episode n={1}>Hello</Episode>
+          <h1 id="hero-title" className="hero__name">
+            {site.name}
+          </h1>
+          <p className="hero__line">
+            <span className="visually-hidden">
+              {hero.lead} {hero.words.join(" ")}
+            </span>
+            <span aria-hidden="true">{hero.lead} </span>
+            <CyclingWord words={hero.words} />
+          </p>
+          <p className="hero__intro">{hero.intro}</p>
+          <p className="hero__where">
+            {site.location}
+            <br />
+            <LocalTime />
+          </p>
+        </div>
+        <div className="hero__art">
+          <HeroScene className="hero__scene" />
+          <p className="hand hero__note" aria-hidden="true">
+            <Arrow className="hero__arrow" />
+            my desk, most nights
+          </p>
+        </div>
+      </section>
+
+      <section className="section wrap" aria-labelledby="beliefs-title">
+        <Episode n={2}>What I believe</Episode>
+        <h2 id="beliefs-title" className="section__title">
+          Three rules I build by
+        </h2>
+        <InView as="ul" className="notes">
+          {beliefs.map((b, i) => (
+            <li key={b.title} className={`note note--${b.colour}`} style={{ "--i": i } as CSSProperties}>
+              <span className="tape" aria-hidden="true" />
+              <h3 className="note__title">{b.title}</h3>
+              <p className="note__body">{b.body}</p>
+            </li>
+          ))}
+        </InView>
+      </section>
+
+      <section className="section ruled" aria-labelledby="work-title">
+        <div className="wrap">
+          <Episode n={3}>The work</Episode>
+          <h2 id="work-title" className="section__title">
+            Things I&apos;ve built, pinned where I can see them
+          </h2>
+          <ul className="board">
+            {projects.map((p, i) => (
+              <li key={p.slug} className="pin" style={{ "--tilt": `${tilts[i % tilts.length]}deg` } as CSSProperties}>
+                <Link href={`/projects/${p.slug}`} className="pin__link">
+                  <span className="tape" aria-hidden="true" />
+                  <ScreenSketch slug={p.slug} label={p.name} className="pin__shot" />
+                  <span className="pin__name">{p.name}</span>
+                  <span className="pin__area">{areas[p.area].label}</span>
+                </Link>
+              </li>
+            ))}
+            <li className="pin pin--note" style={{ "--tilt": "3deg" } as CSSProperties}>
+              <a href={site.social[0].href} className="pin__sticky" target="_blank" rel="noopener noreferrer">
+                <span className="tape" aria-hidden="true" />
+                <span className="hand">All the code lives on GitHub</span>
+                <span className="text-link">github.com/anubrata-de</span>
+              </a>
+            </li>
+          </ul>
+          <div className="quests">
+            <h3 className="quests__title">
+              Side quests <span className="hand">(machine learning models)</span>
+            </h3>
+            <ul className="quests__list">
+              {models.map((m) => (
+                <li key={m.name}>
+                  <strong>{m.name}</strong>
+                  <span>{m.question}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="section__more">
+            <Link href="/projects" className="button button--ghost">
+              See every project in detail
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="section strip" aria-labelledby="tiles-title">
+        <div className="wrap">
+          <Episode n={4}>Off the clock</Episode>
+          <h2 id="tiles-title" className="section__title">
+            A few things about me
+          </h2>
+        </div>
+        <div className="marquee">
+          {[0, 1].map((copy) => (
+            <ul key={copy} className="marquee__track" aria-hidden={copy === 1 ? true : undefined}>
+              {tiles.map((t, i) => (
+                <li key={t.label} className="tile" style={{ "--tilt": `${i % 2 ? 2 : -2}deg` } as CSSProperties}>
+                  <TileDoodle name={t.doodle} className="tile__doodle" />
+                  <span>{t.label}</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </section>
+
+      <section className="section wrap" aria-labelledby="looking-title">
+        <Episode n={5}>Next episode</Episode>
+        <h2 id="looking-title" className="section__title">
+          What I&apos;m looking for
+        </h2>
+        <Checklist items={lookingFor} />
+        <Petal className="float-petal float-petal--a" />
+        <Petal className="float-petal float-petal--b" />
+      </section>
     </>
   );
 }

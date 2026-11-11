@@ -1,28 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
-import { ExperienceProvider } from "@/context/Experience";
-import { IntroLoader } from "@/components/experience/IntroLoader";
-import { SceneCanvas } from "@/components/experience/SceneCanvas";
-import { Cursor } from "@/components/experience/Cursor";
-import { ScrollExperience } from "@/components/experience/ScrollExperience";
+import { Instrument_Sans, Nothing_You_Could_Do } from "next/font/google";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { MenuOverlay } from "@/components/layout/MenuOverlay";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { AskAnu } from "@/components/assistant/AskAnu";
-import { PerfNotice } from "@/components/experience/PerfNotice";
-import { themeScript } from "@/lib/theme-script";
+import { SketchDefs } from "@/components/doodles/SketchDefs";
 import { site } from "@/data/site";
 import "./globals.css";
 
-const sans = Geist({ variable: "--font-geist", subsets: ["latin"], display: "swap" });
-const mono = IBM_Plex_Mono({ variable: "--font-plex", subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
-const display = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  display: "swap",
-});
+const sans = Instrument_Sans({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
+const hand = Nothing_You_Could_Do({ variable: "--font-hand", subsets: ["latin"], weight: "400", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -36,36 +21,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3edff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0919" },
-  ],
+  themeColor: "#fbfaf7",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      data-theme="dark"
-      className={`${sans.variable} ${mono.variable} ${display.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html lang="en" className={`${sans.variable} ${hand.variable}`}>
       <body>
-        <ExperienceProvider>
-          <SceneCanvas />
-          <ScrollExperience />
-          <IntroLoader />
-          <SiteHeader />
-          <MenuOverlay />
-          <main id="main">{children}</main>
-          <SiteFooter />
-          <AskAnu />
-          <PerfNotice />
-          <Cursor />
-        </ExperienceProvider>
+        <SketchDefs />
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -2,8 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { site } from "@/data/site";
-import { audio } from "@/lib/audio";
-import { Icon } from "@/components/ui/Icon";
 
 type Field = "topic" | "name" | "email" | "message";
 type Errors = Partial<Record<Field, string>>;
@@ -19,7 +17,6 @@ const FORMSPREE_ID = /^[a-zA-Z0-9]{4,32}$/.test(RAW_FORMSPREE_ID) ? RAW_FORMSPRE
 const LIMITS = { name: 100, email: 200, message: 4000 } as const;
 
 const topics = ["an internship or role", "a project to build together", "a question about my work", "something else"];
-const sources = ["LinkedIn", "GitHub", "IIT Madras", "A friend or colleague", "Somewhere else"];
 
 function validate(data: FormData): Errors {
   const errors: Errors = {};
@@ -49,16 +46,14 @@ export function ContactForm() {
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    audio.click();
     const topic = String(data.get("topic"));
     const name = String(data.get("name")).trim();
     const email = String(data.get("email")).trim();
     const message = String(data.get("message")).trim();
-    const source = String(data.get("source") ?? "");
 
     if (!FORMSPREE_ID) {
       const subject = encodeURIComponent(`About ${topic}, from ${name}`);
-      const body = encodeURIComponent(`${message}\n\n${name}\n${email}${source ? `\nFound you through: ${source}` : ""}`);
+      const body = encodeURIComponent(`${message}\n\n${name}\n${email}`);
       window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
       setStatus({
         kind: "mailto",
@@ -72,11 +67,10 @@ export function ContactForm() {
       const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ topic, name, email, message, source }),
+        body: JSON.stringify({ topic, name, email, message }),
       });
       if (!response.ok) throw new Error(String(response.status));
       form.reset();
-      audio.message();
       setStatus({ kind: "sent", text: "Message sent. I'll reply to the address you gave." });
     } catch {
       setStatus({ kind: "error", text: `The message didn't go through. Try again, or email ${site.email} directly.` });
@@ -145,21 +139,9 @@ export function ContactForm() {
         </div>
       </div>
 
-      <fieldset className="form__row">
-        <legend className="form__label">I found you through…</legend>
-        <div className="form__choices">
-          {sources.map((s) => (
-            <label key={s} className="choice">
-              <input type="radio" name="source" value={s} />
-              <span>{s}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
       <div className="form__submit">
-        <button type="submit" className="pill pill--solid pill--large" disabled={status.kind === "sending"} data-magnetic>
-          {status.kind === "sending" ? "Sending…" : "Send message"} <Icon name="return" />
+        <button type="submit" className="button" disabled={status.kind === "sending"}>
+          {status.kind === "sending" ? "Sending…" : "Send message"}
         </button>
         <p className="form__status" role="status" data-kind={status.kind}>
           {status.text}

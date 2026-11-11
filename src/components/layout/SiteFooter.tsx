@@ -1,58 +1,42 @@
 import Link from "next/link";
 import { site } from "@/data/site";
-import { CopyEmail } from "@/components/ui/CopyEmail";
-import { Wordmark } from "./Wordmark";
+import { endCard } from "@/data/home";
+import { EndCardScene } from "@/components/doodles/Scenes";
 
 export function SiteFooter() {
   return (
-    <footer className="footer">
-      <div className="footer__grid wrap">
-        <div className="footer__brand">
-          <Wordmark />
-          <p>Data science, LLM agents and the systems around them.</p>
-        </div>
-        <div>
-          <p className="label">Social</p>
-          <ul>
-            {site.social.map((item, i) => (
-              <li key={item.label}>
-                <a href={item.href} target="_blank" rel="noopener noreferrer">
-                  <span className="footer__idx">[{String(i + 1).padStart(2, "0")}]</span> {item.label}
+    <footer className="endcard">
+      <div className="endcard__frame">
+        <EndCardScene />
+        <p className="endcard__sub">{endCard.subtitle}</p>
+      </div>
+      <div className="wrap endcard__meta">
+        <p className="endcard__sign hand" aria-label={`Signed, ${endCard.signature}`}>
+          {endCard.signature}
+        </p>
+        <nav aria-label="Footer">
+          <ul className="endcard__links">
+            <li>
+              <Link href="/projects">Work</Link>
+            </li>
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+            {site.social.map((s) => (
+              <li key={s.label}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <p className="label">Pages</p>
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            {site.nav.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
-            {site.resume && (
-              <li>
-                <a href={site.resume}>Résumé</a>
-              </li>
-            )}
-          </ul>
-        </div>
-        <div>
-          <p className="label">Location</p>
-          <p>{site.location}</p>
-          <p className="label footer__email-label">E-mail</p>
-          <CopyEmail />
-        </div>
-      </div>
-      <div className="footer__bottom wrap">
-        <p>
-          © {site.year} {site.name}
+        </nav>
+        <p className="endcard__small">
+          © {site.year} {site.name}. <Link href="/legal/privacy-policy">Privacy</Link>
         </p>
-        <Link href="/legal/privacy-policy">Privacy</Link>
       </div>
     </footer>
   );

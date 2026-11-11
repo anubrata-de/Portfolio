@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
+import { Episode } from "@/components/ui/Episode";
 import { CopyEmail } from "@/components/ui/CopyEmail";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { Curl, Label, RevealLines, delay } from "@/components/ui/RevealLines";
-import { Icon } from "@/components/ui/Icon";
+import { SocialDoodle, type SocialName } from "@/components/doodles/Doodles";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,41 +12,31 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="contact" data-scene="plane" data-scene-side="left">
-      <div className="contact__scene" aria-hidden="true" />
-      <div className="contact__panel">
-        <div data-reveal>
-          <Label>Stay in touch</Label>
-        </div>
-        <RevealLines
-          as="h1"
-          className="contact__title"
-          lines={[
-            <>
-              Let&apos;s build
-            </>,
-            <>
-              <Curl /> something
-            </>,
-            <em key="u">useful</em>,
-          ]}
-        />
-        <p className="contact__lede" data-reveal style={delay(0.2)}>
-          Tell me about the role or the project and I&apos;ll reply by email.
-        </p>
-        <div className="contact__direct" data-reveal style={delay(0.25)}>
+    <div className="page wrap contact">
+      <header className="page__head">
+        <Episode n={5}>Next episode</Episode>
+        <h1 className="page__title">Let&apos;s talk</h1>
+        <p className="page__lead">Tell me about the role or the project and I&apos;ll reply by email.</p>
+      </header>
+      <div className="contact__grid">
+        <aside className="contact__direct">
+          <h2 className="project__h2">Write to me directly</h2>
           <CopyEmail />
-          <ul>
+          <ul className="contact__social">
             {site.social.map((s) => (
               <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="pill">
-                  {s.label} <Icon name="external" />
+                <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  <SocialDoodle name={s.label as SocialName} className="contact__icon" />
+                  {s.label}
                 </a>
               </li>
             ))}
           </ul>
+        </aside>
+        <div className="contact__form">
+          <h2 className="project__h2">Or leave a note</h2>
+          <ContactForm />
         </div>
-        <ContactForm />
       </div>
     </div>
   );
