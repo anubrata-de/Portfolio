@@ -1,0 +1,5 @@
+// Kept out of client components so the server layout receives the string itself.
+// Runs before paint so the first frame already has the right theme and motion mode:
+// theme (stored, then system, then dark), animation mode (stored, or still when the
+// system asks for reduced motion), quality, and whether the intro was seen this session.
+export const themeScript = `(function(){try{var d=document.documentElement,s=localStorage,q=function(m){return window.matchMedia(m).matches};var c=document.cookie.match(/(?:^|; )theme=(dark|light)\\b/);var t=s.getItem("theme")||(c&&c[1]);if(t!=="dark"&&t!=="light"){t=q("(prefers-color-scheme: light)")?"light":"dark"}d.dataset.theme=t;var m=s.getItem("motion");if(m!=="full"&&m!=="still"){m=q("(prefers-reduced-motion: reduce)")?"still":"full"}d.dataset.motion=m;var k=s.getItem("quality");if(k==="high"||k==="low"){d.dataset.quality=k}if(sessionStorage.getItem("intro-seen")==="1"){d.dataset.intro="seen"}if(m==="full"&&!q("(prefers-reduced-motion: reduce)")){d.classList.add("fx")}}catch(e){}})();`;
