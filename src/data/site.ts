@@ -14,7 +14,7 @@ function resolveSiteUrl() {
 export const site = {
   name: "Anubrata De",
   url: resolveSiteUrl(),
-  email: "anubratade01@gmail.com",
+  email: "anubrata.2016@gmail.com",
   location: "Kolkata, India",
   year: 2026,
   description:

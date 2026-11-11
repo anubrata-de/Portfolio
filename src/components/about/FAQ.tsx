@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { audio } from "@/lib/audio";
 import { cn } from "@/lib/cn";
+import { site } from "@/data/site";
 
 const items = [
   {
@@ -23,7 +24,7 @@ const items = [
   },
   {
     q: "How do I reach you?",
-    a: "Email anubratade01@gmail.com, message me on LinkedIn, or use the contact form.",
+    a: `Email ${site.email}, message me on LinkedIn, or use the contact form.`,
   },
 ];
 
