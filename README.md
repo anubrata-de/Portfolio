@@ -1,8 +1,8 @@
 # anubrata.de
 
-Portfolio for Anubrata De: BS in Data Science and Applications at IIT Madras, Secretary of Nilgiri House (2025–26), building LLM agents, retrieval apps and full-stack Flask and Vue systems.
+Portfolio for Anubrata De: BS in Data Science and Applications at IIT Madras (2023–2027), former Secretary of Nilgiri House, building LLM agents, retrieval apps and full-stack Flask and Vue systems.
 
-The site is a sketchbook: grid paper, black ink and a red pen. Every drawing is hand-made SVG, and each home page section is an "episode", with an anime-style end card in the footer.
+The site is a sketchbook with anime touches: grid paper and ink, with colours taken from anime skies and Japanese craft (torii vermilion, sakura, sky blue, matcha). Every drawing is hand-made SVG. Each section is an "episode" labelled in romaji with its English meaning (Konnichiwa, Shinnen, Sakuhin…), and the footer is an anime end card.
 
 ## Run it
 
@@ -18,12 +18,12 @@ Requires Node 20.9 or later.
 
 | Section | What it shows |
 | --- | --- |
-| Hello | Name, a line that cycles through words ("Data should feel useful, obvious, honest…"), the local time in Kolkata, and a drawing of a late-night desk. |
-| What I believe | Three rules on taped sticky notes. |
-| The work | Every project as a sketch of its main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Below them are the machine learning "side quests". |
-| Off the clock | A slow strip of small facts with doodles. Pauses on hover. |
-| Next episode | What I'm looking for, as a checklist. Ticking each box draws more of the scene next to it. |
-| End card | Dusk over rooftops and power lines, with a fansub-style subtitle and a signature. |
+| Konnichiwa | Name (with the katakana version running down the side), a line that cycles through words ("Data should feel useful, obvious, honest, sugoi"), the local time, and a drawing of a late-night desk under a twilight sky, with a manga sound effect. |
+| Shinnen | Three rules on taped sticky notes. |
+| Sakuhin | Every project as a sketch of its main screen, pinned on ruled paper. Hover straightens a card; click opens the project. Below them are the machine learning "side quests". |
+| Yasumi | A slow strip of small facts with doodles. Pauses on hover. |
+| Jikai | What I'm looking for, as a checklist. Ticking each box draws more of the scene next to it. |
+| End card | Sunset over rooftops and power lines, a fansub-style subtitle, a signature and a red name seal. |
 
 Motion is kept small: the cycling word, notes settling in once, and the checklist drawing. With *reduce motion* turned on, all of it is still and the strip becomes a static row.
 
@@ -34,8 +34,9 @@ All content lives in `src/data/`:
 | File | Holds |
 | --- | --- |
 | `site.ts` | Name, email, location, social links |
-| `home.ts` | Home page words: hero line, beliefs, facts strip, checklist, end card subtitle |
-| `projects.ts` | Projects (summary, steps or parts, highlights, stack, links) and ML models |
+| `home.ts` | Section labels, hero line, beliefs, facts strip, checklist, end card |
+| `journey.ts` | Roles and milestones (the About page's story arcs) and languages |
+| `projects.ts` | Projects (summary, steps or parts, highlights, stack, links) and smaller side quests |
 | `skills.ts` | Toolkit |
 
 Each project's screen sketch is in `src/components/projects/ScreenSketch.tsx`, keyed by the project's `slug`. A new project without a sketch still shows its window frame.

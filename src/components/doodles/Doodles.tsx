@@ -45,7 +45,7 @@ export function Star(props: P) {
 export function Petal(props: P) {
   return (
     <svg viewBox="0 0 30 30" aria-hidden="true" {...props}>
-      <path d="M15 4 C 24 8, 26 18, 15 26 C 4 18, 6 8, 15 4 Z" fill="#ffc9d6" stroke="currentColor" strokeWidth={1.6} />
+      <path d="M15 4 C 24 8, 26 18, 15 26 C 4 18, 6 8, 15 4 Z" fill="#ffc5d5" stroke="currentColor" strokeWidth={1.6} />
       <path d="M15 8 L 15 14" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" />
     </svg>
   );
@@ -62,7 +62,7 @@ const tileDoodles = {
   ),
   moon: (
     <>
-      <path d="M26 6 A 14 14 0 1 0 34 26 A 11 11 0 1 1 26 6 Z" fill="#ffe680" stroke="currentColor" strokeWidth={2.2} strokeLinejoin="round" />
+      <path d="M26 6 A 14 14 0 1 0 34 26 A 11 11 0 1 1 26 6 Z" fill="#ffe27a" stroke="currentColor" strokeWidth={2.2} strokeLinejoin="round" />
       <path d="M8 8 l2 2 m0 -2 l-2 2" {...ink} strokeWidth={1.6} />
     </>
   ),
@@ -88,7 +88,30 @@ const tileDoodles = {
   ),
   spark: (
     <>
-      <path d="M22 4 L 10 22 H 20 L 17 36 L 30 16 H 20 Z" fill="#ffe680" stroke="currentColor" strokeWidth={2.2} strokeLinejoin="round" />
+      <path d="M22 4 L 10 22 H 20 L 17 36 L 30 16 H 20 Z" fill="#ffe27a" stroke="currentColor" strokeWidth={2.2} strokeLinejoin="round" />
+    </>
+  ),
+  kana: (
+    <>
+      <rect x="5" y="5" width="30" height="30" rx="4" {...ink} />
+      <text x="20" y="28" textAnchor="middle" fontSize="20" fontWeight="700" fill="currentColor" fontFamily="'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif">
+        あ
+      </text>
+    </>
+  ),
+  pawn: (
+    <>
+      <circle cx="20" cy="11" r="5" {...ink} fill="#fff" />
+      <path d="M15 17 H25 L 23 26 H17 Z" {...ink} fill="#fff" />
+      <path d="M11 34 C 11 29, 15 27, 20 27 C 25 27, 29 29, 29 34 Z" {...ink} fill="#1d1b22" />
+    </>
+  ),
+  gamepad: (
+    <>
+      <path d="M10 14 H30 C 35 14, 37 20, 37 25 C 37 31, 32 32, 29 28 L 27 25 H13 L 11 28 C 8 32, 3 31, 3 25 C 3 20, 5 14, 10 14 Z" {...ink} />
+      <path d="M11 18 V24 M8 21 H14" {...ink} strokeWidth={2} />
+      <circle cx="27" cy="19" r="1.6" fill="#e2442f" />
+      <circle cx="31" cy="22" r="1.6" fill="currentColor" />
     </>
   ),
   cup: (

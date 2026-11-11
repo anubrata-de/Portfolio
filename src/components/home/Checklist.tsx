@@ -35,7 +35,7 @@ export function Checklist({ items }: { items: readonly string[] }) {
           <Link href="/contact" className="button">
             Let&apos;s talk
           </Link>
-          <p className="hand checklist__hint">{count === 3 ? "all three? we should talk!" : "go on, tick them"}</p>
+          <p className="hand checklist__hint">{count === 3 ? "sugoi! we should talk" : "go on, tick them"}</p>
         </div>
       </div>
       <ChecklistScene count={count} />

@@ -14,6 +14,10 @@ const items = [
     a: "The Data Analyst Agent for agents and data handling, the TDS Virtual TA for retrieval, and the Placement Portal for a full-stack app with roles and background jobs.",
   },
   {
+    q: "Do you actually speak Japanese?",
+    a: "A little. I'm at an elementary level, enough for the episode labels on this site and to follow along with subtitles off for a few lines at a time.",
+  },
+  {
     q: "Where can I see your code?",
     a: "Every project on this site links to its repository on GitHub at github.com/anubrata-de.",
   },

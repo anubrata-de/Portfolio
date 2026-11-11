@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { toolkit } from "@/data/skills";
+import { episodes } from "@/data/home";
+import { arcs, languages } from "@/data/journey";
 import { Episode } from "@/components/ui/Episode";
 import { FAQ } from "@/components/about/FAQ";
 import { Ring } from "@/components/doodles/Doodles";
@@ -9,15 +11,18 @@ import { Ring } from "@/components/doodles/Doodles";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Anubrata De is a BS Data Science and Applications student at IIT Madras, Secretary of Nilgiri House, and builds LLM agents and full-stack apps.",
+    "Anubrata De studies data science at IIT Madras (BS, 2023–2027), builds LLM agents and full-stack apps, and served as Secretary of Nilgiri House.",
 };
 
 const facts = [
   {
     title: "Studying",
-    body: "BS in Data Science and Applications at IIT Madras. The Data Analyst Agent and the TDS Virtual TA both started as work for the Tools in Data Science course.",
+    body: "BS in Data Science and Applications at IIT Madras, Sep 2023 to Aug 2027. The Data Analyst Agent and the TDS Virtual TA both started as course work there.",
   },
-  { title: "Serving", body: "Secretary of Nilgiri House, one of the student houses of the IIT Madras BS programme, for 2025–26." },
+  {
+    title: "Languages",
+    body: `${languages.fluent.join(", ")} fluently. ${languages.learning.join(" and ")} at a beginner level, so I can read the episode labels on this site.`,
+  },
   { title: "Looking for", body: "Internships in data science, machine learning or backend engineering." },
 ];
 
@@ -48,7 +53,7 @@ export default function AboutPage() {
   return (
     <div className="page wrap about">
       <header className="page__head">
-        <Episode n={1}>About</Episode>
+        <Episode n={1} {...episodes.about} />
         <h1 className="page__title">
           Hi, I&apos;m{" "}
           <span className="ringed">
@@ -59,7 +64,8 @@ export default function AboutPage() {
         </h1>
         <p className="page__lead">
           I like the part where a model leaves the notebook and someone actually uses it. So I build the whole path: the data
-          cleaning, the model or LLM, the API around it and the screen on top.
+          cleaning, the model or LLM, the API around it and the screen on top. Outside of code I&apos;ve spent most of my time
+          running student communities at IIT Madras.
         </p>
       </header>
 
@@ -71,6 +77,26 @@ export default function AboutPage() {
           </li>
         ))}
       </ul>
+
+      <section className="project__section" aria-labelledby="arcs-title">
+        <h2 id="arcs-title" className="project__h2">
+          Story arcs so far
+        </h2>
+        <ol className="arcs">
+          {arcs.map((a, i) => (
+            <li key={`${a.role}-${a.when}`} className="arc">
+              <p className="arc__no">Arc {i + 1}</p>
+              <div>
+                <p className="arc__when">{a.when}</p>
+                <h3 className="arc__role">
+                  {a.role}, <span>{a.org}</span>
+                </h3>
+                <p className="arc__detail">{a.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <section className="project__section" aria-labelledby="habits-title">
         <h2 id="habits-title" className="project__h2">
@@ -114,6 +140,9 @@ export default function AboutPage() {
         <Link href="/contact" className="button">
           Get in touch
         </Link>
+        <a href={site.social[1].href} className="button button--ghost" target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>
         <a href={site.social[0].href} className="button button--ghost" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>

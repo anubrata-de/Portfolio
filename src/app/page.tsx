@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { areas, models, projects } from "@/data/projects";
-import { beliefs, hero, lookingFor, tiles } from "@/data/home";
+import { beliefs, episodes, hero, lookingFor, tiles } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { InView } from "@/components/ui/InView";
 import { CyclingWord } from "@/components/home/CyclingWord";
@@ -20,7 +20,10 @@ export default function Home() {
     <>
       <section className="hero wrap" aria-labelledby="hero-title">
         <div className="hero__text">
-          <Episode n={1}>Hello</Episode>
+          <p className="hero__kana" lang="ja" aria-hidden="true">
+            アヌブラタ・デ
+          </p>
+          <Episode n={1} {...episodes.hello} />
           <h1 id="hero-title" className="hero__name">
             {site.name}
           </h1>
@@ -47,8 +50,10 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="nami" aria-hidden="true" />
+
       <section className="section wrap" aria-labelledby="beliefs-title">
-        <Episode n={2}>What I believe</Episode>
+        <Episode n={2} {...episodes.beliefs} />
         <h2 id="beliefs-title" className="section__title">
           Three rules I build by
         </h2>
@@ -65,7 +70,7 @@ export default function Home() {
 
       <section className="section ruled" aria-labelledby="work-title">
         <div className="wrap">
-          <Episode n={3}>The work</Episode>
+          <Episode n={3} {...episodes.work} />
           <h2 id="work-title" className="section__title">
             Things I&apos;ve built, pinned where I can see them
           </h2>
@@ -90,7 +95,7 @@ export default function Home() {
           </ul>
           <div className="quests">
             <h3 className="quests__title">
-              Side quests <span className="hand">(machine learning models)</span>
+              Side quests <span className="hand">(ML, deep learning and a business case)</span>
             </h3>
             <ul className="quests__list">
               {models.map((m) => (
@@ -111,7 +116,7 @@ export default function Home() {
 
       <section className="section strip" aria-labelledby="tiles-title">
         <div className="wrap">
-          <Episode n={4}>Off the clock</Episode>
+          <Episode n={4} {...episodes.offClock} />
           <h2 id="tiles-title" className="section__title">
             A few things about me
           </h2>
@@ -131,7 +136,7 @@ export default function Home() {
       </section>
 
       <section className="section wrap" aria-labelledby="looking-title">
-        <Episode n={5}>Next episode</Episode>
+        <Episode n={5} {...episodes.next} />
         <h2 id="looking-title" className="section__title">
           What I&apos;m looking for
         </h2>

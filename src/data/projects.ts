@@ -252,36 +252,43 @@ export const projects: Project[] = [
 
 export type Model = {
   name: string;
-  task: "classification" | "regression" | "multiclass" | "forecast";
+  /** What kind of problem it is, in a few words. */
   taskLabel: string;
+  /** The question it answers. */
   question: string;
 };
 
-/** Machine learning work listed on the GitHub profile. */
+/** Smaller course projects: machine learning, deep learning and a business case. */
 export const models: Model[] = [
   {
+    name: "Cinema audience forecasting",
+    taskLabel: "Time-series forecasting",
+    question: "How many people will come to each theatre on a given day?",
+  },
+  {
+    name: "Messy Mashup (DLGenAI)",
+    taskLabel: "Deep learning, audio",
+    question: "Which genre is this noisy mashup of mixed instrument stems?",
+  },
+  {
     name: "Hotel booking cancellation",
-    task: "classification",
     taskLabel: "Binary classification",
     question: "Will this booking be cancelled?",
   },
   {
     name: "House price prediction",
-    task: "regression",
     taskLabel: "Regression",
     question: "What will this house sell for?",
   },
   {
     name: "Movie review sentiment",
-    task: "multiclass",
     taskLabel: "Multiclass classification",
-    question: "Which sentiment class does this review belong to?",
+    question: "Is this review negative, neutral or positive?",
   },
   {
-    name: "Cinema audience forecasting",
-    task: "forecast",
-    taskLabel: "Time-series forecasting",
-    question: "How many people will come to the cinema?",
+    name: "Clothing shop strategy (BDM capstone)",
+    taskLabel: "Business analysis",
+    question: "How can a readymade garments shop fix its working capital and grow?",
   },
 ];
 

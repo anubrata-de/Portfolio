@@ -15,7 +15,7 @@ export const site = {
   name: "Anubrata De",
   url: resolveSiteUrl(),
   email: "anubrata.2016@gmail.com",
-  location: "Kolkata, India",
+  location: "West Bengal, India",
   year: 2026,
   description:
     "Anubrata De studies data science at IIT Madras and builds LLM agents, retrieval systems and the full-stack apps around them.",

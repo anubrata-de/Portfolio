@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { areaOrder, areas, models, projects } from "@/data/projects";
 import { toolkit } from "@/data/skills";
+import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
 
@@ -14,7 +15,7 @@ export default function WorkPage() {
   return (
     <div className="page wrap">
       <header className="page__head">
-        <Episode n={3}>The work</Episode>
+        <Episode n={3} {...episodes.work} />
         <h1 className="page__title">Everything I&apos;ve built</h1>
         <p className="page__lead">
           {projects.length} projects with public code, from agents that do the analysis themselves to apps with logins, roles and
@@ -48,7 +49,7 @@ export default function WorkPage() {
 
       <section id="models" className="work-group" aria-labelledby="models-title">
         <h2 id="models-title" className="work-group__title">
-          Side quests: machine learning models
+          Side quests
         </h2>
         <ul className="quests__list quests__list--wide">
           {models.map((m) => (

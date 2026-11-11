@@ -13,9 +13,9 @@ const screens: Record<string, ReactNode> = {
   "data-analyst-agent": (
     <>
       <rect x="18" y="40" width="150" height="150" rx="6" fill="#1d1b22" />
-      <text x="30" y="62" fontFamily="ui-monospace, monospace" fontSize="10" fill="#ffe680">POST /api</text>
+      <text x="30" y="62" fontFamily="ui-monospace, monospace" fontSize="10" fill="#ffe27a">POST /api</text>
       {[78, 94, 110, 126, 142, 158].map((y, i) => (
-        <rect key={y} x={i % 3 === 0 ? 30 : 42} y={y} width={[90, 70, 100, 60, 84, 50][i]} height="5" rx="2.5" fill={i === 2 ? "#ffc9d6" : "#6b6875"} />
+        <rect key={y} x={i % 3 === 0 ? 30 : 42} y={y} width={[90, 70, 100, 60, 84, 50][i]} height="5" rx="2.5" fill={i === 2 ? "#ffc5d5" : "#6b6875"} />
       ))}
       <text x="186" y="58" fontSize="10" fontWeight="600" fill={INK}>answers.json</text>
       {[
@@ -25,14 +25,14 @@ const screens: Record<string, ReactNode> = {
         [260, 140, 36],
         [284, 104, 72],
       ].map(([x, y, h]) => (
-        <rect key={x} x={x} y={y} width="16" height={h} rx="2" fill="#ffe680" stroke={INK} strokeWidth={1.4} />
+        <rect key={x} x={x} y={y} width="16" height={h} rx="2" fill="#ffe27a" stroke={INK} strokeWidth={1.4} />
       ))}
       <path d="M182 176 H306" {...s} />
     </>
   ),
   "tds-virtual-ta": (
     <>
-      <rect x="120" y="40" width="182" height="34" rx="12" fill="#e3e9f6" stroke={INK} strokeWidth={1.4} />
+      <rect x="120" y="40" width="182" height="34" rx="12" fill="#d6e6ff" stroke={INK} strokeWidth={1.4} />
       {bar(134, 50, 120, "#9aa7c4")}
       {bar(134, 62, 80, "#9aa7c4")}
       <rect x="18" y="86" width="210" height="62" rx="12" fill="#ffffff" stroke={INK} strokeWidth={1.4} />
@@ -41,7 +41,7 @@ const screens: Record<string, ReactNode> = {
       {bar(32, 122, 110)}
       {["forum #412", "notes 3.2"].map((t, i) => (
         <g key={t}>
-          <rect x={32 + i * 86} y="158" width="78" height="20" rx="10" fill="#ffe680" stroke={INK} strokeWidth={1.2} />
+          <rect x={32 + i * 86} y="158" width="78" height="20" rx="10" fill="#ffe27a" stroke={INK} strokeWidth={1.2} />
           <text x={71 + i * 86} y="172" textAnchor="middle" fontSize="9.5" fill={INK}>{t}</text>
         </g>
       ))}
@@ -51,14 +51,14 @@ const screens: Record<string, ReactNode> = {
     <>
       <rect x="18" y="40" width="96" height="150" rx="6" fill="#f4f2f7" />
       {[50, 90, 130].map((y, i) => (
-        <rect key={y} x="28" y={y} width="76" height="32" rx="3" fill="#ffffff" stroke={i === 0 ? "#e5484d" : INK} strokeWidth={i === 0 ? 2 : 1.2} />
+        <rect key={y} x="28" y={y} width="76" height="32" rx="3" fill="#ffffff" stroke={i === 0 ? "#e2442f" : INK} strokeWidth={i === 0 ? 2 : 1.2} />
       ))}
       <rect x="128" y="48" width="176" height="112" rx="4" fill="#ffffff" stroke={INK} strokeWidth={1.6} />
       <text x="144" y="78" fontSize="14" fontWeight="700" fill={INK}>Q3 in one slide</text>
       {bar(144, 92, 120)}
       {bar(144, 104, 96)}
-      <circle cx="270" cy="132" r="16" fill="#c6ecd9" stroke={INK} strokeWidth={1.4} />
-      <path d="M270 132 V116 A16 16 0 0 1 284 140 Z" fill="#ffe680" stroke={INK} strokeWidth={1.2} />
+      <circle cx="270" cy="132" r="16" fill="#cfe6b4" stroke={INK} strokeWidth={1.4} />
+      <path d="M270 132 V116 A16 16 0 0 1 284 140 Z" fill="#ffe27a" stroke={INK} strokeWidth={1.2} />
       <rect x="200" y="170" width="104" height="22" rx="11" fill={INK} />
       <text x="252" y="185" textAnchor="middle" fontSize="10" fill="#ffffff">Download .pptx</text>
     </>
@@ -66,9 +66,9 @@ const screens: Record<string, ReactNode> = {
   "browser-llm-agent": (
     <>
       {[
-        ["search_web", "#e3e9f6"],
-        ["run_js", "#ffe680"],
-        ["fetch_api", "#c6ecd9"],
+        ["search_web", "#d6e6ff"],
+        ["run_js", "#ffe27a"],
+        ["fetch_api", "#cfe6b4"],
       ].map(([t, fill], i) => (
         <g key={t}>
           <rect x="18" y={42 + i * 40} width="200" height="30" rx="8" fill={fill} stroke={INK} strokeWidth={1.4} />
@@ -93,7 +93,7 @@ const screens: Record<string, ReactNode> = {
         const taken = [1, 2, 4, 7, 9, 10].includes(i);
         return (
           <g key={i}>
-            <rect x={x} y={y} width="38" height="58" rx="4" fill={taken ? "#ffc9d6" : "#ffffff"} stroke={INK} strokeWidth={1.4} />
+            <rect x={x} y={y} width="38" height="58" rx="4" fill={taken ? "#ffc5d5" : "#ffffff"} stroke={INK} strokeWidth={1.4} />
             <text x={x + 19} y={y + 34} textAnchor="middle" fontSize="11" fontWeight="600" fill={INK}>
               {taken ? "×" : `P${i + 1}`}
             </text>
@@ -111,7 +111,7 @@ const screens: Record<string, ReactNode> = {
           <text x={26 + c * 98} y="58" fontSize="10" fontWeight="600" fill={INK}>{t}</text>
           {Array.from({ length: 3 - c }, (_, r) => (
             <g key={r}>
-              <rect x={26 + c * 98} y={66 + r * 40} width="72" height="32" rx="4" fill={c === 2 ? "#c6ecd9" : "#ffffff"} stroke={INK} strokeWidth={1.2} />
+              <rect x={26 + c * 98} y={66 + r * 40} width="72" height="32" rx="4" fill={c === 2 ? "#cfe6b4" : "#ffffff"} stroke={INK} strokeWidth={1.2} />
               {bar(34 + c * 98, 74 + r * 40, 44)}
               {bar(34 + c * 98, 84 + r * 40, 30)}
             </g>
@@ -125,13 +125,13 @@ const screens: Record<string, ReactNode> = {
       <text x="22" y="62" fontSize="12" fontWeight="700" fill={INK}>Q4. Which join keeps every row?</text>
       {["Inner join", "Left join", "Cross join"].map((t, i) => (
         <g key={t}>
-          <rect x="22" y={76 + i * 34} width="200" height="26" rx="6" fill={i === 1 ? "#c6ecd9" : "#ffffff"} stroke={INK} strokeWidth={1.4} />
+          <rect x="22" y={76 + i * 34} width="200" height="26" rx="6" fill={i === 1 ? "#cfe6b4" : "#ffffff"} stroke={INK} strokeWidth={1.4} />
           <circle cx="38" cy={89 + i * 34} r="5" fill={i === 1 ? INK : "#ffffff"} stroke={INK} strokeWidth={1.4} />
           <text x="52" y={93 + i * 34} fontSize="11" fill={INK}>{t}</text>
         </g>
       ))}
       <circle cx="268" cy="110" r="30" fill="#ffffff" stroke={MUTED} strokeWidth={6} />
-      <path d="M268 80 A30 30 0 1 1 240 120" fill="none" stroke="#e5484d" strokeWidth={6} strokeLinecap="round" />
+      <path d="M268 80 A30 30 0 1 1 240 120" fill="none" stroke="#e2442f" strokeWidth={6} strokeLinecap="round" />
       <text x="268" y="115" textAnchor="middle" fontSize="13" fontWeight="700" fill={INK}>0:42</text>
     </>
   ),
@@ -142,9 +142,9 @@ export function ScreenSketch({ slug, label, className }: { slug: string; label: 
     <svg viewBox="0 0 320 206" className={className} role="img" aria-label={`Sketch of ${label}`}>
       <rect x="1" y="1" width="318" height="204" rx="10" fill="#ffffff" stroke={INK} strokeWidth={2} />
       <path d="M1 28 H319" stroke={INK} strokeWidth={1.4} />
-      <circle cx="16" cy="15" r="4" fill="#e5484d" />
-      <circle cx="30" cy="15" r="4" fill="#ffe680" stroke={INK} strokeWidth={1} />
-      <circle cx="44" cy="15" r="4" fill="#c6ecd9" stroke={INK} strokeWidth={1} />
+      <circle cx="16" cy="15" r="4" fill="#e2442f" />
+      <circle cx="30" cy="15" r="4" fill="#ffe27a" stroke={INK} strokeWidth={1} />
+      <circle cx="44" cy="15" r="4" fill="#cfe6b4" stroke={INK} strokeWidth={1} />
       <rect x="96" y="8" width="128" height="14" rx="7" fill="#f4f2f7" />
       {screens[slug]}
     </svg>

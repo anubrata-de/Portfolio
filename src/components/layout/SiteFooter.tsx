@@ -11,8 +11,11 @@ export function SiteFooter() {
         <p className="endcard__sub">{endCard.subtitle}</p>
       </div>
       <div className="wrap endcard__meta">
-        <p className="endcard__sign hand" aria-label={`Signed, ${endCard.signature}`}>
-          {endCard.signature}
+        <p className="endcard__sign" aria-label={`Signed, ${endCard.signature}`}>
+          <span className="hand">{endCard.signature}</span>
+          <span className="hanko" lang="ja" aria-hidden="true">
+            {endCard.seal}
+          </span>
         </p>
         <nav aria-label="Footer">
           <ul className="endcard__links">
