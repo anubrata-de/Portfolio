@@ -16,7 +16,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
-  const wrap = useRef<HTMLDivElement>(null);
+  const wrap = useRef<HTMLLIElement>(null);
 
   // Close the connect menu when the route changes.
   if (pathname !== lastPath) {
