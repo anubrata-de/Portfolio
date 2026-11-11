@@ -6,6 +6,7 @@ import { areas, projects } from "@/data/projects";
 import { ProjectCover } from "@/components/projects/ProjectCover";
 import { RevealLines, delay } from "@/components/ui/RevealLines";
 import { useExperience } from "@/context/Experience";
+import { Icon } from "@/components/ui/Icon";
 
 /**
  * Project index. On a mouse, hovering a row floats that project's cover
@@ -51,12 +52,12 @@ export function SelectedProjects() {
   return (
     <section className="selected" data-scene="globe" data-scene-side="right" aria-labelledby="selected-title">
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-parallax>
           <RevealLines
             id="selected-title"
             lines={[
               <>
-                Selected <span className="arrows" aria-hidden="true">⟶⟶</span> projects
+                Selected <span className="arrows"><Icon name="long" /><Icon name="long" /></span> projects
               </>,
             ]}
           />
@@ -91,7 +92,7 @@ export function SelectedProjects() {
 
         <p className="selected__more" data-reveal>
           <Link href="/projects" className="pill" data-magnetic>
-            View all work <span aria-hidden="true">↳</span>
+            View all work <Icon name="return" />
           </Link>
         </p>
       </div>

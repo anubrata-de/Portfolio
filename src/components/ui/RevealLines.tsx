@@ -1,5 +1,6 @@
 import type { CSSProperties, ElementType, ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 /**
  * A headline whose lines slide up out of masks when it scrolls into view,
@@ -18,14 +19,15 @@ export function RevealLines({
   className?: string;
   id?: string;
   delay?: number;
-  warp?: boolean;
+  /** true: curve while entering and leaving; "exit": only while leaving. */
+  warp?: boolean | "exit";
 }) {
   return (
     <Tag
       id={id}
       className={cn("display", className)}
       data-reveal="lines"
-      data-warp={warp ? "" : undefined}
+      data-warp={warp === "exit" ? "exit" : warp ? "" : undefined}
       style={{ "--d": `${delay}s` } as CSSProperties}
     >
       {lines.map((line, i) => (
@@ -46,9 +48,5 @@ export function Label({ children, className }: { children: ReactNode; className?
 export const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
 
 export function Curl() {
-  return (
-    <span className="curl" aria-hidden="true">
-      ↪
-    </span>
-  );
+  return <Icon name="curl" className="curl" />;
 }

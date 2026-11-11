@@ -8,6 +8,7 @@ import { useExperience } from "@/context/Experience";
 import { audio } from "@/lib/audio";
 import { cn } from "@/lib/cn";
 import { SettingsMenu } from "./SettingsMenu";
+import { Icon } from "@/components/ui/Icon";
 
 const links = [{ label: "Home", href: "/" }, ...site.nav];
 
@@ -56,7 +57,7 @@ export function MenuOverlay() {
         <div className="menu__foot">
           <SettingsMenu inline />
           <Link href="/contact" className="pill pill--solid" onClick={() => setMenuOpen(false)}>
-            Let&apos;s talk <span aria-hidden="true">↳</span>
+            Let&apos;s talk <Icon name="return" />
           </Link>
         </div>
       </div>

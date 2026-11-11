@@ -3,6 +3,7 @@ import { areas, neighbours, type Project } from "@/data/projects";
 import { ProjectCover } from "./ProjectCover";
 import { Pipeline } from "./Pipeline";
 import { Label, RevealLines, delay } from "@/components/ui/RevealLines";
+import { Icon } from "@/components/ui/Icon";
 
 export function CaseStudy({ project }: { project: Project }) {
   const { previous, next } = neighbours(project.slug);
@@ -14,7 +15,7 @@ export function CaseStudy({ project }: { project: Project }) {
       <header className="case__hero wrap" data-scene="knot" data-scene-side="right">
         <nav className="case__crumb" aria-label="Breadcrumb" data-reveal>
           <Link href="/projects" className="text-link">
-            ← All work
+            <Icon name="left" /> All work
           </Link>
         </nav>
         <div data-reveal>
@@ -29,11 +30,11 @@ export function CaseStudy({ project }: { project: Project }) {
         </p>
         <div className="case__actions" data-reveal style={delay(0.3)}>
           <a href={project.code} className="pill pill--solid" target="_blank" rel="noopener noreferrer" data-magnetic>
-            Code on GitHub <span aria-hidden="true">↗</span>
+            Code on GitHub <Icon name="external" />
           </a>
           {project.live && (
             <a href={project.live.href} className="pill" target="_blank" rel="noopener noreferrer">
-              {project.live.label} <span aria-hidden="true">↗</span>
+              {project.live.label} <Icon name="external" />
             </a>
           )}
         </div>

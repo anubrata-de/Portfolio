@@ -9,24 +9,29 @@ import { useExperience } from "@/context/Experience";
 
 /**
  * The living background: a night (or dawn) landscape with a lake, and a
- * particle sculpture that re-forms into a new shape for each section.
- * Sections opt in with data-scene="tree|wave|knot|clusters|globe|plane"
- * and data-scene-side="left|right|center".
+ * particle sculpture driven by the scroll position.
  *
- * Performance: the landscape renders at reduced resolution into a texture,
- * frame rate is measured every second and resolution and particle count step
- * down (and back up) to keep it smooth, and nothing renders while the scene is
- * covered or the tab is hidden. In the simple version it draws one still frame.
+ * Each section marks an anchor with data-scene="tree|wave|knot|clusters|globe|plane"
+ * and data-scene-side="left|right|center". Between two anchors the scroll position
+ * scrubs the morph from one shape to the next: the particles burst outward, the
+ * camera flies through the cloud, and they regather as the next shape. Rotation and
+ * the landscape parallax follow the scroll too, so every scroll moves something.
+ *
+ * Performance: the landscape renders at reduced resolution into a texture, frame
+ * rate is measured every second and resolution and particle count step down (and
+ * back up) to stay smooth, and nothing renders while the scene is covered or the
+ * tab is hidden. In the simple version it draws one still frame.
  */
 
 type Side = "left" | "right" | "center";
+type Anchor = { y: number; shape: ShapeName; side: Side };
 
 const SHAPE_STYLE: Record<ShapeName, { scale: number; y: number; spin: number; tint: [number, number, number] }> = {
-  tree: { scale: 0.8, y: -0.02, spin: 0.09, tint: [1, 1, 1] },
-  wave: { scale: 0.9, y: 0.02, spin: 0.05, tint: [0.95, 1, 1.08] },
-  knot: { scale: 0.9, y: 0.04, spin: 0.22, tint: [1.05, 0.95, 1.05] },
+  tree: { scale: 0.82, y: -0.02, spin: 0.09, tint: [1, 1, 1] },
+  wave: { scale: 0.92, y: 0.02, spin: 0.05, tint: [0.95, 1, 1.08] },
+  knot: { scale: 0.9, y: 0.04, spin: 0.2, tint: [1.05, 0.95, 1.05] },
   clusters: { scale: 0.95, y: 0.04, spin: 0.1, tint: [0.94, 0.98, 1.1] },
-  globe: { scale: 0.78, y: 0.05, spin: 0.14, tint: [1, 1, 1] },
+  globe: { scale: 0.8, y: 0.05, spin: 0.14, tint: [1, 1, 1] },
   plane: { scale: 0.9, y: 0.08, spin: 0.04, tint: [1.08, 0.96, 1] },
 };
 
@@ -41,9 +46,9 @@ const routeShape = (path: string) => ROUTE_DEFAULT.find(([re]) => re.test(path))
 
 const NIGHT = [
   [0.98, 0.88, 1.0],
-  [0.78, 0.42, 1.0],
-  [0.55, 0.28, 1.0],
-  [1.0, 0.48, 0.86],
+  [0.8, 0.45, 1.0],
+  [0.58, 0.3, 1.0],
+  [1.0, 0.52, 0.88],
 ];
 const DAWN = [
   [0.6, 0.26, 0.98],
@@ -53,13 +58,12 @@ const DAWN = [
 ];
 
 const TIERS = {
-  high: { count: 8000, dprCap: 2, motes: 240, octaves: 5, size: 16 },
-  low: { count: 3000, dprCap: 1.25, motes: 100, octaves: 3, size: 20 },
+  high: { count: 8000, dprCap: 2, motes: 240, octaves: 5, size: 19 },
+  low: { count: 3000, dprCap: 1.25, motes: 100, octaves: 3, size: 24 },
 };
 /** Steps the renderer moves through when frame rate drops. */
 const STEPS = [1, 0.85, 0.7, 0.55];
 const LANDSCAPE_RES = 0.75; // landscape pixels per CSS pixel, before stepping
-const MORPH_MS = 1900;
 const MAX_DELAY = 0.35;
 
 function compile(gl: WebGL2RenderingContext, vs: string, fs: string) {
@@ -102,6 +106,10 @@ function viewMatrix(out: Float32Array, rx: number, ry: number, scale: number, di
 }
 
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const smooth = (a: number, b: number, t: number) => {
+  const x = Math.max(0, Math.min(1, (t - a) / (b - a)));
+  return x * x * (3 - 2 * x);
+};
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 export function SceneCanvas() {
@@ -155,7 +163,7 @@ export function SceneCanvas() {
     };
     const M = { time: u(motesProgram, "uTime"), theme: u(motesProgram, "uTheme"), dpr: u(motesProgram, "uDpr") };
 
-    // Particle state. Buffers are shuffled, so drawing the first N is an even subsample.
+    // Particle data. Buffers are shuffled, so drawing the first N is an even subsample.
     const count = tier.count;
     const shapes = Object.fromEntries(shapeNames.map((n) => [n, buildShape(n, count)])) as Record<ShapeName, Float32Array>;
     const seeds = new Float32Array(count);
@@ -169,13 +177,7 @@ export function SceneCanvas() {
       dirs[i * 3 + 1] = Math.sin(b) * Math.sin(a);
       dirs[i * 3 + 2] = Math.cos(b);
     }
-
-    let shape: ShapeName = routeShape(routeRef.current);
-    const current = new Float32Array(shapes[shape]);
-    let from = new Float32Array(current);
-    let to = shapes[shape];
-    let morphStart = -1;
-    let morphing = false;
+    const current = new Float32Array(shapes[routeShape(routeRef.current)]);
 
     const vao = gl.createVertexArray();
     gl.bindVertexArray(vao);
@@ -208,18 +210,82 @@ export function SceneCanvas() {
     // Render-loop state (declared before anything can request a frame)
     let frame = 0;
     let firstFrame = true;
-
-    // Live inputs
     let width = 1, height = 1, dpr = 1;
     let step = 0;
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-    let scroll = 0, scrollTarget = 0;
+    let pageProgress = 0;
     let theme = getPrefs().theme === "light" ? 1 : 0;
-    const place = { x: 0.38, y: 0, scale: 1, tx: 0.38, ty: 0, tscale: 1 };
+    const place = { x: 0.4, y: 0, scale: 0.82, fly: 0 };
     const tint = [1, 1, 1];
-    let side: Side = "right";
+    let spinShape: ShapeName = routeShape(routeRef.current);
     const projMatrix = new Float32Array(16);
     const viewMat = new Float32Array(16);
+
+    // Scroll anchors: the centre of every [data-scene] section, top to bottom.
+    let anchors: Anchor[] = [];
+    let lastMorphKey = "";
+    const measure = () => {
+      anchors = Array.from(document.querySelectorAll<HTMLElement>("[data-scene]"))
+        .map((el) => {
+          const r = el.getBoundingClientRect();
+          return {
+            y: r.top + window.scrollY + r.height / 2,
+            shape: (el.dataset.scene as ShapeName) || "tree",
+            side: (el.dataset.sceneSide as Side) || "right",
+          };
+        })
+        .sort((a, b) => a.y - b.y);
+      lastMorphKey = "";
+      request();
+    };
+
+    const sideX = (side: Side) => (width / height < 0.95 ? 0 : side === "right" ? 0.4 : side === "left" ? -0.4 : 0);
+
+    /** Where between two anchors the middle of the screen sits, 0..1. */
+    const locate = (): { a: Anchor; b: Anchor; m: number } => {
+      if (calm || anchors.length === 0) {
+        const shape = routeShape(routeRef.current);
+        const first = anchors[0];
+        const only = { y: 0, shape, side: first?.side ?? "right" };
+        return { a: only, b: only, m: 0 };
+      }
+      const centre = window.scrollY + height * 0.5;
+      if (centre <= anchors[0].y) return { a: anchors[0], b: anchors[0], m: 0 };
+      for (let i = 0; i < anchors.length - 1; i++) {
+        const a = anchors[i];
+        const b = anchors[i + 1];
+        if (centre < b.y) {
+          // Hold each shape briefly around its section, morph through the rest.
+          const t = (centre - a.y) / Math.max(1, b.y - a.y);
+          return { a, b, m: smooth(0.12, 0.88, t) };
+        }
+      }
+      const last = anchors[anchors.length - 1];
+      return { a: last, b: last, m: 0 };
+    };
+
+    const updateParticles = (a: ShapeName, b: ShapeName, m: number) => {
+      const key = a === b || m <= 0 ? a : m >= 1 ? b : `${a}>${b}:${m.toFixed(4)}`;
+      if (key === lastMorphKey) return;
+      lastMorphKey = key;
+      const A = shapes[a];
+      const Bs = shapes[b];
+      if (a === b || m <= 0) current.set(A);
+      else if (m >= 1) current.set(Bs);
+      else {
+        for (let i = 0; i < count; i++) {
+          const ti = Math.max(0, Math.min(1, (m - seeds[i] * MAX_DELAY) / (1 - MAX_DELAY)));
+          const e = ease(ti);
+          const burst = Math.sin(Math.PI * ti) * 0.6;
+          const j = i * 3;
+          current[j] = A[j] + (Bs[j] - A[j]) * e + dirs[j] * burst;
+          current[j + 1] = A[j + 1] + (Bs[j + 1] - A[j + 1]) * e + dirs[j + 1] * burst;
+          current[j + 2] = A[j + 2] + (Bs[j + 2] - A[j + 2]) * e + dirs[j + 2] * burst;
+        }
+      }
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, current);
+    };
 
     const resize = () => {
       width = window.innerWidth;
@@ -235,82 +301,19 @@ export function SceneCanvas() {
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, landTex, 0);
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       canvas.dataset.step = String(step);
-      updatePlacement();
       request();
     };
 
-    const updatePlacement = () => {
-      const narrow = width / height < 0.95;
-      const style = SHAPE_STYLE[shape];
-      place.tx = narrow ? 0 : side === "right" ? 0.4 : side === "left" ? -0.4 : 0;
-      place.ty = narrow ? 0.42 + style.y : style.y;
-      place.tscale = style.scale * (narrow ? 0.52 : 1);
-      if (calm) {
-        place.x = place.tx;
-        place.y = place.ty;
-        place.scale = place.tscale;
-      }
+    let measureTimer = 0;
+    const remeasureSoon = () => {
+      window.clearTimeout(measureTimer);
+      measureTimer = window.setTimeout(measure, 150);
     };
-
-    const setShape = (next: ShapeName, nextSide: Side) => {
-      side = nextSide;
-      if (next !== shape) {
-        shape = next;
-        to = shapes[next];
-        if (calm) {
-          current.set(to);
-          gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-          gl.bufferSubData(gl.ARRAY_BUFFER, 0, current);
-        } else {
-          from = new Float32Array(current);
-          morphStart = -1;
-          morphing = true;
-        }
-      }
-      updatePlacement();
-      request();
-    };
-
-    // Which section fills most of the screen? (Animated version only.)
-    const visible = new Map<Element, number>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (calm) return;
-        for (const e of entries) {
-          if (e.isIntersecting) visible.set(e.target, e.intersectionRect.height);
-          else visible.delete(e.target);
-        }
-        let best: HTMLElement | null = null;
-        let most = 0;
-        visible.forEach((h, el) => {
-          if (h > most) {
-            most = h;
-            best = el as HTMLElement;
-          }
-        });
-        const el = best as HTMLElement | null;
-        if (el) setShape((el.dataset.scene as ShapeName) || shape, (el.dataset.sceneSide as Side) || "right");
-      },
-      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
-    );
-    let rescanTimer = 0;
-    const rescan = () => {
-      io.disconnect();
-      visible.clear();
-      const found = document.querySelectorAll("[data-scene]");
-      if (calm || found.length === 0) {
-        const first = found[0] as HTMLElement | undefined;
-        setShape(routeShape(routeRef.current), (first?.dataset.sceneSide as Side) || "right");
-      }
-      if (!calm) found.forEach((el) => io.observe(el));
-    };
-    const mo = new MutationObserver(() => {
-      window.clearTimeout(rescanTimer);
-      rescanTimer = window.setTimeout(rescan, 120);
-    });
+    const mo = new MutationObserver(remeasureSoon);
     const main = document.querySelector("main");
     if (main) mo.observe(main, { childList: true, subtree: true });
-    window.addEventListener("scene:rescan", rescan);
+    window.addEventListener("scene:rescan", remeasureSoon);
+    document.fonts?.ready.then(measure);
 
     const onPointer = (e: PointerEvent) => {
       if (calm) return;
@@ -319,10 +322,7 @@ export function SceneCanvas() {
       request();
     };
     const onScroll = () => {
-      if (calm) return;
-      const max = document.documentElement.scrollHeight - height;
-      scrollTarget = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-      request();
+      if (!calm) request();
     };
 
     // Frame-rate monitor
@@ -332,13 +332,15 @@ export function SceneCanvas() {
     let slowWindows = 0;
     let fastWindows = 0;
     let slowNotified = false;
+    // Quality changes resize at the start of the next frame, so the clear and redraw happen together.
+    let resizePending = false;
     const adapt = (fps: number) => {
       if (fps < 45) {
         fastWindows = 0;
         slowWindows++;
         if (step < STEPS.length - 1) {
           step++;
-          resize();
+          resizePending = true;
         } else if (fps < 24 && slowWindows >= 4 && !slowNotified) {
           slowNotified = true;
           window.dispatchEvent(new Event("scene:slow"));
@@ -349,7 +351,7 @@ export function SceneCanvas() {
         if (fastWindows >= 4 && step > 0) {
           step--;
           fastWindows = 0;
-          resize();
+          resizePending = true;
         }
       } else {
         slowWindows = 0;
@@ -359,44 +361,42 @@ export function SceneCanvas() {
 
     const start = performance.now();
     let lastNow = start;
-
     const paused = () =>
       document.hidden || (!firstFrame && (root.dataset.intro !== "seen" || root.classList.contains("is-locked")));
 
     const render = (now: number) => {
       frame = 0;
+      if (resizePending) {
+        resizePending = false;
+        resize();
+      }
       const dt = Math.min(64, now - lastNow);
       lastNow = now;
-      const k = calm ? 1 : 1 - Math.pow(0.001, dt / 1000);
+      const follow = calm ? 1 : 1 - Math.pow(0.0005, dt / 1000); // fast, but never a hard jump
       const time = calm ? 12 : (now - start) / 1000;
 
       const targetTheme = getPrefs().theme === "light" ? 1 : 0;
       theme = calm ? targetTheme : lerp(theme, targetTheme, Math.min(1, dt / 160));
-      mouse.x = lerp(mouse.x, mouse.tx, k * 0.6);
-      mouse.y = lerp(mouse.y, mouse.ty, k * 0.6);
-      scroll = lerp(scroll, scrollTarget, k);
-      place.x = lerp(place.x, place.tx, k * 0.5);
-      place.y = lerp(place.y, place.ty, k * 0.5);
-      place.scale = lerp(place.scale, place.tscale, k * 0.5);
-      const st = SHAPE_STYLE[shape].tint;
-      for (let i = 0; i < 3; i++) tint[i] = calm ? st[i] : lerp(tint[i], st[i], k * 0.3);
+      mouse.x = lerp(mouse.x, mouse.tx, follow * 0.5);
+      mouse.y = lerp(mouse.y, mouse.ty, follow * 0.5);
+      const maxScroll = document.documentElement.scrollHeight - height;
+      pageProgress = lerp(pageProgress, maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 0, follow);
 
-      if (morphing) {
-        if (morphStart < 0) morphStart = now;
-        const t = (now - morphStart) / MORPH_MS;
-        for (let i = 0; i < count; i++) {
-          const ti = Math.max(0, Math.min(1, (t - seeds[i] * MAX_DELAY) / (1 - MAX_DELAY)));
-          const e = ease(ti);
-          const burst = Math.sin(Math.PI * ti) * 0.38;
-          const j = i * 3;
-          current[j] = from[j] + (to[j] - from[j]) * e + dirs[j] * burst;
-          current[j + 1] = from[j + 1] + (to[j + 1] - from[j + 1]) * e + dirs[j + 1] * burst;
-          current[j + 2] = from[j + 2] + (to[j + 2] - from[j + 2]) * e + dirs[j + 2] * burst;
-        }
-        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 0, current);
-        if (t >= 1) morphing = false;
-      }
+      // Scroll-scrubbed sculpture
+      const { a, b, m } = locate();
+      updateParticles(a.shape, b.shape, m);
+      const me = ease(m);
+      const sa = SHAPE_STYLE[a.shape];
+      const sb = SHAPE_STYLE[b.shape];
+      const narrow = width / height < 0.95;
+      const flyTarget = a.shape !== b.shape ? Math.sin(Math.PI * m) : 0;
+      place.fly = lerp(place.fly, flyTarget, follow);
+      // Mid-transition the cloud drifts towards the centre while the camera flies into it.
+      place.x = lerp(place.x, lerp(sideX(a.side), sideX(b.side), me) * (1 - place.fly * 0.7), follow);
+      place.y = lerp(place.y, lerp(sa.y, sb.y, me) + (narrow ? 0.42 : 0), follow);
+      place.scale = lerp(place.scale, lerp(sa.scale, sb.scale, me) * (narrow ? 0.52 : 1), follow);
+      spinShape = m < 0.5 ? a.shape : b.shape;
+      for (let i = 0; i < 3; i++) tint[i] = lerp(tint[i], lerp(sa.tint[i], sb.tint[i], me), follow);
 
       gl.disable(gl.DEPTH_TEST);
       gl.disable(gl.BLEND);
@@ -410,7 +410,7 @@ export function SceneCanvas() {
       gl.uniform1f(L.time, time);
       gl.uniform1f(L.theme, theme);
       gl.uniform2f(L.mouse, mouse.x, mouse.y);
-      gl.uniform1f(L.scroll, scroll);
+      gl.uniform1f(L.scroll, pageProgress);
       gl.uniform1i(L.octaves, tier.octaves);
       gl.uniform3f(L.tint, tint[0], tint[1], tint[2]);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -431,14 +431,14 @@ export function SceneCanvas() {
       else gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
       const aspect = width / height;
-      const style = SHAPE_STYLE[shape];
+      const spin = time * SHAPE_STYLE[spinShape].spin + window.scrollY * 0.0009 + mouse.x * 0.35;
       gl.useProgram(particles);
       gl.bindVertexArray(vao);
       gl.uniformMatrix4fv(P.proj, false, perspective(projMatrix, (40 * Math.PI) / 180, aspect, 0.1, 50));
       gl.uniformMatrix4fv(
         P.view,
         false,
-        viewMatrix(viewMat, -0.08 + mouse.y * 0.12, time * style.spin + mouse.x * 0.35, place.scale, 3.4),
+        viewMatrix(viewMat, -0.08 + mouse.y * 0.12 + place.fly * 0.25, spin, place.scale, 3.4 - place.fly * 2.2),
       );
       gl.uniform1f(P.time, time);
       gl.uniform1f(P.size, tier.size);
@@ -495,12 +495,15 @@ export function SceneCanvas() {
       frame = 0;
       root.classList.add("no-webgl");
     };
+    const onResize = () => {
+      resize();
+      remeasureSoon();
+    };
 
     // Start only once everything above exists.
     resize();
-    onScroll();
-    rescan();
-    window.addEventListener("resize", resize);
+    measure();
+    window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointer, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onResume);
@@ -508,12 +511,11 @@ export function SceneCanvas() {
 
     return () => {
       cancelAnimationFrame(frame);
-      io.disconnect();
       mo.disconnect();
       stateObserver.disconnect();
-      window.clearTimeout(rescanTimer);
-      window.removeEventListener("scene:rescan", rescan);
-      window.removeEventListener("resize", resize);
+      window.clearTimeout(measureTimer);
+      window.removeEventListener("scene:rescan", remeasureSoon);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onResume);

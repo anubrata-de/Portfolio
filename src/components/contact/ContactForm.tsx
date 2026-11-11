@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { site } from "@/data/site";
 import { audio } from "@/lib/audio";
+import { Icon } from "@/components/ui/Icon";
 
 type Field = "topic" | "name" | "email" | "message";
 type Errors = Partial<Record<Field, string>>;
@@ -158,7 +159,7 @@ export function ContactForm() {
 
       <div className="form__submit">
         <button type="submit" className="pill pill--solid pill--large" disabled={status.kind === "sending"} data-magnetic>
-          {status.kind === "sending" ? "Sending…" : "Send message"} <span aria-hidden="true">↳</span>
+          {status.kind === "sending" ? "Sending…" : "Send message"} <Icon name="return" />
         </button>
         <p className="form__status" role="status" data-kind={status.kind}>
           {status.text}

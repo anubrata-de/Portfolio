@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CopyEmail } from "@/components/ui/CopyEmail";
 import { Curl, Label, RevealLines, delay } from "@/components/ui/RevealLines";
+import { Icon } from "@/components/ui/Icon";
 
 export function ContactCTA() {
   return (
@@ -27,7 +28,7 @@ export function ContactCTA() {
         </p>
         <div className="cta__actions" data-reveal style={delay(0.3)}>
           <Link href="/contact" className="pill pill--solid pill--large" data-magnetic>
-            Get in touch <span aria-hidden="true">↳</span>
+            Get in touch <Icon name="return" />
           </Link>
           <CopyEmail />
         </div>

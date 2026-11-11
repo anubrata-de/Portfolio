@@ -72,7 +72,7 @@ vec3 above(vec2 uv, float aspect, float horizon) {
   col += vec3(0.9, 0.85, 1.0) * star * (1.0 - uTheme) * smoothstep(horizon + 0.05, horizon + 0.3, uv.y);
 
   // Moon at night, a soft sun haze at dawn
-  vec2 m = vec2(0.24, 0.8);
+  vec2 m = vec2(0.24 + uScroll * 0.1, 0.8 - uScroll * 0.12);
   float d = length((uv - m) * vec2(aspect, 1.0));
   float disk = smoothstep(0.047, 0.043, d);
   float crater = fbm((uv - m) * 60.0) * 0.25;
@@ -80,19 +80,19 @@ vec3 above(vec2 uv, float aspect, float horizon) {
   col += pal(vec3(0.45, 0.25, 0.75), vec3(1.0, 0.9, 0.85)) * exp(-d * pal(vec3(8.0), vec3(4.5)).x) * pal(vec3(0.45), vec3(0.55)).x;
 
   // Drifting cloud bands
-  float c = fbm(vec2(p.x * 1.4 + uTime * 0.012, p.y * 3.4 - uTime * 0.004));
+  float c = fbm(vec2(p.x * 1.4 + uTime * 0.012 + uScroll * 0.6, p.y * 3.4 - uTime * 0.004));
   float band = smoothstep(0.5, 0.78, c) * smoothstep(horizon + 0.02, horizon + 0.2, uv.y) * (1.0 - smoothstep(0.82, 1.0, uv.y));
   col = mix(col, pal(vec3(0.32, 0.16, 0.48), vec3(1.0, 0.86, 0.96)), band * pal(vec3(0.42), vec3(0.65)).x);
 
   // Three hill layers, far to near, each nudged by the pointer and scroll for parallax
   for (int k = 0; k < 3; k++) {
     float fk = float(k);
-    float par = (uMouse.x * 0.015 + uScroll * 0.04) * (fk + 1.0);
+    float par = (uMouse.x * 0.015 + uScroll * 0.9) * (fk + 1.0);
     float freq = 1.4 + fk * 1.25;
     float h = horizon + 0.012 + (0.11 - fk * 0.025) * fbm(vec2(p.x * freq + par + fk * 7.3, fk * 3.1));
     if (k == 2) h = horizon + 0.004 + 0.05 * pow(abs(noise(vec2(p.x * 6.0 + par * 2.0, 4.0)) * 2.0 - 1.0), 0.6);
-    vec3 far = pal(vec3(0.16, 0.07, 0.3), vec3(0.62, 0.48, 0.84));
-    vec3 near = pal(vec3(0.05, 0.02, 0.11), vec3(0.35, 0.2, 0.58));
+    vec3 far = pal(vec3(0.16, 0.07, 0.3), vec3(0.82, 0.74, 0.95));
+    vec3 near = pal(vec3(0.05, 0.02, 0.11), vec3(0.66, 0.55, 0.88));
     vec3 hill = mix(far, near, fk / 2.0) * uTint;
     float edge = smoothstep(h, h - 0.002, uv.y);
     col = mix(col, hill, edge);
@@ -117,7 +117,7 @@ void main() {
     col = above(r, aspect, horizon);
     vec3 deep = pal(vec3(0.03, 0.015, 0.07), vec3(0.42, 0.3, 0.68));
     col = mix(col * pal(vec3(0.75), vec3(0.88)), deep, smoothstep(0.0, 1.0, depth) * 0.7);
-    float glint = exp(-abs(uv.x - 0.24) * aspect * 12.0) * smoothstep(0.6, 0.9, noise(vec2(uv.x * 90.0, uv.y * 300.0 + uTime)));
+    float glint = exp(-abs(uv.x - (0.24 + uScroll * 0.1)) * aspect * 12.0) * smoothstep(0.6, 0.9, noise(vec2(uv.x * 90.0, uv.y * 300.0 + uTime)));
     col += pal(vec3(0.6, 0.45, 0.95), vec3(1.0, 0.95, 0.98)) * glint * (1.0 - depth) * 0.5;
   }
 
@@ -158,12 +158,20 @@ uniform float uAspect;
 out float vSeed;
 out float vDepth;
 out float vGlow;
+out float vNear;
 
 void main() {
   float s = aSeed * 6.2831;
   vec3 p = aPos + 0.012 * vec3(sin(uTime * 0.9 + s * 3.0), cos(uTime * 0.7 + s * 5.0), sin(uTime * 0.8 + s * 7.0));
   vec4 view = uView * vec4(p, 1.0);
   vec4 clip = uProj * view;
+  // Particles the camera has flown past are dropped.
+  if (clip.w < 0.25) {
+    gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+    gl_PointSize = 0.0;
+    vSeed = 0.0; vDepth = 0.0; vGlow = 0.0; vNear = 0.0;
+    return;
+  }
   vec2 ndc = clip.xy / clip.w + uOffset;
 
   // The pointer gently pushes particles aside
@@ -173,10 +181,13 @@ void main() {
   ndc += (d / max(dist, 1e-4)) * push * 0.07 * vec2(1.0 / uAspect, 1.0);
 
   gl_Position = vec4(ndc * clip.w, clip.z, clip.w);
-  gl_PointSize = uSize * (0.5 + 1.15 * fract(aSeed * 91.7)) * uDpr * (1.0 + push * 0.9) / clip.w;
+  float size = uSize * (0.5 + 1.15 * fract(aSeed * 91.7)) * uDpr * (1.0 + push * 0.9) / clip.w;
+  // Close particles grow into soft discs, capped so fill cost stays bounded.
+  gl_PointSize = min(size, 72.0 * uDpr);
   vSeed = aSeed;
   vDepth = view.z;
   vGlow = push;
+  vNear = smoothstep(1.8, 0.5, clip.w);
 }`;
 
 export const particleFrag = /* glsl */ `#version 300 es
@@ -184,6 +195,7 @@ precision highp float;
 in float vSeed;
 in float vDepth;
 in float vGlow;
+in float vNear;
 out vec4 outColor;
 uniform float uTheme;
 uniform vec3 uC0;
@@ -195,11 +207,12 @@ void main() {
   vec2 c = gl_PointCoord - 0.5;
   float r = length(c);
   if (r > 0.5) discard;
-  float a = pow(smoothstep(0.5, 0.0, r), 1.5);
+  // Far particles are crisp dots; near ones become soft, translucent bokeh.
+  float a = pow(smoothstep(0.5, 0.0, r), mix(1.5, 0.6, vNear)) * mix(1.0, 0.35, vNear);
   float pick = fract(vSeed * 13.37);
   vec3 col = pick < 0.25 ? uC0 : pick < 0.6 ? uC1 : pick < 0.86 ? uC2 : uC3;
   col = mix(col, vec3(1.0), smoothstep(0.22, 0.0, r) * mix(0.55, 0.15, uTheme));
-  float depthFade = clamp(1.25 + (vDepth + 3.4) * 0.45, 0.35, 1.0);
+  float depthFade = clamp(1.25 + (vDepth + 3.4) * 0.45, 0.35, 1.0) + vNear;
   outColor = vec4(col, a * depthFade * (0.8 + vGlow * 0.4));
 }`;
 

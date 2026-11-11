@@ -6,6 +6,7 @@ import { useExperience } from "@/context/Experience";
 import { audio } from "@/lib/audio";
 import { answer, type Note, type Reply } from "@/lib/assistant/knowledge";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 type Message =
   | { id: number; role: "user"; text: string }
@@ -223,7 +224,7 @@ export function AskAnu() {
         <div className="anu__top">
           <p className="anu__note">Answers come from notes on this site, matched to your question. No AI model involved.</p>
           <button type="button" className="anu__close" onClick={close}>
-            Close <span aria-hidden="true">✕</span>
+            Close <Icon name="close" />
           </button>
         </div>
 

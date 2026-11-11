@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import { ExperienceProvider } from "@/context/Experience";
 import { IntroLoader } from "@/components/experience/IntroLoader";
 import { SceneCanvas } from "@/components/experience/SceneCanvas";
@@ -15,7 +15,7 @@ import { site } from "@/data/site";
 import "./globals.css";
 
 const sans = Geist({ variable: "--font-geist", subsets: ["latin"], display: "swap" });
-const mono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
+const mono = IBM_Plex_Mono({ variable: "--font-plex", subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
 const display = Instrument_Serif({
   variable: "--font-instrument",
   subsets: ["latin"],

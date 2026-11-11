@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Label, RevealLines } from "@/components/ui/RevealLines";
+import { Icon } from "@/components/ui/Icon";
 
 export default function NotFound() {
   return (
@@ -13,7 +14,7 @@ export default function NotFound() {
       </p>
       <div className="case__actions" data-reveal>
         <Link href="/projects" className="pill pill--solid" data-magnetic>
-          Browse my work <span aria-hidden="true">↳</span>
+          Browse my work <Icon name="return" />
         </Link>
         <Link href="/" className="pill">
           Go home

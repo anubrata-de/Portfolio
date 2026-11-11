@@ -82,16 +82,18 @@ export function Story() {
                 {c.pill}
               </span>
               <RevealLines id={`${c.id}-title`} className="chapter__title" lines={c.lines} />
-              <p className="chapter__body" data-reveal style={delay(0.25)}>
-                {c.body}
-              </p>
-              {c.link && (
-                <p data-reveal style={delay(0.35)}>
-                  <Link href={c.link.href} className="text-link">
-                    {c.link.label}
-                  </Link>
+              <div data-parallax>
+                <p className="chapter__body" data-reveal style={delay(0.25)}>
+                  {c.body}
                 </p>
-              )}
+                {c.link && (
+                  <p data-reveal style={delay(0.35)}>
+                    <Link href={c.link.href} className="text-link">
+                      {c.link.label}
+                    </Link>
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </section>

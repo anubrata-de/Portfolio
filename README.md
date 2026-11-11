@@ -18,11 +18,11 @@ Requires Node 20.9 or later.
 
 | Piece | What it does |
 | --- | --- |
-| Intro | Real progress (fonts, the scene compiling, page load), then **Enter with sound**, **Enter without sound**, or **Use the simple version**. Shown once per browser session. |
-| Scene | Hand-written WebGL 2: sky, moon or sun haze, clouds, stars, three hill layers, a reflective lake, grass, fireflies at night and petals at dawn. A particle sculpture morphs between six shapes as sections scroll into view (tree, data wave, agent loop, retrieval clusters, globe, paper plane) and moves away from the pointer. |
+| Intro | The wordmark in the centre and a loading line across the bottom that tracks real progress (fonts, the scene compiling, page load). Then **Enter with sound**, **Enter without sound**, or **Simple version, no animation**, with the simple one marked as recommended on slow devices. Shown once per browser session. |
+| Scene | Hand-written WebGL 2: sky, moon or sun haze, clouds, stars, three hill layers, a reflective lake, grass, fireflies at night and petals at dawn. A particle sculpture is scrubbed by the scroll position: between two sections it bursts apart, the camera flies through the particles, and the next shape forms (tree, data wave, agent loop, retrieval clusters, globe, paper plane). It also moves away from the pointer, and the hills, moon and clouds drift with the page. |
 | Sound | Generated live with the Web Audio API: an evolving chord pad, wind and the odd bell, plus interface sounds. No audio files. The header's equaliser bars follow the real output. Pauses when the tab is hidden. |
 | Cursor | A glowing orb that trails the pointer, grows over links, shows **View**, **Drag** or **Ask** labels, and pulls buttons marked `data-magnetic` towards it. Mouse and trackpad only. |
-| Scroll | Smooth scrolling (Lenis), headlines that slide up line by line, and headlines that bend back and split into green and magenta as they leave, more strongly the faster you scroll. |
+| Scroll | Smooth scrolling (Lenis), headlines that slide up line by line, headlines that bend on a curve as they enter and leave the screen (and split into colour only while the page is moving, so they are always sharp at rest), and section text that drifts against the scroll. |
 | Work | A curved 3D carousel (drag, arrow keys or buttons) with a filter, plus a full list. |
 | Anu | The orb in the corner. Answers questions from notes generated from this site's data using TF-IDF retrieval, shows the source and match score, reads answers aloud when sound is on, and accepts voice questions where the browser supports it. No AI service, nothing leaves the browser. |
 | Themes | Night and dawn, following the system until the visitor chooses. The scene crossfades between palettes. |
@@ -78,4 +78,4 @@ To add a résumé, create a `public/` folder, put the PDF in it, and set `resume
 ## Stack
 
 Next.js 16 (App Router), React 19, TypeScript, plain CSS, WebGL 2, Web Audio, Lenis.
-Fonts: Instrument Serif (display), Geist (text) and Geist Mono (labels), self-hosted by `next/font`.
+Fonts: Instrument Serif (display), Geist (text) and IBM Plex Mono (labels), self-hosted by `next/font`. No text is set below 12px, and text meets 4.5:1 contrast in both themes. Arrows and icons are inline SVG, so they look the same on every system.

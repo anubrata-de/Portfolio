@@ -3,6 +3,7 @@ import { site } from "@/data/site";
 import { CopyEmail } from "@/components/ui/CopyEmail";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Curl, Label, RevealLines, delay } from "@/components/ui/RevealLines";
+import { Icon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -39,7 +40,7 @@ export default function ContactPage() {
             {site.social.map((s) => (
               <li key={s.label}>
                 <a href={s.href} target="_blank" rel="noopener noreferrer" className="pill">
-                  {s.label} <span aria-hidden="true">↗</span>
+                  {s.label} <Icon name="external" />
                 </a>
               </li>
             ))}

@@ -37,7 +37,7 @@ export function Milestones() {
   return (
     <section className="milestones" data-scene="globe" data-scene-side="left" aria-labelledby="milestones-title">
       <div className="wrap milestones__inner">
-        <div className="section-intro">
+        <div className="section-intro" data-parallax>
           <RevealLines id="milestones-title" lines={["Milestones"]} />
           <p data-reveal style={delay(0.15)}>
             Studying, running a student house and shipping code.

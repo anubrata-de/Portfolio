@@ -8,6 +8,7 @@ import { ProjectCover } from "./ProjectCover";
 import { useExperience } from "@/context/Experience";
 import { audio } from "@/lib/audio";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 /**
  * Projects on a curved wall that wraps around you. Drag, use the arrow keys,
@@ -127,10 +128,10 @@ export function Carousel() {
         </div>
         <div className="carousel__nav">
           <button type="button" className="pill" onClick={() => go(safeIndex - 1)} disabled={safeIndex === 0} aria-label="Previous project">
-            ←
+            <Icon name="left" />
           </button>
           <button type="button" className="pill" onClick={() => go(safeIndex + 1)} disabled={safeIndex === count - 1} aria-label="Next project">
-            →
+            <Icon name="right" />
           </button>
         </div>
       </div>
@@ -208,7 +209,7 @@ export function Carousel() {
       <div className="carousel__detail glass" aria-live="polite">
         <p className="carousel__detail-summary">{shown[safeIndex].summary}</p>
         <Link href={`/projects/${shown[safeIndex].slug}`} className="pill pill--solid" data-magnetic>
-          Open {shown[safeIndex].name} <span aria-hidden="true">↳</span>
+          Open {shown[safeIndex].name} <Icon name="return" />
         </Link>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { cn } from "@/lib/cn";
 import { SettingsMenu } from "./SettingsMenu";
 import { SoundButton } from "./SoundButton";
 import { Wordmark } from "./Wordmark";
+import { Icon } from "@/components/ui/Icon";
 
 let lastY = 0;
 let hidden = false;
@@ -57,7 +58,7 @@ export function SiteHeader() {
           <SoundButton />
         </div>
         <Link href="/contact" className="pill header__cta" data-magnetic>
-          Let&apos;s talk <span aria-hidden="true">↳</span>
+          Let&apos;s talk <Icon name="return" />
         </Link>
         <button
           type="button"

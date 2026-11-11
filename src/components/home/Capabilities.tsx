@@ -5,7 +5,7 @@ export function Capabilities() {
   return (
     <section className="capabilities" data-scene="wave" data-scene-side="right" aria-labelledby="capabilities-title">
       <div className="wrap">
-        <div className="section-intro">
+        <div className="section-intro" data-parallax>
           <RevealLines id="capabilities-title" lines={["What I work on"]} />
           <p data-reveal style={delay(0.15)}>
             From agents and retrieval to the Flask and Vue apps around them. Each one is something I&apos;ve shipped in a
