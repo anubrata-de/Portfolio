@@ -951,10 +951,19 @@ textarea {
   position: relative;
   height: clamp(260px, 32vw, 420px);
   overflow: hidden;
+  /* the clouds measure their trip across in container units */
+  container-type: size;
+  /* skip the scene, and its motion, while it is off screen */
+  content-visibility: auto;
   border-block: 12px solid var(--ink);
 }
 
 .endcard__scene {
+  position: absolute;
+  inset: 0;
+}
+
+.endcard__layer {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1840,6 +1849,443 @@ textarea {
   }
 }
 
+/* ---------- moving drawings ----------
+ * Each drawing is a stack of layers that share one viewBox. The still parts are
+ * painted once; whole layers move or fade (cheap for the browser), and only a
+ * few small shapes animate inside a layer. Reduced motion turns all of it off,
+ * and the layers then line up into the original still drawing.
+ */
+
+.scene {
+  position: relative;
+  /* skip the drawing, and its motion, while it is off screen */
+  content-visibility: auto;
+}
+
+.scene--hero {
+  aspect-ratio: 600 / 460;
+}
+
+.scene__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* keeps the small moving shapes from repainting the still drawing below */
+.scene__fx {
+  will-change: transform;
+}
+
+/* the branch sways from where it enters the frame, at (232, 30) */
+.scene__sakura {
+  transform-origin: 38.667% 6.522%;
+  animation: branch-sway 7s ease-in-out infinite;
+}
+
+@keyframes branch-sway {
+  0%,
+  100% {
+    transform: rotate(-0.9deg);
+  }
+  50% {
+    transform: rotate(1.1deg);
+  }
+}
+
+.twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.55);
+  }
+}
+
+.shooting-star {
+  animation: shoot 9s linear -3s infinite;
+}
+
+@keyframes shoot {
+  0%,
+  60% {
+    opacity: 0;
+    transform: translate(-74px, -41px);
+  }
+  63%,
+  70% {
+    opacity: 1;
+  }
+  74%,
+  100% {
+    opacity: 0;
+    transform: translate(36px, 20px);
+  }
+}
+
+.petal {
+  animation: petal-fall 9s linear infinite;
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate(-70px, -88px);
+  }
+  12%,
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(64px, 78px);
+  }
+}
+
+.petal__spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: petal-spin 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes petal-spin {
+  from {
+    transform: translateX(-7px) rotate(-35deg) scaleX(1);
+  }
+  to {
+    transform: translateX(7px) rotate(45deg) scaleX(0.6);
+  }
+}
+
+.steam {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: steam 3.45s ease-out infinite;
+}
+
+@keyframes steam {
+  0% {
+    opacity: 0;
+    transform: translate(0, 10px) scaleY(0.8);
+  }
+  25% {
+    opacity: 0.8;
+  }
+  55% {
+    transform: translate(-3px, -10px) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(3px, -32px) scaleY(1.15);
+  }
+}
+
+/* the z's float up one after another */
+.snore {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: snore 4.2s ease-in-out infinite backwards;
+}
+
+@keyframes snore {
+  0% {
+    opacity: 0;
+    transform: translate(-4px, 8px) scale(0.6);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(4px, -7px) scale(1.04);
+  }
+  82%,
+  100% {
+    opacity: 0;
+    transform: translate(8px, -14px) scale(1.08);
+  }
+}
+
+/* the cat breathes from where it rests on the desk, at (96, 384) */
+.scene__cat {
+  transform-origin: 16% 83.5%;
+  animation: breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.012, 1.035);
+  }
+}
+
+.cat__tail {
+  transform-origin: 150px 372px;
+  animation: cat-tail 7s ease-in-out infinite;
+}
+
+@keyframes cat-tail {
+  0%,
+  68%,
+  100% {
+    transform: rotate(0);
+  }
+  74% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-1deg);
+  }
+  86% {
+    transform: rotate(4deg);
+  }
+  93% {
+    transform: rotate(0);
+  }
+}
+
+.cat__ear {
+  transform-origin: 39px 347px;
+  animation: cat-ear 9s ease-in-out infinite;
+}
+
+@keyframes cat-ear {
+  0%,
+  30%,
+  34%,
+  38%,
+  100% {
+    transform: rotate(0);
+  }
+  32% {
+    transform: rotate(-16deg);
+  }
+  36% {
+    transform: rotate(-10deg);
+  }
+}
+
+/* the yawn: the head tips back, the mouth opens wide, then it settles again */
+.cat__head {
+  transform-origin: 72px 366px;
+  animation: cat-head 12s ease-in-out infinite;
+}
+
+@keyframes cat-head {
+  0%,
+  58%,
+  88%,
+  100% {
+    transform: rotate(0);
+  }
+  64%,
+  79% {
+    transform: rotate(9deg);
+  }
+}
+
+.cat__mouth {
+  animation: cat-mouth 12s ease-in-out infinite;
+}
+
+@keyframes cat-mouth {
+  0%,
+  59%,
+  87%,
+  100% {
+    opacity: 1;
+  }
+  62%,
+  83% {
+    opacity: 0;
+  }
+}
+
+.cat__yawn {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: cat-yawn 12s ease-in-out infinite;
+}
+
+@keyframes cat-yawn {
+  0%,
+  60% {
+    opacity: 0;
+    transform: scale(1, 0.2);
+  }
+  63%,
+  82% {
+    opacity: 1;
+  }
+  67%,
+  79% {
+    transform: scale(1, 1);
+  }
+  73% {
+    transform: scale(1, 0.85);
+  }
+  85%,
+  100% {
+    opacity: 0;
+    transform: scale(1, 0.2);
+  }
+}
+
+/* end card: night fades to dawn as the sun comes up, then slowly back */
+.endcard__sun {
+  animation: sunrise 44s infinite;
+}
+
+@keyframes sunrise {
+  0% {
+    transform: translateY(10%);
+    animation-timing-function: ease-out;
+  }
+  14%,
+  50% {
+    transform: translateY(0);
+    animation-timing-function: ease-in-out;
+  }
+  76%,
+  86% {
+    transform: translateY(22%);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translateY(10%);
+  }
+}
+
+.endcard__veil {
+  opacity: 0;
+  animation: night-veil 44s infinite;
+}
+
+@keyframes night-veil {
+  0% {
+    opacity: 0.55;
+    animation-timing-function: ease-out;
+  }
+  14%,
+  50% {
+    opacity: 0;
+    animation-timing-function: ease-in-out;
+  }
+  76%,
+  86% {
+    opacity: 1;
+    animation-timing-function: ease-in;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+
+.endcard__cloud {
+  position: absolute;
+  top: var(--top);
+  left: 0;
+  width: auto;
+  height: var(--h);
+  aspect-ratio: var(--ratio);
+  overflow: visible;
+  transform: translateX(var(--x));
+  animation: cloud-drift 80s linear infinite;
+}
+
+/* from just off the left edge to just off the right edge */
+@keyframes cloud-drift {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100vw);
+    transform: translateX(100cqw);
+  }
+}
+
+.endcard__crows {
+  animation: crows-fly 26s linear -8s infinite;
+}
+
+@keyframes crows-fly {
+  0% {
+    transform: translateX(-82%);
+  }
+  72%,
+  100% {
+    transform: translateX(92%);
+  }
+}
+
+.crow {
+  animation: crow-bob 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes crow-bob {
+  from {
+    transform: translateY(-4px);
+  }
+  to {
+    transform: translateY(5px);
+  }
+}
+
+.crow__wings {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flap 0.36s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(-0.5);
+  }
+}
+
+/* カー appears as the crows pass the middle, in step with their flight */
+.crow__caw {
+  opacity: 0;
+  animation: caw 26s linear -8s infinite;
+}
+
+.crow__caw--late {
+  animation-delay: -4s;
+}
+
+@keyframes caw {
+  0%,
+  31% {
+    opacity: 0;
+  }
+  33%,
+  40% {
+    opacity: 1;
+  }
+  43%,
+  100% {
+    opacity: 0;
+  }
+}
+
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1850,6 +2296,12 @@ textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     transition-delay: 0s !important;
+  }
+
+  /* the drawings simply stay still */
+  .scene *,
+  .endcard__scene * {
+    animation: none !important;
   }
 
   .notes .note {
