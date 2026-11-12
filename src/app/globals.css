@@ -2080,45 +2080,45 @@ textarea {
 }
 
 /*
- * The cat's routine: one 15.3s loop shared by every part so they stay in step.
- *   4.0s  the big stretch, modelled on a real cat:
- *         chest drops and the body lengthens while both front legs push far
- *         forward; the head then throws back into a huge yawn with the eyes
- *         squeezed shut; the head comes down, the legs hold a moment, then
- *         everything folds back in
- *   9.3s  back to sleep for 10s, then the next stretch (19.3s, 34.6s, ...)
+ * The cat's routine: one 13.7s loop shared by every part so they stay in step.
+ *   4.0s  the big stretch-and-yawn, modelled on a real cat: the chest drops and
+ *         the body lengthens; at the same moment both front legs push far
+ *         forward and the head throws back into a huge yawn, eyes squeezed shut
+ *   5.1s  legs fully out, mouth wide open, both held
+ *   6.8s  together, the yawn closes and the legs fold back in
+ *   7.6s  asleep for about 10s, then the next stretch
  */
 .cat__head {
   transform-origin: 72px 366px;
-  animation: cat-head 15.3s ease-in-out infinite;
+  animation: cat-head 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-head {
   0%,
-  34.64%,
-  51.63%,
+  29.93%,
+  54.74%,
   100% {
     transform: rotate(0);
   }
-  38.56%,
-  47.06% {
+  35.04%,
+  49.64% {
     transform: rotate(26deg);
   }
 }
 
 .cat__mouth {
-  animation: cat-mouth 15.3s ease-in-out infinite;
+  animation: cat-mouth 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-mouth {
   0%,
-  35.29%,
-  50.98%,
+  30.29%,
+  53.65%,
   100% {
     opacity: 1;
   }
-  36.6%,
-  49.02% {
+  31.39%,
+  52.19% {
     opacity: 0;
   }
 }
@@ -2127,27 +2127,28 @@ textarea {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: 50% 0;
-  animation: cat-yawn 15.3s ease-in-out infinite;
+  animation: cat-yawn 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-yawn {
   0%,
-  35.95% {
+  30.66% {
     opacity: 0;
     transform: scale(1, 0.2);
   }
-  37.25%,
-  47.06% {
+  31.75%,
+  50.73% {
     opacity: 1;
   }
-  39.22%,
-  44.44% {
+  35.77%,
+  45.26%,
+  49.64% {
     transform: scale(1.2, 1.25);
   }
-  41.83% {
+  40.15% {
     transform: scale(1.15, 1.1);
   }
-  49.67%,
+  52.19%,
   100% {
     opacity: 0;
     transform: scale(1, 0.2);
@@ -2156,35 +2157,35 @@ textarea {
 
 .cat__squeeze {
   opacity: 0;
-  animation: cat-squeeze 15.3s ease-in-out infinite;
+  animation: cat-squeeze 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-squeeze {
   0%,
-  36.34%,
-  49.93%,
+  31.02%,
+  52.19%,
   100% {
     opacity: 0;
   }
-  36.86%,
-  49.41% {
+  31.75%,
+  51.46% {
     opacity: 1;
   }
 }
 
 .cat__eyes {
-  animation: cat-eyes 15.3s ease-in-out infinite;
+  animation: cat-eyes 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-eyes {
   0%,
-  36.34%,
-  49.93%,
+  31.02%,
+  52.19%,
   100% {
     opacity: 1;
   }
-  36.86%,
-  49.41% {
+  31.75%,
+  51.46% {
     opacity: 0;
   }
 }
@@ -2192,36 +2193,36 @@ textarea {
 /* the stretch: the chest drops and the body lengthens from its back end */
 .cat__body {
   transform-origin: 152px 382px;
-  animation: cat-body 15.3s ease-in-out infinite;
+  animation: cat-body 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-body {
   0%,
-  26.14%,
-  60.78%,
+  29.2%,
+  55.47%,
   100% {
     transform: scale(1, 1);
   }
-  32.03%,
-  54.9% {
+  35.77%,
+  49.64% {
     transform: scale(1.05, 0.9);
   }
 }
 
 /* the head draws back between the shoulders, out of the way of the legs */
 .cat__front {
-  animation: cat-front 15.3s ease-in-out infinite;
+  animation: cat-front 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-front {
   0%,
-  26.14%,
-  60.13%,
+  29.2%,
+  54.74%,
   100% {
     transform: translate(0, 0);
   }
-  31.37%,
-  54.9% {
+  35.04%,
+  49.64% {
     transform: translate(10px, 3px);
   }
 }
@@ -2230,24 +2231,24 @@ textarea {
 .cat__legs {
   opacity: 0;
   transform: translateY(-14px);
-  animation: cat-legs 15.3s ease-in-out infinite;
+  animation: cat-legs 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-legs {
   0%,
-  26.8% {
+  29.93% {
     opacity: 0;
     transform: translateY(-14px);
   }
-  28.76%,
-  59.48% {
+  31.75%,
+  54.01% {
     opacity: 1;
   }
-  30.07%,
-  56.86% {
+  32.85%,
+  52.19% {
     transform: translateY(0);
   }
-  60.78%,
+  55.47%,
   100% {
     opacity: 0;
     transform: translateY(-14px);
@@ -2257,7 +2258,7 @@ textarea {
 /* each arm reaches out from its shoulder... */
 .cat__arm {
   transform: scale(0.15, 1);
-  animation: cat-arm 15.3s ease-in-out infinite;
+  animation: cat-arm 13.7s ease-in-out infinite;
 }
 
 .cat__arm--far {
@@ -2270,13 +2271,13 @@ textarea {
 
 @keyframes cat-arm {
   0%,
-  26.8%,
-  59.48%,
+  29.93%,
+  54.74%,
   100% {
     transform: scale(0.15, 1);
   }
-  33.33%,
-  54.9% {
+  37.23%,
+  49.64% {
     transform: scale(1, 1);
   }
 }
@@ -2284,18 +2285,18 @@ textarea {
 /* ...and its paw rides along with the tip (arm length 54 x 0.85 = 45.9) */
 .cat__paw {
   transform: translateX(45.9px);
-  animation: cat-paw 15.3s ease-in-out infinite;
+  animation: cat-paw 13.7s ease-in-out infinite;
 }
 
 @keyframes cat-paw {
   0%,
-  26.8%,
-  59.48%,
+  29.93%,
+  54.74%,
   100% {
     transform: translateX(45.9px);
   }
-  33.33%,
-  54.9% {
+  37.23%,
+  49.64% {
     transform: translateX(0);
   }
 }
