@@ -197,7 +197,7 @@ export function HeroScene({ className }: { className?: string }) {
         ))}
       </svg>
 
-      {/* the cat: breathes all the time, flicks its tail, twitches an ear, and now and then yawns or has a long stretch */}
+      {/* the cat: breathes all the time, flicks its tail, twitches an ear, yawns now and then, and has a big stretch-and-yawn */}
       <svg viewBox={VIEW} className="scene__layer scene__cat" aria-hidden="true" focusable="false">
         <g className="cat__tail">
           <path d="M150 372 C 154 396, 110 398, 82 388" {...line} strokeWidth={3} filter="url(#wobble)" />
@@ -209,13 +209,30 @@ export function HeroScene({ className }: { className?: string }) {
             <rect x="70" y="340" width="56" height="34" rx="16" fill="url(#tone-light)" opacity={0.7} />
           </g>
         </g>
-        {/* front legs, drawn at full stretch; at rest they are tucked away under the chin */}
+        {/*
+          Front legs, drawn at full reach. Each arm grows out from the shoulder
+          while its paw slides along with the tip, so the paw keeps its shape.
+          At rest they are folded away under the chin.
+        */}
         <g className="cat__legs">
           <g filter="url(#wobble)">
-            {/* open at the back end, so each leg runs into the chest */}
-            <path d="M64 370.5 H21.5 a4.5 4.5 0 0 0 0 9 H64" {...solid("#fbfaf7")} strokeWidth={2.2} />
-            <path d="M64 373 H14.5 a4.5 4.5 0 0 0 0 9 H64" {...solid("#fbfaf7")} strokeWidth={2.2} />
-            <path d="M15.5 375.5 v4.5 M20 375.5 v4.5" {...line} strokeWidth={1.4} />
+            {/* the far leg reaches a little higher, so the two legs fan apart */}
+            <g className="cat__arm cat__arm--far">
+              <path d="M74 366.5 L 20 360.5 L 20 367 L 74 373.5" {...solid("#fbfaf7")} strokeWidth={2.1} />
+            </g>
+            <g className="cat__paw">
+              <g transform="rotate(-6 18 363.8)">
+                <ellipse cx="18" cy="363.8" rx="5.8" ry="4.2" {...solid("#fbfaf7")} strokeWidth={2.1} />
+                <path d="M14.6 361.8 v4 M18 361.4 v4.8" {...line} strokeWidth={1.3} />
+              </g>
+            </g>
+            <g className="cat__arm cat__arm--near">
+              <path d="M68 374.5 L 14 375.8 L 14 382 L 68 381.8" {...solid("#fbfaf7")} strokeWidth={2.1} />
+            </g>
+            <g className="cat__paw">
+              <ellipse cx="12" cy="378.4" rx="6" ry="4" {...solid("#fbfaf7")} strokeWidth={2.1} />
+              <path d="M8.5 376.6 v3.8 M12 376.2 v4.6" {...line} strokeWidth={1.3} />
+            </g>
           </g>
         </g>
         <g className="cat__front">
@@ -226,9 +243,11 @@ export function HeroScene({ className }: { className?: string }) {
             <g filter="url(#wobble)">
               <path d="M58 336 L 72 322 L 74 352 Z" {...solid("#fbfaf7")} />
               <circle cx="52" cy="352" r="22" {...solid("#fbfaf7")} />
-              <path d="M40 352 q4 4 8 0 M56 352 q4 4 8 0" {...line} strokeWidth={1.8} />
               <path d="M30 360 h-10 M30 364 l-9 4 M74 360 h10 M74 364 l9 4" {...line} strokeWidth={1.3} />
             </g>
+            {/* sleepy closed eyes, swapped for squeezed-shut > < during the big yawn */}
+            <path className="cat__eyes" d="M40 352 q4 4 8 0 M56 352 q4 4 8 0" {...line} strokeWidth={1.8} />
+            <path className="cat__squeeze" d="M41 349 L 47 352 L 41 355 M63 349 L 57 352 L 63 355" {...line} strokeWidth={1.8} />
             <path className="cat__mouth" d="M51 360 l2 2 l2 -2" {...line} strokeWidth={1.5} />
             <g className="cat__yawn">
               <ellipse cx="53" cy="365" rx="4.6" ry="5.8" fill="#b8384f" stroke={INK} strokeWidth={1.5} />
