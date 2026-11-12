@@ -112,10 +112,6 @@ export function HeroScene({ className }: { className?: string }) {
           <path d="M430 356 l6 -6 l6 6 l6 -6 l6 6 M500 356 l6 -6 l6 6 l6 -6 l6 6" fill="none" stroke="#e2442f" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
           <ellipse cx="486" cy="318" rx="72" ry="14" {...solid("#f3dcb0")} />
           <path d="M436 318 c8 -6 14 6 22 0 s14 6 22 0 s14 6 22 0" {...line} strokeWidth={1.6} />
-          <ellipse cx="454" cy="314" rx="13" ry="7.5" {...solid("#ffffff")} strokeWidth={1.8} />
-          <ellipse cx="456" cy="314" rx="5.5" ry="4" fill="#ffc94d" stroke={INK} strokeWidth={1.4} />
-          <circle cx="514" cy="314" r="10" {...solid("#ffffff")} strokeWidth={1.8} />
-          <path d="M514 314 m-1 0 a2 2 0 0 1 3 0 a4 4 0 0 1 -5 3 a6 6 0 0 1 6 -8" fill="none" stroke="#e2442f" strokeWidth={1.6} strokeLinecap="round" />
           <path d="M466 386 h40 v8 h-40 z" {...solid("#fbfaf7")} strokeWidth={2} />
         </g>
         {/* manga sound effect: シーン ("shiin"), the sound of a very quiet room */}
@@ -182,6 +178,15 @@ export function HeroScene({ className }: { className?: string }) {
             </g>
           ))}
         </g>
+        {/* the egg and the naruto look like a pair of eyes, so they act like them */}
+        <g className="ramen-eye">
+          <ellipse cx="454" cy="314" rx="13" ry="7.5" {...solid("#ffffff")} strokeWidth={1.8} filter="url(#wobble)" />
+          <ellipse className="ramen-eye__yolk" cx="456" cy="314" rx="5.5" ry="4" fill="#ffc94d" stroke={INK} strokeWidth={1.4} />
+        </g>
+        <g className="ramen-eye">
+          <circle cx="514" cy="314" r="10" {...solid("#ffffff")} strokeWidth={1.8} filter="url(#wobble)" />
+          <path className="naruto-swirl" d="M514 314 m-1 0 a2 2 0 0 1 3 0 a4 4 0 0 1 -5 3 a6 6 0 0 1 6 -8" fill="none" stroke="#e2442f" strokeWidth={1.6} strokeLinecap="round" />
+        </g>
         {STEAM.map((d, i) => (
           <path key={d} className="steam" style={{ animationDelay: `${-i * 1.15}s` }} d={d} {...line} strokeWidth={1.8} opacity={0.75} />
         ))}
@@ -192,30 +197,43 @@ export function HeroScene({ className }: { className?: string }) {
         ))}
       </svg>
 
-      {/* the cat: breathes all the time, flicks its tail, twitches an ear and yawns now and then */}
+      {/* the cat: breathes all the time, flicks its tail, twitches an ear, and now and then yawns or has a long stretch */}
       <svg viewBox={VIEW} className="scene__layer scene__cat" aria-hidden="true" focusable="false">
         <g className="cat__tail">
           <path d="M150 372 C 154 396, 110 398, 82 388" {...line} strokeWidth={3} filter="url(#wobble)" />
         </g>
-        <g filter="url(#wobble)">
-          <ellipse cx="96" cy="356" rx="58" ry="26" {...solid("#fbfaf7")} />
-          <path d="M108 336 c6 6 6 14 0 20 M126 338 c6 6 6 14 0 20" {...line} strokeWidth={1.8} />
-          <rect x="70" y="340" width="56" height="34" rx="16" fill="url(#tone-light)" opacity={0.7} />
-        </g>
-        <g className="cat__head">
-          <g className="cat__ear">
-            <path d="M30 356 L 34 324 L 48 338 Z" {...solid("#fbfaf7")} filter="url(#wobble)" />
-          </g>
+        <g className="cat__body">
           <g filter="url(#wobble)">
-            <path d="M58 336 L 72 322 L 74 352 Z" {...solid("#fbfaf7")} />
-            <circle cx="52" cy="352" r="22" {...solid("#fbfaf7")} />
-            <path d="M40 352 q4 4 8 0 M56 352 q4 4 8 0" {...line} strokeWidth={1.8} />
-            <path d="M30 360 h-10 M30 364 l-9 4 M74 360 h10 M74 364 l9 4" {...line} strokeWidth={1.3} />
+            <ellipse cx="96" cy="356" rx="58" ry="26" {...solid("#fbfaf7")} />
+            <path d="M108 336 c6 6 6 14 0 20 M126 338 c6 6 6 14 0 20" {...line} strokeWidth={1.8} />
+            <rect x="70" y="340" width="56" height="34" rx="16" fill="url(#tone-light)" opacity={0.7} />
           </g>
-          <path className="cat__mouth" d="M51 360 l2 2 l2 -2" {...line} strokeWidth={1.5} />
-          <g className="cat__yawn">
-            <ellipse cx="53" cy="365" rx="4.6" ry="5.8" fill="#b8384f" stroke={INK} strokeWidth={1.5} />
-            <ellipse cx="53" cy="368.6" rx="2.6" ry="1.6" fill="#ff9fb4" />
+        </g>
+        {/* front legs, drawn at full stretch; at rest they are tucked away under the chin */}
+        <g className="cat__legs">
+          <g filter="url(#wobble)">
+            {/* open at the back end, so each leg runs into the chest */}
+            <path d="M64 370.5 H21.5 a4.5 4.5 0 0 0 0 9 H64" {...solid("#fbfaf7")} strokeWidth={2.2} />
+            <path d="M64 373 H14.5 a4.5 4.5 0 0 0 0 9 H64" {...solid("#fbfaf7")} strokeWidth={2.2} />
+            <path d="M15.5 375.5 v4.5 M20 375.5 v4.5" {...line} strokeWidth={1.4} />
+          </g>
+        </g>
+        <g className="cat__front">
+          <g className="cat__head">
+            <g className="cat__ear">
+              <path d="M30 356 L 34 324 L 48 338 Z" {...solid("#fbfaf7")} filter="url(#wobble)" />
+            </g>
+            <g filter="url(#wobble)">
+              <path d="M58 336 L 72 322 L 74 352 Z" {...solid("#fbfaf7")} />
+              <circle cx="52" cy="352" r="22" {...solid("#fbfaf7")} />
+              <path d="M40 352 q4 4 8 0 M56 352 q4 4 8 0" {...line} strokeWidth={1.8} />
+              <path d="M30 360 h-10 M30 364 l-9 4 M74 360 h10 M74 364 l9 4" {...line} strokeWidth={1.3} />
+            </g>
+            <path className="cat__mouth" d="M51 360 l2 2 l2 -2" {...line} strokeWidth={1.5} />
+            <g className="cat__yawn">
+              <ellipse cx="53" cy="365" rx="4.6" ry="5.8" fill="#b8384f" stroke={INK} strokeWidth={1.5} />
+              <ellipse cx="53" cy="368.6" rx="2.6" ry="1.6" fill="#ff9fb4" />
+            </g>
           </g>
         </g>
       </svg>
