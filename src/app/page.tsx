@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { featured, projects } from "@/data/projects";
@@ -11,6 +12,11 @@ import { Notes } from "@/components/home/Notes";
 import { HeroScene } from "@/components/doodles/HeroScene";
 import { Arrow, Petal, TileDoodle } from "@/components/doodles/Doodles";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
+
+// The layout's "%s | Anubrata De" template skips the page in its own segment, so set it in full.
+export const metadata: Metadata = {
+  title: { absolute: `Home | ${site.name}` },
+};
 
 /** Fixed tilts for the pinboard so it looks hand-placed but never shifts between renders. */
 const tilts = [-3, 2.5, -1.5, 3, -2.5, 1.5, -2];
