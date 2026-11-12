@@ -1852,8 +1852,8 @@ textarea {
 /* ---------- moving drawings ----------
  * Each drawing is a stack of layers that share one viewBox. The still parts are
  * painted once; whole layers move or fade (cheap for the browser), and only a
- * few small shapes animate inside a layer. Reduced motion turns all of it off,
- * and the layers then line up into the original still drawing.
+ * few small shapes animate inside a layer. They animate for every visitor,
+ * including those with reduced motion on.
  */
 
 .scene {
@@ -2289,19 +2289,20 @@ textarea {
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  /* everything holds still except the two drawings, which always animate */
+  *:not(.scene *, .endcard__scene *) {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     transition-delay: 0s !important;
   }
 
-  /* the drawings simply stay still */
-  .scene *,
-  .endcard__scene * {
-    animation: none !important;
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
   }
 
   .notes .note {

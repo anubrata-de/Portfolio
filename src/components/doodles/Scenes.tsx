@@ -78,7 +78,7 @@ const JA_FONT = "'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', 'Noto Sans CJK JP
  * Stacked layers share one viewBox: the sky, the sun, the clouds, a night veil
  * that fades away as the sun comes up, the rooftops, and a few crows crossing.
  * Every moving layer moves as a whole (position or fade), which the browser can
- * do without repainting. With reduced motion on, it is the still dawn drawing.
+ * do without repainting. With the motion paused, it is the still dawn drawing.
  */
 export function EndCardScene() {
   const wire = (y1: number, y2: number, sag: number) => `M-20 ${y1} Q 140 ${y1 + sag} 262 ${y2} Q 620 ${y2 + sag * 1.6} 982 ${y2 + 4} Q 1100 ${y2 + sag} 1220 ${y1 + 10}`;

@@ -7,8 +7,8 @@ import type { CSSProperties } from "react";
  * It is drawn as stacked layers that share one viewBox. The bottom layer holds
  * everything that stays still, and the parts that move sit on their own layers
  * above it, so a twinkling star never makes the browser repaint the whole desk.
- * The motion lives in globals.css and switches off when reduced motion is on;
- * with no motion, the layers line up into the original still drawing.
+ * The motion lives in globals.css; with it paused, the layers line up into
+ * the original still drawing.
  */
 const INK = "#1d1b22";
 const VIEW = "0 0 600 460";
