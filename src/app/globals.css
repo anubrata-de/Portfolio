@@ -2081,7 +2081,6 @@ textarea {
 
 /*
  * The cat's routine: one 20s loop shared by every part so they stay in step.
- *   1.3s  a small sleepy yawn (head tips back a little, mouth opens)
  *   9.0s  the big stretch, modelled on a real cat:
  *         chest drops and the body lengthens while both front legs push far
  *         forward; the head then throws back into a huge yawn with the eyes
@@ -2096,16 +2095,10 @@ textarea {
 
 @keyframes cat-head {
   0%,
-  6.5%,
-  24.5%,
   51.5%,
   64.5%,
   100% {
     transform: rotate(0);
-  }
-  10%,
-  19.25% {
-    transform: rotate(9deg);
   }
   54.5%,
   61% {
@@ -2119,15 +2112,11 @@ textarea {
 
 @keyframes cat-mouth {
   0%,
-  7.25%,
-  24%,
   52%,
   64%,
   100% {
     opacity: 1;
   }
-  8.75%,
-  21.5%,
   53%,
   62.5% {
     opacity: 0;
@@ -2142,29 +2131,11 @@ textarea {
 }
 
 @keyframes cat-yawn {
-  /* the small yawn */
   0%,
-  7.5% {
-    opacity: 0;
-    transform: scale(1, 0.2);
-  }
-  8.75%,
-  20.75% {
-    opacity: 1;
-  }
-  11.25%,
-  17.5% {
-    transform: scale(1, 1);
-  }
-  14.5% {
-    transform: scale(1, 0.85);
-  }
-  22.5%,
   52.5% {
     opacity: 0;
     transform: scale(1, 0.2);
   }
-  /* the big one, mid-stretch */
   53.5%,
   61% {
     opacity: 1;

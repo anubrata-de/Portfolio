@@ -197,7 +197,7 @@ export function HeroScene({ className }: { className?: string }) {
         ))}
       </svg>
 
-      {/* the cat: breathes all the time, flicks its tail, twitches an ear, yawns now and then, and has a big stretch-and-yawn */}
+      {/* the cat: breathes all the time, flicks its tail, twitches an ear, and now and then has a big stretch-and-yawn */}
       <svg viewBox={VIEW} className="scene__layer scene__cat" aria-hidden="true" focusable="false">
         <g className="cat__tail">
           <path d="M150 372 C 154 396, 110 398, 82 388" {...line} strokeWidth={3} filter="url(#wobble)" />
