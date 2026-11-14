@@ -106,6 +106,20 @@ const tileDoodles = {
       <circle cx="31" cy="22" r="1.6" fill="currentColor" />
     </>
   ),
+  book: (
+    <>
+      <path d="M20 10 C 15 7, 9 7, 5 9 V 32 C 9 30, 15 30, 20 33 C 25 30, 31 30, 35 32 V 9 C 31 7, 25 7, 20 10 Z" {...ink} fill="#fff" />
+      <path d="M20 10 V 33" {...ink} />
+      <path d="M9 15 C 12 14, 15 14, 17 15 M23 15 C 25 14, 28 14, 31 15 M9 21 C 12 20, 15 20, 17 21" {...ink} strokeWidth={1.5} />
+    </>
+  ),
+  mic: (
+    <>
+      <rect x="14" y="4" width="12" height="20" rx="6" {...ink} fill="#ffc5d5" />
+      <path d="M9 18 C 9 25, 14 29, 20 29 C 26 29, 31 25, 31 18 M20 29 V 35 M14 35 H26" {...ink} />
+      <path d="M17 11 H23 M17 16 H23" {...ink} strokeWidth={1.5} />
+    </>
+  ),
   cup: (
     <>
       <path d="M8 14 H28 V 26 C 28 31, 24 34, 18 34 C 12 34, 8 31, 8 26 Z" {...ink} />

@@ -3,15 +3,15 @@ import Link from "next/link";
 import { site } from "@/data/site";
 import { toolkit } from "@/data/skills";
 import { episodes } from "@/data/home";
-import { arcs, languages } from "@/data/journey";
+import { achievements, arcs, languages, volunteering } from "@/data/journey";
 import { Episode } from "@/components/ui/Episode";
 import { FAQ } from "@/components/about/FAQ";
-import { Ring } from "@/components/doodles/Doodles";
+import { Ring, TileDoodle } from "@/components/doodles/Doodles";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Anubrata De studies data science at IIT Madras (BS, 2023–2027), builds LLM agents and full-stack apps, and served as Secretary of Nilgiri House.",
+    "Anubrata De studies data science at IIT Madras (BS, 2023–2027), builds LLM agents and full-stack apps, led Nilgiri House as Secretary, and placed 2nd at the India College Chess Championship.",
 };
 
 const facts = [
@@ -80,22 +80,76 @@ export default function AboutPage() {
 
       <section className="project__section" aria-labelledby="arcs-title">
         <h2 id="arcs-title" className="project__h2">
-          Story arcs so far
+          Leadership and experience <span className="h2-note">story arcs so far</span>
         </h2>
         <ol className="arcs">
           {arcs.map((a, i) => (
             <li key={`${a.role}-${a.when}`} className="arc">
               <p className="arc__no">Arc {i + 1}</p>
               <div>
-                <p className="arc__when">{a.when}</p>
+                <p className="arc__when">
+                  {a.when}
+                  <span className={`arc__kind arc__kind--${a.kind.toLowerCase()}`}>{a.kind}</span>
+                </p>
                 <h3 className="arc__role">
                   {a.role}, <span>{a.org}</span>
                 </h3>
                 <p className="arc__detail">{a.detail}</p>
+                {a.points && (
+                  <ul className="arc__points">
+                    {a.points.map((pt) => (
+                      <li key={pt}>{pt}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="project__section" aria-labelledby="quests-title">
+        <h2 id="quests-title" className="project__h2">
+          Volunteering <span className="h2-note">side quests</span>
+        </h2>
+        <ul className="quests">
+          {volunteering.map((v) => (
+            <li key={v.event} className="quest">
+              <span className="tape" aria-hidden="true" />
+              <p className="quest__when">{v.when}</p>
+              <h3 className="quest__role">{v.role}</h3>
+              <p className="quest__event">{v.event}</p>
+              <p className="quest__detail">{v.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="project__section" aria-labelledby="trophies-title">
+        <h2 id="trophies-title" className="project__h2">
+          Achievements <span className="h2-note">trophy shelf</span>
+        </h2>
+        <div className="shelf">
+          {achievements.map((g) => (
+            <section key={g.name} className="shelf__group" aria-labelledby={`shelf-${g.doodle}`}>
+              <h3 id={`shelf-${g.doodle}`} className="shelf__name">
+                <TileDoodle name={g.doodle} className="shelf__doodle" />
+                {g.name}
+              </h3>
+              <ul className="shelf__items">
+                {g.items.map((t) => (
+                  <li key={`${t.title}-${t.meta}`} className="trophy">
+                    <span className={`medal medal--${t.tone}`}>{t.badge}</span>
+                    <span>
+                      <span className="trophy__title">{t.title}</span>
+                      <span className="trophy__meta">{t.meta}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
       </section>
 
       <section className="project__section" aria-labelledby="habits-title">
