@@ -2915,6 +2915,51 @@ textarea {
   }
 }
 
+/* whiskers twitch with each nose wiggle, tips flicking up */
+.bunny__whiskers {
+  animation-duration: 2.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.bunny__whiskers--left {
+  transform-origin: 223px 114px;
+  animation-name: bunny-whiskers-left;
+}
+
+.bunny__whiskers--right {
+  transform-origin: 281px 114px;
+  animation-name: bunny-whiskers-right;
+}
+
+@keyframes bunny-whiskers-left {
+  0%,
+  60%,
+  72%,
+  84%,
+  100% {
+    transform: rotate(0);
+  }
+  66%,
+  78% {
+    transform: rotate(13deg);
+  }
+}
+
+@keyframes bunny-whiskers-right {
+  0%,
+  60%,
+  72%,
+  84%,
+  100% {
+    transform: rotate(0);
+  }
+  66%,
+  78% {
+    transform: rotate(-13deg);
+  }
+}
+
 .bunny__nose {
   transform-box: fill-box;
   transform-origin: center;
@@ -3214,12 +3259,12 @@ textarea {
 }
 
 .puppy__leg--near {
-  transform-origin: 214px 186px;
+  transform-origin: 244px 186px;
   animation-name: puppy-tap-near;
 }
 
 .puppy__leg--far {
-  transform-origin: 216px 176px;
+  transform-origin: 246px 176px;
   animation-name: puppy-tap-far;
 }
 
@@ -3486,7 +3531,7 @@ textarea {
 
 .puppy__front {
   opacity: 0;
-  transform-origin: 216px 142px;
+  transform-origin: 262px 148px;
   animation: puppy-front 10s ease-out infinite;
 }
 
@@ -3514,7 +3559,7 @@ textarea {
 
 /* thinking: the nose tips up toward the "?" */
 .puppy__tilt {
-  transform-origin: 226px 136px;
+  transform-origin: 262px 148px;
   animation: puppy-tilt 10s ease-in-out infinite;
 }
 
@@ -3555,7 +3600,7 @@ textarea {
 }
 
 .puppy__ear {
-  transform-origin: 245px 88px;
+  transform-origin: 290px 86px;
   animation: puppy-ear 6s ease-in-out infinite;
 }
 
