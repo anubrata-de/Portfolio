@@ -2795,10 +2795,9 @@ textarea {
   }
 }
 
-/* the arm rises from its side, waves three times, and comes back down */
+/* the right arm swings out and up from its side, waves three times, and comes back down */
 .bunny__arm {
-  transform-origin: 280px 150px;
-  transform: rotate(125deg);
+  transform-origin: 277px 151px;
   animation: bunny-wave 9s ease-in-out infinite;
 }
 
@@ -2806,18 +2805,18 @@ textarea {
   0%,
   34%,
   100% {
-    transform: rotate(125deg);
+    transform: rotate(0deg);
   }
   4%,
   12%,
   20%,
   28% {
-    transform: rotate(0deg);
+    transform: rotate(-140deg);
   }
   8%,
   16%,
   24% {
-    transform: rotate(16deg);
+    transform: rotate(-122deg);
   }
 }
 
@@ -2937,11 +2936,12 @@ textarea {
 }
 
 /*
- * The shiba (10s loop):
- *   0–48%   types; code lines fill the screen to a カタカタ
- *   50–74%  ships it: a ✓, a happy paw in the air, ^ ^ eyes, a little bounce
+ * The corgi (10s loop), after a clip of a corgi typing like a person:
+ *   0–48%   both paws tap at the keys in turn; code fills the screen to a カタカタ
+ *   50–74%  ships it (a ✓) and turns to look straight at you, pleased
  *   74–78%  the screen clears
- *   78–92%  head tilts at a "?" while it thinks of the next one
+ *   78–92%  head tilts up at a "?" while it thinks of the next one
+ *   92%     back to typing
  */
 .code-line {
   transform-box: fill-box;
@@ -3113,29 +3113,28 @@ textarea {
   animation-name: code-line-6;
 }
 
-.shiba__sfx {
-  opacity: 0;
-  animation: shiba-sfx 10s linear infinite;
+.puppy__sfx {
+  animation: puppy-sfx 10s linear infinite;
 }
 
-@keyframes shiba-sfx {
+@keyframes puppy-sfx {
   0%,
-  4%,
-  47%,
+  45%,
+  94%,
   100% {
-    opacity: 0;
-  }
-  6%,
-  45% {
     opacity: 1;
   }
+  47%,
+  92% {
+    opacity: 0;
+  }
 }
 
-.shiba__sfx-jitter {
-  animation: shiba-jitter 0.24s steps(2, end) infinite;
+.puppy__sfx-jitter {
+  animation: puppy-jitter 0.24s steps(2, end) infinite;
 }
 
-@keyframes shiba-jitter {
+@keyframes puppy-jitter {
   from {
     transform: translate(0, 0);
   }
@@ -3144,14 +3143,14 @@ textarea {
   }
 }
 
-.shiba__ship {
+.puppy__ship {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: shiba-ship 10s ease-out infinite;
+  animation: puppy-ship 10s ease-out infinite;
 }
 
-@keyframes shiba-ship {
+@keyframes puppy-ship {
   0%,
   49% {
     opacity: 0;
@@ -3173,12 +3172,12 @@ textarea {
   }
 }
 
-.shiba__sparks {
+.puppy__sparks {
   opacity: 0;
-  animation: shiba-sparks 10s ease-out infinite;
+  animation: puppy-sparks 10s ease-out infinite;
 }
 
-@keyframes shiba-sparks {
+@keyframes puppy-sparks {
   0%,
   50%,
   70%,
@@ -3191,104 +3190,376 @@ textarea {
   }
 }
 
-/* two little bounces of joy */
-.shiba {
-  animation: shiba-bounce 10s ease-in-out infinite;
+.puppy {
+  animation: puppy-bounce 10s ease-in-out infinite;
 }
 
-@keyframes shiba-bounce {
+@keyframes puppy-bounce {
   0%,
   54%,
   60%,
-  66%,
   100% {
     transform: translateY(0);
   }
   57% {
-    transform: translateY(-8px);
-  }
-  63% {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
   }
 }
 
-.shiba__tail {
-  transform-origin: 310px 210px;
-  animation: shiba-wag 0.45s ease-in-out infinite alternate;
+/* paws tap at the keys in turn, pivoting at the shoulder */
+.puppy__leg {
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-@keyframes shiba-wag {
-  from {
-    transform: rotate(-10deg);
+.puppy__leg--near {
+  transform-origin: 214px 186px;
+  animation-name: puppy-tap-near;
+}
+
+.puppy__leg--far {
+  transform-origin: 216px 176px;
+  animation-name: puppy-tap-far;
+}
+
+@keyframes puppy-tap-near {
+  0% {
+    transform: rotate(0);
   }
-  to {
-    transform: rotate(12deg);
+  1.5% {
+    transform: rotate(5deg);
   }
-}
-
-/* the typing paw taps all the time; for the celebration it is thrown up in the air */
-.shiba__pose {
-  transform-origin: 276px 198px;
-  animation: shiba-pose 10s ease-in-out infinite;
-}
-
-@keyframes shiba-pose {
-  0%,
-  51%,
-  72%,
+  3% {
+    transform: rotate(0);
+  }
+  4.5% {
+    transform: rotate(5deg);
+  }
+  6% {
+    transform: rotate(0);
+  }
+  7.5% {
+    transform: rotate(5deg);
+  }
+  9% {
+    transform: rotate(0);
+  }
+  10.5% {
+    transform: rotate(5deg);
+  }
+  12% {
+    transform: rotate(0);
+  }
+  13.5% {
+    transform: rotate(5deg);
+  }
+  15% {
+    transform: rotate(0);
+  }
+  16.5% {
+    transform: rotate(5deg);
+  }
+  18% {
+    transform: rotate(0);
+  }
+  19.5% {
+    transform: rotate(5deg);
+  }
+  21% {
+    transform: rotate(0);
+  }
+  22.5% {
+    transform: rotate(5deg);
+  }
+  24% {
+    transform: rotate(0);
+  }
+  25.5% {
+    transform: rotate(5deg);
+  }
+  27% {
+    transform: rotate(0);
+  }
+  28.5% {
+    transform: rotate(5deg);
+  }
+  30% {
+    transform: rotate(0);
+  }
+  31.5% {
+    transform: rotate(5deg);
+  }
+  33% {
+    transform: rotate(0);
+  }
+  34.5% {
+    transform: rotate(5deg);
+  }
+  36% {
+    transform: rotate(0);
+  }
+  37.5% {
+    transform: rotate(5deg);
+  }
+  39% {
+    transform: rotate(0);
+  }
+  40.5% {
+    transform: rotate(5deg);
+  }
+  42% {
+    transform: rotate(0);
+  }
+  43.5% {
+    transform: rotate(5deg);
+  }
+  45% {
+    transform: rotate(0);
+  }
+  46.5% {
+    transform: rotate(5deg);
+  }
+  48% {
+    transform: rotate(0);
+  }
+  92% {
+    transform: rotate(0);
+  }
+  93.5% {
+    transform: rotate(5deg);
+  }
+  95% {
+    transform: rotate(0);
+  }
+  96.5% {
+    transform: rotate(5deg);
+  }
+  98% {
+    transform: rotate(0);
+  }
   100% {
     transform: rotate(0);
   }
-  55%,
-  68% {
-    transform: rotate(70deg);
+}
+
+@keyframes puppy-tap-far {
+  0% {
+    transform: rotate(5deg);
   }
-}
-
-.shiba__tap {
-  transform-origin: 276px 198px;
-  animation: shiba-tap 0.22s ease-in-out infinite alternate;
-}
-
-@keyframes shiba-tap {
-  from {
+  1.5% {
     transform: rotate(0);
   }
-  to {
-    transform: rotate(-4deg);
+  3% {
+    transform: rotate(5deg);
+  }
+  4.5% {
+    transform: rotate(0);
+  }
+  6% {
+    transform: rotate(5deg);
+  }
+  7.5% {
+    transform: rotate(0);
+  }
+  9% {
+    transform: rotate(5deg);
+  }
+  10.5% {
+    transform: rotate(0);
+  }
+  12% {
+    transform: rotate(5deg);
+  }
+  13.5% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(5deg);
+  }
+  16.5% {
+    transform: rotate(0);
+  }
+  18% {
+    transform: rotate(5deg);
+  }
+  19.5% {
+    transform: rotate(0);
+  }
+  21% {
+    transform: rotate(5deg);
+  }
+  22.5% {
+    transform: rotate(0);
+  }
+  24% {
+    transform: rotate(5deg);
+  }
+  25.5% {
+    transform: rotate(0);
+  }
+  27% {
+    transform: rotate(5deg);
+  }
+  28.5% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(5deg);
+  }
+  31.5% {
+    transform: rotate(0);
+  }
+  33% {
+    transform: rotate(5deg);
+  }
+  34.5% {
+    transform: rotate(0);
+  }
+  36% {
+    transform: rotate(5deg);
+  }
+  37.5% {
+    transform: rotate(0);
+  }
+  39% {
+    transform: rotate(5deg);
+  }
+  40.5% {
+    transform: rotate(0);
+  }
+  42% {
+    transform: rotate(5deg);
+  }
+  43.5% {
+    transform: rotate(0);
+  }
+  45% {
+    transform: rotate(5deg);
+  }
+  46.5% {
+    transform: rotate(0);
+  }
+  48% {
+    transform: rotate(0);
+  }
+  91% {
+    transform: rotate(0);
+  }
+  92% {
+    transform: rotate(5deg);
+  }
+  93.5% {
+    transform: rotate(0);
+  }
+  95% {
+    transform: rotate(5deg);
+  }
+  96.5% {
+    transform: rotate(0);
+  }
+  98% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(5deg);
   }
 }
 
-.shiba__head {
-  transform-origin: 288px 156px;
-  animation: shiba-head 10s ease-in-out infinite;
+/* the head turns: profile while typing, facing you once it ships */
+.puppy__profile {
+  animation: puppy-profile 10s linear infinite;
 }
 
-@keyframes shiba-head {
+@keyframes puppy-profile {
   0%,
-  50%,
-  70%,
+  52%,
+  70.5%,
+  100% {
+    opacity: 1;
+  }
+  52.5%,
+  70% {
+    opacity: 0;
+  }
+}
+
+.puppy__front {
+  opacity: 0;
+  transform-origin: 216px 142px;
+  animation: puppy-front 10s ease-out infinite;
+}
+
+@keyframes puppy-front {
+  0%,
+  52% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  52.5% {
+    opacity: 1;
+    transform: scale(0.96);
+  }
+  54%,
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70.5%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* thinking: the nose tips up toward the "?" */
+.puppy__tilt {
+  transform-origin: 226px 136px;
+  animation: puppy-tilt 10s ease-in-out infinite;
+}
+
+@keyframes puppy-tilt {
+  0%,
   78%,
   92%,
   100% {
     transform: rotate(0);
   }
-  56%,
-  64% {
-    transform: rotate(5deg);
+  81%,
+  89% {
+    transform: rotate(8deg);
+  }
+}
+
+.puppy__look {
+  animation: puppy-look 10s ease-in-out infinite;
+}
+
+@keyframes puppy-look {
+  0%,
+  78%,
+  92%,
+  100% {
+    transform: translate(0, 0);
   }
   81%,
   89% {
-    transform: rotate(-12deg);
+    transform: translate(0.5px, -1.5px);
   }
 }
 
-.shiba__ear {
-  transform-origin: 312px 92px;
-  animation: shiba-ear 6s ease-in-out infinite;
+.puppy__blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: buddy-blink 4s ease-in-out infinite;
 }
 
-@keyframes shiba-ear {
+.puppy__ear {
+  transform-origin: 245px 88px;
+  animation: puppy-ear 6s ease-in-out infinite;
+}
+
+@keyframes puppy-ear {
   0%,
   30%,
   33%,
@@ -3297,103 +3568,21 @@ textarea {
     transform: rotate(0);
   }
   31.5% {
-    transform: rotate(12deg);
+    transform: rotate(10deg);
   }
   34.5% {
-    transform: rotate(8deg);
+    transform: rotate(6deg);
   }
 }
 
-.shiba__open {
-  animation: shiba-open 10s linear infinite;
-}
-
-@keyframes shiba-open {
-  0%,
-  51.5%,
-  70.5%,
-  100% {
-    opacity: 1;
-  }
-  52%,
-  70% {
-    opacity: 0;
-  }
-}
-
-.shiba__happy {
-  opacity: 0;
-  animation: shiba-happy 10s linear infinite;
-}
-
-@keyframes shiba-happy {
-  0%,
-  51.5%,
-  70.5%,
-  100% {
-    opacity: 0;
-  }
-  52%,
-  70% {
-    opacity: 1;
-  }
-}
-
-/* eyes look toward the screen while typing, and up while thinking */
-.shiba__look {
-  animation: shiba-look 10s ease-in-out infinite;
-}
-
-@keyframes shiba-look {
-  0%,
-  50%,
-  78%,
-  92%,
-  100% {
-    transform: translate(-1.5px, 0);
-  }
-  81%,
-  89% {
-    transform: translate(-0.5px, -2px);
-  }
-}
-
-.shiba__blink {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: buddy-blink 3.8s ease-in-out infinite;
-}
-
-.shiba__tongue {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: 50% 0;
-  animation: shiba-tongue 10s ease-out infinite;
-}
-
-@keyframes shiba-tongue {
-  0%,
-  52%,
-  69%,
-  100% {
-    opacity: 0;
-    transform: scaleY(0.3);
-  }
-  54%,
-  67% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
-.shiba__q {
+.puppy__q {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: 50% 100%;
-  animation: shiba-q 10s ease-out infinite;
+  animation: puppy-q 10s ease-out infinite;
 }
 
-@keyframes shiba-q {
+@keyframes puppy-q {
   0%,
   79% {
     opacity: 0;

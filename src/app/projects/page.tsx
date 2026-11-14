@@ -4,7 +4,7 @@ import { categories, projects } from "@/data/projects";
 import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
-import { ShibaBuddy } from "@/components/doodles/Buddies";
+import { PuppyBuddy } from "@/components/doodles/Buddies";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -25,7 +25,7 @@ export default function WorkPage() {
           </p>
         </div>
         <div className="page__buddy">
-          <ShibaBuddy />
+          <PuppyBuddy />
         </div>
       </header>
 
