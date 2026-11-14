@@ -5,12 +5,13 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SketchDefs } from "@/components/doodles/SketchDefs";
 import { site } from "@/data/site";
 import "./globals.css";
+import { siteUrl } from "@/data/site-url";
 
 const sans = Instrument_Sans({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const hand = Nothing_You_Could_Do({ variable: "--font-hand", subsets: ["latin"], weight: "400", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name}, data science and LLM engineering`,
     template: `%s | ${site.name}`,

@@ -6,7 +6,8 @@ const isDev = process.env.NODE_ENV !== "production";
  * Content Security Policy. Next.js injects small inline scripts to boot the page,
  * so script-src needs 'unsafe-inline' unless you add per-request nonces (which
  * would make every page dynamic). Everything else is locked to this origin,
- * plus Formspree for the optional contact form.
+ * plus Formspree for the optional contact form. No frames, no workers, and any
+ * stray http:// request is upgraded to https://.
  */
 const csp = [
   "default-src 'self'",
@@ -19,6 +20,11 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self' https://formspree.io",
   "frame-ancestors 'none'",
+  "frame-src 'none'",
+  "worker-src 'none'",
+  "manifest-src 'self'",
+  // the local dev server is plain http, so only upgrade in production
+  ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
 const securityHeaders = [
@@ -27,6 +33,7 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
   { key: "Permissions-Policy", value: "microphone=(), camera=(), geolocation=(), payment=(), usb=()" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
 ];
