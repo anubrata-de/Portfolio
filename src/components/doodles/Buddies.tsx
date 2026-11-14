@@ -125,14 +125,14 @@ export function BunnyBuddy() {
   );
 }
 
-/** Code lines on the laptop screen: x, y, width, colour. */
+/** Code lines, in the screen's own flat coordinates: x, y, width, colour. */
 const CODE = [
-  [50, 114, 44, "#ffc5d5"],
-  [62, 126, 70, "#ffe27a"],
-  [74, 138, 50, "#d6e6ff"],
-  [74, 150, 84, "#cfe6b4"],
-  [62, 162, 38, "#ffe27a"],
-  [50, 174, 22, "#ffc5d5"],
+  [18, 20, 44, "#ffc5d5"],
+  [30, 32, 70, "#ffe27a"],
+  [42, 44, 50, "#d6e6ff"],
+  [42, 56, 84, "#cfe6b4"],
+  [30, 68, 38, "#ffe27a"],
+  [18, 80, 22, "#ffc5d5"],
 ] as const;
 
 /**
@@ -151,32 +151,38 @@ export function PuppyBuddy() {
       <rect x="12" y="240" width="356" height="10" fill="url(#tone-light)" />
       <path d="M8 232 H372 M12 240 H368" {...line} />
 
-      {/* laptop, square to the viewer */}
+      {/* laptop, turned to face the puppy and a little toward us */}
       <g filter="url(#wobble)">
-        <rect x="30" y="92" width="160" height="108" rx="8" {...solid(PAPER)} />
-        <rect x="40" y="102" width="140" height="88" rx="4" fill="#2b2d42" stroke={INK} strokeWidth={1.8} />
-        <circle cx="110" cy="97" r="1.6" fill={INK} />
-        <path d="M24 200 H196 L 212 226 H8 Z" {...solid(PAPER)} />
-        <path d="M8 226 H212 V230 H8 Z" {...solid(PAPER, 2)} />
-        <path d="M30 207 H190 M24 214 H196 M19 220 H201" {...line} strokeWidth={1.4} strokeDasharray="6 4" opacity={0.55} />
+        <path d="M146.0 174.0 L 223.9 187.5 L 148.9 226.5 L 71.0 213.0 Z" {...solid(PAPER)} />
+        <path d="M223.9 187.5 L 148.9 226.5 L 148.9 230.5 L 223.9 191.5 Z" {...solid(PAPER, 2)} />
+        <path d="M71.0 213.0 L 148.9 226.5 L 148.9 230.5 L 71.0 217.0 Z" {...solid(PAPER, 2)} />
+        <path d="M158.1 180.9 L 97.1 212.7 M173.6 183.6 L 112.6 215.4 M189.2 186.3 L 128.2 218.1" {...line} strokeWidth={1.4} strokeDasharray="6 4" opacity={0.55} />
       </g>
-      {CODE.map(([x, y, w, c], i) => (
-        <rect key={y} className={`code-line code-line--${i + 1}`} x={x} y={y} width={w} height="6" rx="3" fill={c} />
-      ))}
-      <g className="puppy__ship">
-        <rect x="118" y="168" width="54" height="18" rx="9" {...solid("#cfe6b4", 1.6)} />
-        <text x="145" y="181" textAnchor="middle" fontSize="10" fontWeight="700" fill={INK}>
-          ✓ shipped
-        </text>
+      {/* the screen, drawn flat and then turned with the laptop */}
+      <g transform="matrix(0.5 -0.26 0.18 1.01 53 112)">
+        <g filter="url(#wobble)">
+          <rect x="0" y="0" width="150" height="100" rx="8" {...solid(PAPER)} vectorEffect="non-scaling-stroke" />
+          <rect x="8" y="8" width="134" height="84" rx="4" fill="#2b2d42" stroke={INK} strokeWidth={1.8} vectorEffect="non-scaling-stroke" />
+          <circle cx="75" cy="4" r="1.8" fill={INK} />
+        </g>
+        {CODE.map(([x, y, w, c], i) => (
+          <rect key={y} className={`code-line code-line--${i + 1}`} x={x} y={y} width={w} height="6" rx="3" fill={c} />
+        ))}
+        <g className="puppy__ship">
+          <rect x="80" y="70" width="54" height="18" rx="9" {...solid("#cfe6b4", 1.6)} vectorEffect="non-scaling-stroke" />
+          <text x="107" y="83" textAnchor="middle" fontSize="10" fontWeight="700" fill={INK}>
+            ✓ shipped
+          </text>
+        </g>
       </g>
 
       {/* カタカタ ("kata kata"): the manga sound of typing */}
       <g className="puppy__sfx">
         <g className="puppy__sfx-jitter">
           <text
-            x="104"
-            y="76"
-            transform="rotate(-6 104 76)"
+            x="150"
+            y="58"
+            transform="rotate(-6 150 58)"
             textAnchor="middle"
             fontFamily={JA_FONT}
             fontWeight="800"
@@ -194,15 +200,15 @@ export function PuppyBuddy() {
       <g className="puppy">
         {/* both front paws reach onto the keyboard and tap in turn */}
         <g className="puppy__leg puppy__leg--far">
-          <path d="M246 176 L 181 207" fill="none" stroke={INK} strokeWidth={15} strokeLinecap="round" />
-          <path d="M246 176 L 181 207" fill="none" stroke="#f3ecdf" strokeWidth={10.5} strokeLinecap="round" />
-          <ellipse cx="178" cy="208" rx="8.5" ry="6" {...solid("#f3ecdf", 2.2)} />
+          <path d="M246 176 L 196.3 187.4" fill="none" stroke={INK} strokeWidth={15} strokeLinecap="round" />
+          <path d="M246 176 L 196.3 187.4" fill="none" stroke="#f3ecdf" strokeWidth={10.5} strokeLinecap="round" />
+          <ellipse cx="193.3" cy="188.4" rx="8.5" ry="6" {...solid("#f3ecdf", 2.2)} />
         </g>
         <g className="puppy__leg puppy__leg--near">
-          <path d="M244 186 L 193 216" fill="none" stroke={INK} strokeWidth={16} strokeLinecap="round" />
-          <path d="M244 186 L 193 216" fill="none" stroke={CREAM} strokeWidth={11.5} strokeLinecap="round" />
-          <ellipse cx="190" cy="217" rx="9" ry="6.5" {...solid(CREAM, 2.2)} />
-          <path d="M185.6 214 v4 M190.4 213.4 v5" {...line} strokeWidth={1.3} />
+          <path d="M244 186 L 181.3 195.2" fill="none" stroke={INK} strokeWidth={16} strokeLinecap="round" />
+          <path d="M244 186 L 181.3 195.2" fill="none" stroke={CREAM} strokeWidth={11.5} strokeLinecap="round" />
+          <ellipse cx="178.3" cy="196.2" rx="9" ry="6.5" {...solid(CREAM, 2.2)} />
+          <path d="M173.9 193.2 v4 M178.7 192.6 v5" {...line} strokeWidth={1.3} />
         </g>
 
         {/* a round little body with a fluffy chest and a big haunch */}
@@ -227,6 +233,7 @@ export function PuppyBuddy() {
               <ellipse cx="262" cy="108" rx="44" ry="40" {...solid(FUR)} />
               <path d="M222 116 C 226 138, 246 148, 264 148 C 284 148, 300 138, 304 120 C 292 128, 278 126, 266 130 C 252 126, 236 128, 222 116 Z" fill={CREAM} />
               <path d="M252 70 C 246 84, 240 98, 238 110 L 254 112 C 254 98, 256 84, 252 70 Z" fill={CREAM} />
+              <ellipse cx="262" cy="108" rx="44" ry="40" {...line} />
               <ellipse cx="236" cy="120" rx="16" ry="11.5" {...solid(CREAM, 2)} />
             </g>
             <ellipse cx="248" cy="116" rx="5" ry="3" fill="#ffb3a8" opacity={0.85} />
@@ -257,6 +264,7 @@ export function PuppyBuddy() {
             <ellipse cx="262" cy="108" rx="44" ry="40" {...solid(FUR)} />
             <path d="M220 116 C 224 138, 244 148, 262 148 C 280 148, 300 138, 304 116 C 292 126, 276 124, 262 128 C 248 124, 232 126, 220 116 Z" fill={CREAM} />
             <path d="M262 70 C 256 84, 252 98, 252 110 L 272 110 C 272 98, 268 84, 262 70 Z" fill={CREAM} />
+            <ellipse cx="262" cy="108" rx="44" ry="40" {...line} />
             <ellipse cx="262" cy="121" rx="17" ry="11.5" {...solid(CREAM, 2)} />
           </g>
           <ellipse cx="238" cy="116" rx="7" ry="4" fill="#ffb3a8" opacity={0.85} />
@@ -286,9 +294,9 @@ export function PuppyBuddy() {
       </text>
 
       <g className="puppy__sparks">
-        <Sparkle x={20} y={84} s={0.9} />
-        <Sparkle x={202} y={78} s={1.1} />
-        <Sparkle x={150} y={60} s={0.7} />
+        <Sparkle x={36} y={98} s={0.9} />
+        <Sparkle x={196} y={86} s={1.1} />
+        <Sparkle x={94} y={70} s={0.7} />
       </g>
     </svg>
   );

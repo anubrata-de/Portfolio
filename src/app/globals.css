@@ -3511,49 +3511,39 @@ textarea {
   }
 }
 
-/* the head turns: profile while typing, facing you once it ships */
+/* the head turns in an instant: toward the screen while typing, to you once it ships */
 .puppy__profile {
-  animation: puppy-profile 10s linear infinite;
+  animation: puppy-profile 10s step-end infinite;
 }
 
 @keyframes puppy-profile {
-  0%,
-  52%,
+  0% {
+    opacity: 1;
+  }
+  52.5% {
+    opacity: 0;
+  }
   70.5%,
   100% {
     opacity: 1;
-  }
-  52.5%,
-  70% {
-    opacity: 0;
   }
 }
 
 .puppy__front {
   opacity: 0;
-  transform-origin: 262px 148px;
-  animation: puppy-front 10s ease-out infinite;
+  animation: puppy-front 10s step-end infinite;
 }
 
 @keyframes puppy-front {
-  0%,
-  52% {
+  0% {
     opacity: 0;
-    transform: scale(0.94);
   }
   52.5% {
     opacity: 1;
-    transform: scale(0.96);
-  }
-  54%,
-  70% {
-    opacity: 1;
-    transform: scale(1);
   }
   70.5%,
   100% {
     opacity: 0;
-    transform: scale(1);
   }
 }
 
