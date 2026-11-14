@@ -81,7 +81,8 @@ Each project's screen sketch is in `src/components/projects/ScreenSketch.tsx`, k
 | Variable | Needed for |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Absolute URLs in metadata, `robots.txt` and the sitemap. On Vercel the production URL is picked up automatically. |
-| `NEXT_PUBLIC_FORMSPREE_ID` | Optional. With a [Formspree](https://formspree.io) form ID the contact form sends messages directly; without it, the form opens the visitor's email app with the message filled in. Only plain alphanumeric IDs are accepted. |
+
+The contact form has no variable: to send messages straight to your inbox, put a [Formspree](https://formspree.io) form ID in `formspreeId` in `src/data/site.ts` (it's public by design, since it appears in the address the form posts to). Left empty, the form opens the visitor's email app with the message filled in. Only plain alphanumeric IDs are accepted.
 
 ## Security
 
@@ -89,6 +90,9 @@ Each project's screen sketch is in `src/components/projects/ScreenSketch.tsx`, k
 - `script-src` keeps `'unsafe-inline'` because Next.js boots pages with inline scripts; per-request nonces would make every page dynamic.
 - No cookies, analytics or browser storage. User input is rendered as text, length-limited, and the form endpoint is validated.
 - All new-tab links use `rel="noopener noreferrer"`. The `X-Powered-By` header is off.
+- No secrets anywhere: the site has no API keys, no server endpoints and no Vercel environment variables. The browser bundle names no environment variable; the site address is worked out in `src/data/site-url.ts`, which only server files import.
+- No source maps in production, so the original source files can't be rebuilt from the browser. What the browser runs (HTML, CSS and minified JavaScript) is always visible in DevTools, as on any website, so nothing secret should ever be put in a browser component.
+- Also on: no frames, no workers, `upgrade-insecure-requests` in production, and `Cross-Origin-Resource-Policy: same-origin` so other sites can't embed this site's files.
 
 ## Stack
 

@@ -8,10 +8,10 @@ type Errors = Partial<Record<Field, string>>;
 type Status = { kind: "idle" | "sending" | "sent" | "mailto" | "error"; text?: string };
 
 /**
- * Sends through Formspree when NEXT_PUBLIC_FORMSPREE_ID is set.
+ * Sends through Formspree when site.formspreeId is set.
  * Without it, opens the visitor's email app with the message filled in.
  */
-const RAW_FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "";
+const RAW_FORMSPREE_ID = site.formspreeId;
 // Only accept a plain form ID, so a mistyped value can never point the form elsewhere.
 const FORMSPREE_ID = /^[a-zA-Z0-9]{4,32}$/.test(RAW_FORMSPREE_ID) ? RAW_FORMSPREE_ID : null;
 const LIMITS = { name: 100, email: 200, message: 4000 } as const;
