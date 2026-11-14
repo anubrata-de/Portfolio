@@ -7,6 +7,7 @@ import { achievements, arcs, languages, volunteering } from "@/data/journey";
 import { Episode } from "@/components/ui/Episode";
 import { FAQ } from "@/components/about/FAQ";
 import { Ring, TileDoodle } from "@/components/doodles/Doodles";
+import { BunnyBuddy } from "@/components/doodles/Buddies";
 
 export const metadata: Metadata = {
   title: "About",
@@ -52,21 +53,26 @@ const habits = [
 export default function AboutPage() {
   return (
     <div className="page wrap about">
-      <header className="page__head">
-        <Episode n={1} {...episodes.about} />
-        <h1 className="page__title">
-          Hi, I&apos;m{" "}
-          <span className="ringed">
-            Anubrata
-            <Ring className="ringed__ring" />
-          </span>
-          .
-        </h1>
-        <p className="page__lead">
-          I like the part where a model leaves the notebook and someone actually uses it. So I build the whole path: the data
-          cleaning, the model or LLM, the API around it and the screen on top. Outside of code I&apos;ve spent most of my time
-          running student communities at IIT Madras.
-        </p>
+      <header className="page__head page__head--buddy">
+        <div className="page__head-text">
+          <Episode n={1} {...episodes.about} />
+          <h1 className="page__title">
+            Hi, I&apos;m{" "}
+            <span className="ringed">
+              Anubrata
+              <Ring className="ringed__ring" />
+            </span>
+            .
+          </h1>
+          <p className="page__lead">
+            I like the part where a model leaves the notebook and someone actually uses it. So I build the whole path: the data
+            cleaning, the model or LLM, the API around it and the screen on top. Outside of code I&apos;ve spent most of my time
+            running student communities at IIT Madras.
+          </p>
+        </div>
+        <div className="page__buddy">
+          <BunnyBuddy />
+        </div>
       </header>
 
       <ul className="index-cards">

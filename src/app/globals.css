@@ -2692,11 +2692,734 @@ textarea {
   }
 }
 
+/* ---------- page buddies (About and Work headers) ----------
+ * From tablet width up the header becomes two columns, text and buddy, with the
+ * buddy shrinking as the screen narrows; on phones it sits under the intro. The motion follows the desk scene:
+ * a few small shapes animating inside one small drawing.
+ */
+
+.page__head--buddy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: none;
+}
+
+.page__head-text {
+  max-width: 780px;
+}
+
+.page__buddy {
+  justify-self: end;
+  width: min(240px, 72%);
+  margin-top: 12px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+}
+
+.buddy {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@media (min-width: 760px) {
+  .page__head--buddy {
+    grid-template-columns: minmax(0, 780px) clamp(200px, 27vw, 380px);
+    justify-content: space-between;
+    column-gap: 28px;
+    align-items: center;
+  }
+
+  .page__buddy {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* the bunny: waves with a speech bubble, then a little hop later on (9s loop) */
+.bunny {
+  transform-origin: 252px 198px;
+  animation: bunny-hop 9s ease-in-out infinite;
+}
+
+@keyframes bunny-hop {
+  0%,
+  62%,
+  76%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  65% {
+    transform: translateY(0) scale(1.04, 0.93);
+  }
+  69% {
+    transform: translateY(-16px) scale(0.97, 1.05);
+  }
+  73% {
+    transform: translateY(0) scale(1.05, 0.94);
+  }
+}
+
+.bunny__shadow {
+  transform-origin: 252px 199px;
+  animation: bunny-shadow 9s ease-in-out infinite;
+}
+
+@keyframes bunny-shadow {
+  0%,
+  62%,
+  76%,
+  100% {
+    opacity: 0.12;
+    transform: scale(1);
+  }
+  69% {
+    opacity: 0.06;
+    transform: scale(0.6);
+  }
+}
+
+.bunny__breath {
+  transform-origin: 252px 198px;
+  animation: bunny-breath 3.2s ease-in-out infinite;
+}
+
+@keyframes bunny-breath {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 1.014);
+  }
+}
+
+/* the arm rises from its side, waves three times, and comes back down */
+.bunny__arm {
+  transform-origin: 280px 150px;
+  transform: rotate(125deg);
+  animation: bunny-wave 9s ease-in-out infinite;
+}
+
+@keyframes bunny-wave {
+  0%,
+  34%,
+  100% {
+    transform: rotate(125deg);
+  }
+  4%,
+  12%,
+  20%,
+  28% {
+    transform: rotate(0deg);
+  }
+  8%,
+  16%,
+  24% {
+    transform: rotate(16deg);
+  }
+}
+
+.bunny__bubble {
+  opacity: 0;
+  transform-origin: 212px 112px;
+  animation: bunny-bubble 9s ease-out infinite;
+}
+
+@keyframes bunny-bubble {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  4% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  6%,
+  48% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  53%,
+  100% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+/* ears: a twitch while idle, then both flop as it lands from the hop */
+.bunny__ear--left {
+  transform-origin: 240px 82px;
+  animation: bunny-ear-left 9s ease-in-out infinite;
+}
+
+.bunny__ear--right {
+  transform-origin: 264px 82px;
+  animation: bunny-ear-right 9s ease-in-out infinite;
+}
+
+@keyframes bunny-ear-left {
+  0%,
+  40%,
+  43%,
+  46%,
+  64%,
+  78%,
+  100% {
+    transform: rotate(0);
+  }
+  41.5% {
+    transform: rotate(-10deg);
+  }
+  44.5% {
+    transform: rotate(-7deg);
+  }
+  70% {
+    transform: rotate(-14deg);
+  }
+  74% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes bunny-ear-right {
+  0%,
+  64%,
+  78%,
+  100% {
+    transform: rotate(0);
+  }
+  70% {
+    transform: rotate(14deg);
+  }
+  74% {
+    transform: rotate(-6deg);
+  }
+}
+
+.bunny__eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: buddy-blink 4.4s ease-in-out infinite;
+}
+
+@keyframes buddy-blink {
+  0%,
+  90%,
+  96%,
+  100% {
+    transform: scaleY(1);
+  }
+  93% {
+    transform: scaleY(0.1);
+  }
+}
+
+.bunny__nose {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bunny-nose 2.8s ease-in-out infinite;
+}
+
+@keyframes bunny-nose {
+  0%,
+  60%,
+  72%,
+  84%,
+  100% {
+    transform: scale(1, 1);
+  }
+  66%,
+  78% {
+    transform: scale(1.18, 0.9);
+  }
+}
+
+/*
+ * The shiba (10s loop):
+ *   0–48%   types; code lines fill the screen to a カタカタ
+ *   50–74%  ships it: a ✓, a happy paw in the air, ^ ^ eyes, a little bounce
+ *   74–78%  the screen clears
+ *   78–92%  head tilts at a "?" while it thinks of the next one
+ */
+.code-line {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes code-line-1 {
+  0%,
+  6% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  10%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--1 {
+  animation-name: code-line-1;
+}
+
+@keyframes code-line-2 {
+  0%,
+  13% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  17%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--2 {
+  animation-name: code-line-2;
+}
+
+@keyframes code-line-3 {
+  0%,
+  20% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  24%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--3 {
+  animation-name: code-line-3;
+}
+
+@keyframes code-line-4 {
+  0%,
+  27% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  31%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--4 {
+  animation-name: code-line-4;
+}
+
+@keyframes code-line-5 {
+  0%,
+  34% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  38%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--5 {
+  animation-name: code-line-5;
+}
+
+@keyframes code-line-6 {
+  0%,
+  41% {
+    opacity: 1;
+    transform: scaleX(0);
+    animation-timing-function: steps(5, end);
+  }
+  45%,
+  74% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  77% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
+
+.code-line--6 {
+  animation-name: code-line-6;
+}
+
+.shiba__sfx {
+  opacity: 0;
+  animation: shiba-sfx 10s linear infinite;
+}
+
+@keyframes shiba-sfx {
+  0%,
+  4%,
+  47%,
+  100% {
+    opacity: 0;
+  }
+  6%,
+  45% {
+    opacity: 1;
+  }
+}
+
+.shiba__sfx-jitter {
+  animation: shiba-jitter 0.24s steps(2, end) infinite;
+}
+
+@keyframes shiba-jitter {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(1.5px, -1px);
+  }
+}
+
+.shiba__ship {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: shiba-ship 10s ease-out infinite;
+}
+
+@keyframes shiba-ship {
+  0%,
+  49% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  51% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  53%,
+  72% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  74%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.shiba__sparks {
+  opacity: 0;
+  animation: shiba-sparks 10s ease-out infinite;
+}
+
+@keyframes shiba-sparks {
+  0%,
+  50%,
+  70%,
+  100% {
+    opacity: 0;
+  }
+  53%,
+  66% {
+    opacity: 1;
+  }
+}
+
+/* two little bounces of joy */
+.shiba {
+  animation: shiba-bounce 10s ease-in-out infinite;
+}
+
+@keyframes shiba-bounce {
+  0%,
+  54%,
+  60%,
+  66%,
+  100% {
+    transform: translateY(0);
+  }
+  57% {
+    transform: translateY(-8px);
+  }
+  63% {
+    transform: translateY(-5px);
+  }
+}
+
+.shiba__tail {
+  transform-origin: 310px 210px;
+  animation: shiba-wag 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes shiba-wag {
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(12deg);
+  }
+}
+
+/* the typing paw taps all the time; for the celebration it is thrown up in the air */
+.shiba__pose {
+  transform-origin: 276px 198px;
+  animation: shiba-pose 10s ease-in-out infinite;
+}
+
+@keyframes shiba-pose {
+  0%,
+  51%,
+  72%,
+  100% {
+    transform: rotate(0);
+  }
+  55%,
+  68% {
+    transform: rotate(70deg);
+  }
+}
+
+.shiba__tap {
+  transform-origin: 276px 198px;
+  animation: shiba-tap 0.22s ease-in-out infinite alternate;
+}
+
+@keyframes shiba-tap {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-4deg);
+  }
+}
+
+.shiba__head {
+  transform-origin: 288px 156px;
+  animation: shiba-head 10s ease-in-out infinite;
+}
+
+@keyframes shiba-head {
+  0%,
+  50%,
+  70%,
+  78%,
+  92%,
+  100% {
+    transform: rotate(0);
+  }
+  56%,
+  64% {
+    transform: rotate(5deg);
+  }
+  81%,
+  89% {
+    transform: rotate(-12deg);
+  }
+}
+
+.shiba__ear {
+  transform-origin: 312px 92px;
+  animation: shiba-ear 6s ease-in-out infinite;
+}
+
+@keyframes shiba-ear {
+  0%,
+  30%,
+  33%,
+  36%,
+  100% {
+    transform: rotate(0);
+  }
+  31.5% {
+    transform: rotate(12deg);
+  }
+  34.5% {
+    transform: rotate(8deg);
+  }
+}
+
+.shiba__open {
+  animation: shiba-open 10s linear infinite;
+}
+
+@keyframes shiba-open {
+  0%,
+  51.5%,
+  70.5%,
+  100% {
+    opacity: 1;
+  }
+  52%,
+  70% {
+    opacity: 0;
+  }
+}
+
+.shiba__happy {
+  opacity: 0;
+  animation: shiba-happy 10s linear infinite;
+}
+
+@keyframes shiba-happy {
+  0%,
+  51.5%,
+  70.5%,
+  100% {
+    opacity: 0;
+  }
+  52%,
+  70% {
+    opacity: 1;
+  }
+}
+
+/* eyes look toward the screen while typing, and up while thinking */
+.shiba__look {
+  animation: shiba-look 10s ease-in-out infinite;
+}
+
+@keyframes shiba-look {
+  0%,
+  50%,
+  78%,
+  92%,
+  100% {
+    transform: translate(-1.5px, 0);
+  }
+  81%,
+  89% {
+    transform: translate(-0.5px, -2px);
+  }
+}
+
+.shiba__blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: buddy-blink 3.8s ease-in-out infinite;
+}
+
+.shiba__tongue {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: shiba-tongue 10s ease-out infinite;
+}
+
+@keyframes shiba-tongue {
+  0%,
+  52%,
+  69%,
+  100% {
+    opacity: 0;
+    transform: scaleY(0.3);
+  }
+  54%,
+  67% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.shiba__q {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: shiba-q 10s ease-out infinite;
+}
+
+@keyframes shiba-q {
+  0%,
+  79% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  81% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  83%,
+  89% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  91%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  /* everything holds still except the two drawings, which always animate */
-  *:not(.scene *, .endcard__scene *) {
+  /* everything holds still except the drawings, which always animate */
+  *:not(.scene *, .endcard__scene *, .buddy *) {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;

@@ -4,6 +4,7 @@ import { categories, projects } from "@/data/projects";
 import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
+import { ShibaBuddy } from "@/components/doodles/Buddies";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -15,12 +16,17 @@ const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 export default function WorkPage() {
   return (
     <div className="page wrap">
-      <header className="page__head">
-        <Episode n={3} {...episodes.work} />
-        <h1 className="page__title">Everything I&apos;ve built</h1>
-        <p className="page__lead">
-          {projects.length} projects, each with its code on GitHub. This list updates itself from my repositories every day.
-        </p>
+      <header className="page__head page__head--buddy">
+        <div className="page__head-text">
+          <Episode n={3} {...episodes.work} />
+          <h1 className="page__title">Everything I&apos;ve built</h1>
+          <p className="page__lead">
+            {projects.length} projects, each with its code on GitHub. This list updates itself from my repositories every day.
+          </p>
+        </div>
+        <div className="page__buddy">
+          <ShibaBuddy />
+        </div>
       </header>
 
       {categories
