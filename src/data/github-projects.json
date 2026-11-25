@@ -167,6 +167,35 @@
       "isNew": false
     },
     {
+      "repo": "log-parsing-bgl-hdfs",
+      "slug": "log-parsing-bgl-hdfs",
+      "title": "Log parsing on Loghub BGL and HDFS",
+      "tagline": "",
+      "summary": "This repository parses the BGL and HDFS logs from Loghub into event templates, measures how accurate the parsing is, and writes the event sequences that the anomaly detection stage will use. This stage works on the labelled 2k samples; larger and more varied datasets come later.",
+      "category": "Machine learning",
+      "tags": [
+        "Python",
+        "scikit-learn",
+        "Drain3",
+        "pandas",
+        "NumPy",
+        "SciPy"
+      ],
+      "featured": false,
+      "url": "https://github.com/anubrata-de/log-parsing-bgl-hdfs",
+      "homepage": "",
+      "language": "Python",
+      "updated": "2026-11-25T07:58:48Z",
+      "highlights": [
+        "Of the 13 classic parsers in the Loghub benchmark, Drain groups BGL best (GA 0.963) and is close to perfect on HDFS (0.998), but it gets the template text exactly right for only about a third of the lines (PA 0.342 and 0.354).",
+        "Almost all of that gap comes from how variables are masked. Better masks before parsing and the Loghub-2.0 template rules after parsing raise PA to 0.913 on BGL and 1.000 on HDFS, with GA the same or slightly higher.",
+        "On 104,815 HDFS lines that were not used to design the masks, the tuned parser reaches GA 0.999 at a similarity threshold of 0.55 or 0.6. At the Loghub default of 0.5, a single rare line merged into the most common event drops GA to 0.775.",
+        "The parsed output is in the form the anomaly detection stage needs: 7,940 labelled HDFS block sequences and an event count matrix, and BGL lines with event ids and alert labels. A streaming script handles the full logs for the next stage."
+      ],
+      "firstSeen": "2026-11-25",
+      "isNew": true
+    },
+    {
       "repo": "chest-xray-disease-classification",
       "slug": "chest-xray-classification",
       "title": "Chest X-Ray Disease Classification",
