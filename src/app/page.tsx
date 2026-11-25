@@ -2,7 +2,8 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/data/site";
-import { featured, projects } from "@/data/projects";
+import { areasOf, featured, fresh, projects } from "@/data/projects";
+import { NewStamp } from "@/components/projects/NewStamp";
 import { episodes, hero, lookingFor, tiles } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { CyclingWord } from "@/components/home/CyclingWord";
@@ -72,6 +73,20 @@ export default function Home() {
           <h2 id="work-title" className="section__title">
             Things I&apos;ve built, pinned where I can see them
           </h2>
+          {fresh.length > 0 && (
+            <ul className="fresh" aria-label="Just added">
+              {fresh.slice(0, 2).map((p) => (
+                <li key={p.slug}>
+                  <NewStamp />
+                  <span className="hand fresh__label">just added</span>
+                  <Link href={`/projects/${p.slug}`} className="fresh__link">
+                    {p.title}
+                  </Link>
+                  <span className="fresh__area">{p.category}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           <ul className="board">
             {featured.map((p, i) => (
               <li key={p.slug} className="pin" style={{ "--tilt": `${tilts[i % tilts.length]}deg` } as CSSProperties}>
@@ -97,7 +112,7 @@ export default function Home() {
             </Link>
             {projects.length > featured.length && (
               <Link href="/projects" className="section__aside">
-                plus {projects.length - featured.length} more in machine learning and analysis
+                plus {projects.length - featured.length} more in {areasOf(projects.filter((p) => !p.featured))}
               </Link>
             )}
           </p>

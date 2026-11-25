@@ -1,11 +1,21 @@
-# Rebuilds src/data/github-projects.json from the public repos on this account.
-# A change is committed, which makes Vercel redeploy the site with it.
+# Rebuilds src/data/github-projects.json from the public repos on this account:
+# new repos are added (and marked new for 30 days), changed ones updated, deleted
+# or hidden ones removed. A change is committed, which makes Vercel redeploy the
+# site; the profile README picks it up half an hour later.
 name: Sync projects from GitHub
 
 on:
   schedule:
-    - cron: "17 1 * * *" # every day, 06:47 in India
+    # twice a day (06:47 and 18:47 in India); GitHub can start scheduled runs late
+    - cron: "17 1 * * *"
+    - cron: "17 13 * * *"
   workflow_dispatch: # "Run workflow" button in the Actions tab
+  push:
+    # when the sync itself changes, run it straight away
+    branches: [main]
+    paths:
+      - scripts/sync-projects.mjs
+      - .github/workflows/sync-projects.yml
 
 permissions:
   contents: write

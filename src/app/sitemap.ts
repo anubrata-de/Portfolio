@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { projects } from "@/data/projects";
+import { lastUpdated, projects } from "@/data/projects";
 import { siteUrl } from "@/data/site-url";
 
-// A fixed date keeps the sitemap static. Update it when the content changes.
-const lastModified = "2026-11-11";
+// The latest change to any project, from the daily sync, so the sitemap stays static and current.
+const lastModified = lastUpdated;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ["", "/projects", "/about", "/contact"].map((path) => ({

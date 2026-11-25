@@ -36,8 +36,10 @@ Motion is kept small: the cycling word, notes settling in once, and the checklis
 The project list on the site, and on the GitHub profile README, is built from the public repos on this account:
 
 1. `scripts/sync-projects.mjs` reads every public repo (forks, archived repos and this one are skipped) and writes `src/data/github-projects.json`.
-2. `.github/workflows/sync-projects.yml` runs it every morning, and on demand from the **Actions** tab. When something changed it commits the file, and Vercel redeploys.
-3. The profile repo (`anubrata-de/anubrata-de`) rebuilds its README from the same file half an hour later.
+2. `.github/workflows/sync-projects.yml` runs it twice a day (06:47 and 18:47 in India), whenever the sync itself changes, and on demand from the **Actions** tab. When something changed it commits the file, and Vercel redeploys.
+3. The profile repo (`anubrata-de/anubrata-de`) rebuilds its README from the same file half an hour after each sync.
+
+A project that first appears is marked new for 30 days: a red 新 stamp on its card and page, a "just added" note above the home pinboard, and a "new" badge on the profile README. The sync clears it on day 30. Projects listed before this was tracked are never marked new.
 
 So a new public repo appears on its own. To control how a repo is shown, put this anywhere in its README; GitHub doesn't display it:
 
@@ -57,7 +59,15 @@ featured: yes
 - **hide: yes** leaves a repo out.
 - **slug** (optional) fixes the page address, e.g. `slug: data-analyst-agent` → `/projects/data-analyst-agent`.
 
-Without the block, the title comes from the README's first heading, the summary from the repo's About text, and the tags from its topics or main language.
+Without the block, a new repo still gets a full entry, worked out by the sync:
+
+- **title**: the README's first heading (text after a dash or colon becomes the tagline).
+- **summary**: the README's opening paragraph, cut at a sentence; the About text if there is none.
+- **category**: the repo's topics if it has any, otherwise the wording of its title, About text and README (a repo about models, datasets and benchmarks goes to Machine learning), otherwise its language.
+- **tags**: its language plus the libraries in `pyproject.toml`, `requirements.txt`, `environment.yml` or `package.json`, frameworks and distinctive tools first.
+- **highlights**: up to four bullets from a Summary, Highlights, Results or Features section of the README, shown as "Worth knowing" on the project page.
+
+Repos with the block are shown exactly as the block says.
 
 Extra write-up for a project page (steps, highlights) lives in `src/data/projects.ts`, keyed by slug. It's optional.
 

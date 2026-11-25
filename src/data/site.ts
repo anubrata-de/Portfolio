@@ -13,7 +13,6 @@ export const site = {
    */
   formspreeId: "" as string,
   location: "West Bengal, India",
-  year: 2026,
   description:
     "Anubrata De studies data science at IIT Madras and builds LLM agents, retrieval systems and the full-stack apps around them.",
   social: [

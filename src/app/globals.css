@@ -2046,6 +2046,77 @@ textarea {
   }
 }
 
+/* ---------- new projects ----------
+ * A red hanko stamp, 新 ("new"), on anything added in the last 30 days; the
+ * daily sync sets and clears it, so nothing here needs touching by hand.
+ */
+.stamp {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 2.1em;
+  height: 2.1em;
+  border: 2px solid var(--shu);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--shu) 8%, var(--card));
+  color: var(--shu);
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+  transform: rotate(-12deg);
+}
+
+.page__title .stamp {
+  margin-left: 0.3em;
+  font-size: 0.32em;
+  vertical-align: 0.9em;
+}
+
+.card {
+  position: relative;
+}
+
+.card__stamp {
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  right: -8px;
+  font-size: 1rem;
+}
+
+.fresh {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.fresh li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.fresh__label {
+  color: var(--shu-text);
+  font-size: 1.25rem;
+}
+
+.fresh__link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.fresh__area {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
 /* ---------- moving drawings ----------
  * Each drawing is a stack of layers that share one viewBox. The still parts are
  * painted once; whole layers move or fade (cheap for the browser), and only a

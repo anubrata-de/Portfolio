@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { neighbours, type Project } from "@/data/projects";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
+import { NewStamp } from "@/components/projects/NewStamp";
 
 /** A single project page: GitHub details, plus extra write-up where one exists. */
 export function ProjectFile({ project: p }: { project: Project }) {
@@ -8,6 +9,7 @@ export function ProjectFile({ project: p }: { project: Project }) {
   const d = p.detail;
   const live = p.homepage ? { href: p.homepage, label: "Open it" } : d?.live;
   const stack = d?.stack ?? p.tags;
+  const highlights = d?.highlights ?? (p.highlights.length ? p.highlights : undefined);
 
   return (
     <article className="page wrap">
@@ -15,7 +17,10 @@ export function ProjectFile({ project: p }: { project: Project }) {
         <p className="project__crumbs">
           <Link href="/projects">Work</Link> / {p.category}
         </p>
-        <h1 className="page__title">{p.title}</h1>
+        <h1 className="page__title">
+          {p.title}
+          {p.isNew && <NewStamp />}
+        </h1>
         {p.tagline && <p className="project__tagline">{p.tagline}</p>}
         <p className="page__lead">{p.summary}</p>
         {d?.context && <p className="hand project__context">{d.context}</p>}
@@ -69,11 +74,11 @@ export function ProjectFile({ project: p }: { project: Project }) {
       )}
 
       <section className="project__section project__split" aria-label="Details">
-        {d?.highlights ? (
+        {highlights ? (
           <div>
             <h2 className="project__h2">Worth knowing</h2>
             <ul className="ticks">
-              {d.highlights.map((h) => (
+              {highlights.map((h) => (
                 <li key={h}>{h}</li>
               ))}
             </ul>

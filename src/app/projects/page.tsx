@@ -4,6 +4,7 @@ import { categories, projects } from "@/data/projects";
 import { episodes } from "@/data/home";
 import { Episode } from "@/components/ui/Episode";
 import { ScreenSketch } from "@/components/projects/ScreenSketch";
+import { NewStamp } from "@/components/projects/NewStamp";
 import { PuppyBuddy } from "@/components/doodles/Buddies";
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default function WorkPage() {
                 .map((p) => (
                   <li key={p.slug}>
                     <Link href={`/projects/${p.slug}`} className="card">
+                      {p.isNew && <NewStamp className="card__stamp" />}
                       <ScreenSketch slug={p.slug} category={p.category} label={p.title} className="card__shot" />
                       <span className="card__name">{p.title}</span>
                       {p.tagline && <span className="card__tagline">{p.tagline}</span>}

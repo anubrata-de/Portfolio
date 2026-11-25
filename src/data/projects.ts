@@ -224,11 +224,56 @@ const details: Record<string, Detail> = {
   },
 };
 
-export type Project = (typeof data.projects)[number] & { detail?: Detail };
+/** One project as scripts/sync-projects.mjs writes it. */
+type SyncedProject = {
+  repo: string;
+  slug: string;
+  title: string;
+  tagline: string;
+  summary: string;
+  category: string;
+  tags: string[];
+  featured: boolean;
+  url: string;
+  homepage: string;
+  language: string;
+  updated: string;
+  /** Bullets from the README, for projects without a write-up below. */
+  highlights: string[];
+  /** The day it first appeared here; null if it was listed before that was tracked. */
+  firstSeen: string | null;
+  /** First appeared in the last 30 days. */
+  isNew: boolean;
+};
+type SyncedData = { owner: string; year: number; categories: string[]; projects: SyncedProject[] };
+const synced = data as SyncedData;
 
-export const categories: string[] = data.categories;
-export const projects: Project[] = data.projects.map((p) => ({ ...p, detail: details[p.slug] }));
+export type Project = SyncedProject & { detail?: Detail };
+
+export const categories: string[] = synced.categories;
+export const projects: Project[] = synced.projects.map((p) => ({ ...p, detail: details[p.slug] }));
 export const featured = projects.filter((p) => p.featured);
+/** Projects added in the last 30 days, newest first. */
+export const fresh = projects.filter((p) => p.isNew).sort((a, b) => (b.firstSeen ?? "").localeCompare(a.firstSeen ?? ""));
+/** The year in the footer, written by the daily sync. */
+export const dataYear = synced.year;
+/** The day of the latest change to any project, for the sitemap. */
+export const lastUpdated = projects.reduce((latest, p) => (p.updated > latest ? p.updated : latest), "").slice(0, 10);
+
+/** Short names for categories, for running text ("in machine learning and analysis"). */
+const SHORT: Record<string, string> = {
+  "LLM agents and apps": "LLM apps",
+  "Full-stack apps": "full-stack apps",
+  "Machine learning": "machine learning",
+  "Business and data analysis": "analysis",
+  "Other projects": "other work",
+};
+
+/** "machine learning and analysis", from whatever categories the given projects are in. */
+export function areasOf(list: Project[]) {
+  const names = categories.filter((c) => list.some((p) => p.category === c)).map((c) => SHORT[c] ?? c.toLowerCase());
+  return names.length <= 1 ? (names[0] ?? "") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);

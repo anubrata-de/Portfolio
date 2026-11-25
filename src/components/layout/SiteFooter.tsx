@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/data/site";
+import { dataYear } from "@/data/projects";
 import { endCard } from "@/data/home";
 import { EndCardScene } from "@/components/doodles/Scenes";
 
@@ -38,7 +39,7 @@ export function SiteFooter() {
           </ul>
         </nav>
         <p className="endcard__small">
-          © {site.year} {site.name}. <Link href="/legal/privacy-policy">Privacy</Link>
+          © {dataYear} {site.name}. <Link href="/legal/privacy-policy">Privacy</Link>
         </p>
       </div>
     </footer>

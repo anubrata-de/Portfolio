@@ -1,5 +1,6 @@
 {
   "owner": "anubrata-de",
+  "year": 2026,
   "categories": [
     "LLM agents and apps",
     "Full-stack apps",
@@ -25,7 +26,10 @@
       "url": "https://github.com/anubrata-de/Promt2PPT",
       "homepage": "https://promt2-ppt.vercel.app",
       "language": "Python",
-      "updated": "2026-11-11T08:47:53Z"
+      "updated": "2026-11-11T08:47:53Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "TDS-VIRTUAL-TA",
@@ -44,7 +48,10 @@
       "url": "https://github.com/anubrata-de/TDS-VIRTUAL-TA",
       "homepage": "https://tds-virtual-ta-steel.vercel.app",
       "language": "Python",
-      "updated": "2026-11-11T08:47:50Z"
+      "updated": "2026-11-11T08:47:50Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "LLM_Agent",
@@ -63,7 +70,10 @@
       "url": "https://github.com/anubrata-de/LLM_Agent",
       "homepage": "https://llm-agent-teal.vercel.app",
       "language": "JavaScript",
-      "updated": "2026-11-11T08:47:48Z"
+      "updated": "2026-11-11T08:47:48Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "tds_p2",
@@ -83,7 +93,10 @@
       "url": "https://github.com/anubrata-de/tds_p2",
       "homepage": "",
       "language": "Python",
-      "updated": "2026-11-11T08:47:46Z"
+      "updated": "2026-11-11T08:47:46Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "Quiz-Master-V1",
@@ -102,7 +115,10 @@
       "url": "https://github.com/anubrata-de/Quiz-Master-V1",
       "homepage": "https://quiz-master-v1-liart.vercel.app",
       "language": "Python",
-      "updated": "2026-11-11T08:47:59Z"
+      "updated": "2026-11-11T08:47:59Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "placement_portal",
@@ -122,7 +138,10 @@
       "url": "https://github.com/anubrata-de/placement_portal",
       "homepage": "",
       "language": "JavaScript",
-      "updated": "2026-11-11T08:47:57Z"
+      "updated": "2026-11-11T08:47:57Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "ParkEase",
@@ -142,7 +161,10 @@
       "url": "https://github.com/anubrata-de/ParkEase",
       "homepage": "",
       "language": "JavaScript",
-      "updated": "2026-11-11T08:47:55Z"
+      "updated": "2026-11-11T08:47:55Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "chest-xray-disease-classification",
@@ -161,7 +183,10 @@
       "url": "https://github.com/anubrata-de/chest-xray-disease-classification",
       "homepage": "",
       "language": "Jupyter Notebook",
-      "updated": "2026-11-11T09:04:31Z"
+      "updated": "2026-11-11T09:04:31Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "cinema-audience-forecasting",
@@ -180,7 +205,10 @@
       "url": "https://github.com/anubrata-de/cinema-audience-forecasting",
       "homepage": "",
       "language": "Jupyter Notebook",
-      "updated": "2026-11-11T09:04:27Z"
+      "updated": "2026-11-11T09:04:27Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "movie-review-sentiment",
@@ -199,7 +227,10 @@
       "url": "https://github.com/anubrata-de/movie-review-sentiment",
       "homepage": "",
       "language": "Jupyter Notebook",
-      "updated": "2026-11-11T09:04:24Z"
+      "updated": "2026-11-11T09:04:24Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "house-price-prediction",
@@ -219,7 +250,10 @@
       "url": "https://github.com/anubrata-de/house-price-prediction",
       "homepage": "",
       "language": "Jupyter Notebook",
-      "updated": "2026-11-11T09:04:21Z"
+      "updated": "2026-11-11T09:04:21Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "hotel-booking-cancellation",
@@ -239,7 +273,10 @@
       "url": "https://github.com/anubrata-de/hotel-booking-cancellation",
       "homepage": "",
       "language": "Jupyter Notebook",
-      "updated": "2026-11-11T09:04:18Z"
+      "updated": "2026-11-11T09:04:18Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "DL-23f3001069-t12026",
@@ -258,7 +295,10 @@
       "url": "https://github.com/anubrata-de/DL-23f3001069-t12026",
       "homepage": "",
       "language": "Python",
-      "updated": "2026-11-11T08:52:55Z"
+      "updated": "2026-11-11T08:52:55Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "portcast-data-analyst-take-home",
@@ -277,7 +317,10 @@
       "url": "https://github.com/anubrata-de/portcast-data-analyst-take-home",
       "homepage": "",
       "language": "Python",
-      "updated": "2026-11-11T08:48:04Z"
+      "updated": "2026-11-11T08:48:04Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     },
     {
       "repo": "bdm-capstone-clothing-business",
@@ -295,7 +338,10 @@
       "url": "https://github.com/anubrata-de/bdm-capstone-clothing-business",
       "homepage": "",
       "language": "",
-      "updated": "2026-11-11T09:10:35Z"
+      "updated": "2026-11-11T09:10:35Z",
+      "highlights": [],
+      "firstSeen": null,
+      "isNew": false
     }
   ]
 }
